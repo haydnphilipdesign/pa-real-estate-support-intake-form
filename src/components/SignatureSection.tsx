@@ -10,9 +10,10 @@ interface SignatureSectionProps {
   role: string | null;
   data: SignatureData;
   onChange: (field: string, value: any) => void;
+  onSubmit: () => void;
 }
 
-export function SignatureSection({ role, data, onChange }: SignatureSectionProps) {
+export function SignatureSection({ role, data, onChange, onSubmit }: SignatureSectionProps) {
   return (
     <div className="space-y-6">
       <div>
@@ -80,7 +81,11 @@ export function SignatureSection({ role, data, onChange }: SignatureSectionProps
             />
           </div>
 
-          <Button className="w-full">
+          <Button 
+            className="w-full" 
+            onClick={onSubmit}
+            disabled={!data.termsAccepted || !data.infoConfirmed || !data.signature || !data.agentName || !data.dateSubmitted}
+          >
             Submit Transaction
           </Button>
         </div>

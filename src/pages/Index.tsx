@@ -12,8 +12,11 @@ import { TitleCompanySection } from "@/components/TitleCompanySection";
 import { AdditionalInfoSection } from "@/components/AdditionalInfoSection";
 import { SignatureSection } from "@/components/SignatureSection";
 import { useTransactionForm } from "@/hooks/useTransactionForm";
+import { submitToAirtable } from "@/utils/airtable";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Index() {
+  const { toast } = useToast();
   const {
     currentStep,
     selectedRole,
@@ -90,6 +93,35 @@ export default function Index() {
       case "signature":
         setSignatureData(prev => ({ ...prev, [field]: value }));
         break;
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const formData = {
+        selectedRole,
+        propertyData,
+        clients,
+        commissionData,
+        propertyDetails,
+        warrantyData,
+        titleData,
+        additionalInfo,
+        signatureData,
+      };
+
+      await submitToAirtable(formData);
+      
+      toast({
+        title: "Success!",
+        description: "Transaction has been submitted successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit transaction. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -173,6 +205,7 @@ export default function Index() {
               role={selectedRole}
               data={signatureData}
               onChange={(field, value) => handleFieldChange("signature", field, value)}
+              onSubmit={handleSubmit}
             />
           )}
 
