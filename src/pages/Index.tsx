@@ -4,7 +4,7 @@ import { MobileNavigation } from "@/components/MobileNavigation";
 import { RoleSelection } from "@/components/RoleSelection";
 import { PropertyInformation } from "@/components/PropertyInformation";
 import { ClientInformation } from "@/components/ClientInformation";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const TOTAL_STEPS = 5;
 
@@ -72,7 +72,7 @@ export default function Index() {
         return true;
       case 3:
         const hasInvalidClient = clients.some(
-          (client) => !client.name || !client.email || !client.phone
+          (client) => !client.name || !client.email || !client.phone || !client.maritalStatus
         );
         if (hasInvalidClient) {
           toast({
@@ -102,7 +102,8 @@ export default function Index() {
         phone: "",
         address: "",
         maritalStatus: "",
-        type: "buyer",
+        type: selectedRole === "listing-agent" ? "seller" : 
+              selectedRole === "buyers-agent" ? "buyer" : "buyer",
       },
     ]);
   };
@@ -136,6 +137,7 @@ export default function Index() {
             <PropertyInformation
               data={propertyData}
               onChange={handlePropertyChange}
+              role={selectedRole}
             />
           )}
           
@@ -145,6 +147,7 @@ export default function Index() {
               onAddClient={handleAddClient}
               onRemoveClient={handleRemoveClient}
               onClientChange={handleClientChange}
+              role={selectedRole}
             />
           )}
         </div>

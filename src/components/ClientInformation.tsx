@@ -21,6 +21,7 @@ interface ClientInformationProps {
   onAddClient: () => void;
   onRemoveClient: (id: string) => void;
   onClientChange: (id: string, field: string, value: string) => void;
+  role: string | null;
 }
 
 export function ClientInformation({
@@ -28,7 +29,24 @@ export function ClientInformation({
   onAddClient,
   onRemoveClient,
   onClientChange,
+  role,
 }: ClientInformationProps) {
+  const getAvailableTypes = () => {
+    switch (role) {
+      case "listing-agent":
+        return [{ value: "seller", label: "Seller" }];
+      case "buyers-agent":
+        return [{ value: "buyer", label: "Buyer" }];
+      case "dual-agent":
+        return [
+          { value: "buyer", label: "Buyer" },
+          { value: "seller", label: "Seller" },
+        ];
+      default:
+        return [];
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -57,18 +75,19 @@ export function ClientInformation({
             <div className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor={`name-${client.id}`}>Full Name</Label>
+                  <Label htmlFor={`name-${client.id}`}>Full Name <span className="text-red-500">*</span></Label>
                   <Input
                     id={`name-${client.id}`}
                     value={client.name}
                     onChange={(e) =>
                       onClientChange(client.id, "name", e.target.value)
                     }
+                    required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor={`email-${client.id}`}>Email</Label>
+                  <Label htmlFor={`email-${client.id}`}>Email <span className="text-red-500">*</span></Label>
                   <Input
                     id={`email-${client.id}`}
                     type="email"
@@ -76,37 +95,40 @@ export function ClientInformation({
                     onChange={(e) =>
                       onClientChange(client.id, "email", e.target.value)
                     }
+                    required
                   />
                 </div>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor={`phone-${client.id}`}>Phone</Label>
+                  <Label htmlFor={`phone-${client.id}`}>Phone <span className="text-red-500">*</span></Label>
                   <Input
                     id={`phone-${client.id}`}
                     value={client.phone}
                     onChange={(e) =>
                       onClientChange(client.id, "phone", e.target.value)
                     }
+                    required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor={`address-${client.id}`}>Address</Label>
+                  <Label htmlFor={`address-${client.id}`}>Address <span className="text-red-500">*</span></Label>
                   <Input
                     id={`address-${client.id}`}
                     value={client.address}
                     onChange={(e) =>
                       onClientChange(client.id, "address", e.target.value)
                     }
+                    required
                   />
                 </div>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label>Marital Status</Label>
+                  <Label>Marital Status <span className="text-red-500">*</span></Label>
                   <Select
                     value={client.maritalStatus}
                     onValueChange={(value) =>
@@ -126,7 +148,7 @@ export function ClientInformation({
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Client Type</Label>
+                  <Label>Client Type <span className="text-red-500">*</span></Label>
                   <RadioGroup
                     value={client.type}
                     onValueChange={(value) =>
@@ -134,14 +156,17 @@ export function ClientInformation({
                     }
                   >
                     <div className="flex space-x-4">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="buyer" id={`buyer-${client.id}`} />
-                        <Label htmlFor={`buyer-${client.id}`}>Buyer</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="seller" id={`seller-${client.id}`} />
-                        <Label htmlFor={`seller-${client.id}`}>Seller</Label>
-                      </div>
+                      {getAvailableTypes().map((type) => (
+                        <div key={type.value} className="flex items-center space-x-2">
+                          <RadioGroupItem
+                            value={type.value}
+                            id={`${type.value}-${client.id}`}
+                          />
+                          <Label htmlFor={`${type.value}-${client.id}`}>
+                            {type.label}
+                          </Label>
+                        </div>
+                      ))}
                     </div>
                   </RadioGroup>
                 </div>

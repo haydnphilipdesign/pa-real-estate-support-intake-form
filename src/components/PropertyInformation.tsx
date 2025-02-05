@@ -14,9 +14,12 @@ interface PropertyInformationProps {
     updateMls: boolean;
   };
   onChange: (field: string, value: string | boolean) => void;
+  role: string | null;
 }
 
-export function PropertyInformation({ data, onChange }: PropertyInformationProps) {
+export function PropertyInformation({ data, onChange, role }: PropertyInformationProps) {
+  const canUpdateMls = role === "listing-agent" || role === "dual-agent";
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -30,39 +33,42 @@ export function PropertyInformation({ data, onChange }: PropertyInformationProps
         <div className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="mlsNumber">MLS Number</Label>
+              <Label htmlFor="mlsNumber">MLS Number <span className="text-red-500">*</span></Label>
               <Input
                 id="mlsNumber"
                 placeholder="Enter MLS number"
                 value={data.mlsNumber}
                 onChange={(e) => onChange("mlsNumber", e.target.value)}
+                required
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="salePrice">Sale Price</Label>
+              <Label htmlFor="salePrice">Sale Price <span className="text-red-500">*</span></Label>
               <Input
                 id="salePrice"
                 placeholder="Enter sale price"
                 value={data.salePrice}
                 onChange={(e) => onChange("salePrice", e.target.value)}
                 type="number"
+                required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="address">Property Address</Label>
+            <Label htmlFor="address">Property Address <span className="text-red-500">*</span></Label>
             <Input
               id="address"
               placeholder="Enter full property address"
               value={data.address}
               onChange={(e) => onChange("address", e.target.value)}
+              required
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Property Status</Label>
+            <Label>Property Status <span className="text-red-500">*</span></Label>
             <RadioGroup
               value={data.status}
               onValueChange={(value) => onChange("status", value)}
@@ -90,14 +96,16 @@ export function PropertyInformation({ data, onChange }: PropertyInformationProps
             </div>
           )}
 
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="updateMls"
-              checked={data.updateMls}
-              onCheckedChange={(checked) => onChange("updateMls", checked)}
-            />
-            <Label htmlFor="updateMls">Update MLS status</Label>
-          </div>
+          {canUpdateMls && (
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="updateMls"
+                checked={data.updateMls}
+                onCheckedChange={(checked) => onChange("updateMls", checked)}
+              />
+              <Label htmlFor="updateMls">Update MLS status</Label>
+            </div>
+          )}
         </div>
       </Card>
     </div>
