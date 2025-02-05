@@ -73,24 +73,66 @@ export const validateStep = (
       break;
 
     case 4:
+      if (!data.commissionData.commissionBase) {
+        errors.commissionBase = ["Commission base is required"];
+      }
       if (!data.commissionData.totalCommission) {
         errors.totalCommission = ["Total commission is required"];
-      }
-      if (data.commissionData.isReferral && !data.commissionData.referralFee) {
-        errors.referralFee = ["Referral fee is required when referral is selected"];
       }
       break;
 
     case 5:
-      if (!data.propertyDetails.squareFootage) {
-        errors.squareFootage = ["Square footage is required"];
+      if (data.propertyDetails.resaleCertRequired && !data.propertyDetails.hoaName) {
+        errors.hoaName = ["HOA name is required when resale certificate is required"];
       }
-      if (!data.propertyDetails.yearBuilt) {
-        errors.yearBuilt = ["Year built is required"];
+      if (data.propertyDetails.coRequired && !data.propertyDetails.municipality) {
+        errors.municipality = ["Municipality is required when CO is required"];
+      }
+      if (data.propertyDetails.firstRightOfRefusal && !data.propertyDetails.firstRightName) {
+        errors.firstRightName = ["First right of refusal name is required"];
+      }
+      if (data.propertyDetails.attorneyRepresentation && !data.propertyDetails.attorneyName) {
+        errors.attorneyName = ["Attorney name is required"];
       }
       break;
 
-    // Add validation for remaining sections...
+    case 6:
+      if (data.warrantyData.hasWarranty) {
+        if (!data.warrantyData.provider) {
+          errors.warrantyProvider = ["Warranty provider is required"];
+        }
+        if (!data.warrantyData.cost) {
+          errors.warrantyCost = ["Warranty cost is required"];
+        }
+        if (!data.warrantyData.paidBy) {
+          errors.warrantyPaidBy = ["Must specify who pays for warranty"];
+        }
+      }
+      break;
+
+    case 7:
+      if (!data.titleData.companyName) {
+        errors.titleCompany = ["Title company name is required"];
+      }
+      if (!data.titleData.coordinatorFeePaidBy) {
+        errors.coordinatorFeePaidBy = ["Must specify who pays coordinator fee"];
+      }
+      break;
+
+    case 10:
+      if (!data.signatureData.agentName) {
+        errors.agentName = ["Agent name is required"];
+      }
+      if (!data.signatureData.dateSubmitted) {
+        errors.dateSubmitted = ["Date is required"];
+      }
+      if (!data.signatureData.signature) {
+        errors.signature = ["Signature is required"];
+      }
+      if (!data.signatureData.termsAccepted || !data.signatureData.infoConfirmed) {
+        errors.terms = ["You must accept terms and confirm information"];
+      }
+      break;
   }
 
   return errors;

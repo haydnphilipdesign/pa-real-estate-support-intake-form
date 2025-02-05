@@ -1,17 +1,18 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch";
 import { PropertyDetailsData } from "@/types/transaction";
 
 interface PropertyDetailsSectionProps {
   role: string | null;
   data?: PropertyDetailsData;
-  onChange?: (field: string, value: string) => void;
+  onChange?: (field: string, value: any) => void;
 }
 
 export function PropertyDetailsSection({ role, data, onChange }: PropertyDetailsSectionProps) {
+  const isListingOrDualAgent = role === "listing-agent" || role === "dual-agent";
+
   return (
     <div className="space-y-6">
       <div>
@@ -21,62 +22,97 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
 
       <Card className="p-6">
         <div className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="yearBuilt">Year Built</Label>
-              <Input 
-                id="yearBuilt" 
-                type="number" 
-                placeholder="Enter year built"
-                value={data?.yearBuilt}
-                onChange={(e) => onChange?.("yearBuilt", e.target.value)}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="squareFootage">Square Footage</Label>
-              <Input 
-                id="squareFootage" 
-                type="number" 
-                placeholder="Enter square footage"
-                value={data?.squareFootage}
-                onChange={(e) => onChange?.("squareFootage", e.target.value)}
-              />
-            </div>
-          </div>
+          {isListingOrDualAgent && (
+            <>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="resaleCertRequired">Resale Certificate Required</Label>
+                <Switch
+                  id="resaleCertRequired"
+                  checked={data?.resaleCertRequired}
+                  onCheckedChange={(checked) => onChange?.("resaleCertRequired", checked)}
+                />
+              </div>
 
-          <div className="space-y-2">
-            <Label>Property Type</Label>
-            <RadioGroup 
-              defaultValue="single-family"
-              value={data?.propertyType}
-              onValueChange={(value) => onChange?.("propertyType", value)}
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="single-family" id="single-family" />
-                <Label htmlFor="single-family">Single Family</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="multi-family" id="multi-family" />
-                <Label htmlFor="multi-family">Multi Family</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="condo" id="condo" />
-                <Label htmlFor="condo">Condo</Label>
-              </div>
-            </RadioGroup>
-          </div>
+              {data?.resaleCertRequired && (
+                <div className="space-y-2">
+                  <Label htmlFor="hoaName">HOA Name</Label>
+                  <Input
+                    id="hoaName"
+                    value={data?.hoaName}
+                    onChange={(e) => onChange?.("hoaName", e.target.value)}
+                    placeholder="Enter HOA name"
+                  />
+                </div>
+              )}
+            </>
+          )}
 
-          <div className="space-y-2">
-            <Label htmlFor="propertyDescription">Property Description</Label>
-            <Textarea
-              id="propertyDescription"
-              placeholder="Enter property description"
-              className="min-h-[100px]"
-              value={data?.description}
-              onChange={(e) => onChange?.("description", e.target.value)}
+          <div className="flex items-center justify-between">
+            <Label htmlFor="coRequired">CO Required</Label>
+            <Switch
+              id="coRequired"
+              checked={data?.coRequired}
+              onCheckedChange={(checked) => onChange?.("coRequired", checked)}
             />
           </div>
+
+          {data?.coRequired && (
+            <div className="space-y-2">
+              <Label htmlFor="municipality">Municipality/Township</Label>
+              <Input
+                id="municipality"
+                value={data?.municipality}
+                onChange={(e) => onChange?.("municipality", e.target.value)}
+                placeholder="Enter municipality/township"
+              />
+            </div>
+          )}
+
+          {isListingOrDualAgent && (
+            <>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="firstRightOfRefusal">First Right of Refusal</Label>
+                <Switch
+                  id="firstRightOfRefusal"
+                  checked={data?.firstRightOfRefusal}
+                  onCheckedChange={(checked) => onChange?.("firstRightOfRefusal", checked)}
+                />
+              </div>
+
+              {data?.firstRightOfRefusal && (
+                <div className="space-y-2">
+                  <Label htmlFor="firstRightName">First Right of Refusal Name</Label>
+                  <Input
+                    id="firstRightName"
+                    value={data?.firstRightName}
+                    onChange={(e) => onChange?.("firstRightName", e.target.value)}
+                    placeholder="Enter name"
+                  />
+                </div>
+              )}
+            </>
+          )}
+
+          <div className="flex items-center justify-between">
+            <Label htmlFor="attorneyRepresentation">Attorney Representation</Label>
+            <Switch
+              id="attorneyRepresentation"
+              checked={data?.attorneyRepresentation}
+              onCheckedChange={(checked) => onChange?.("attorneyRepresentation", checked)}
+            />
+          </div>
+
+          {data?.attorneyRepresentation && (
+            <div className="space-y-2">
+              <Label htmlFor="attorneyName">Attorney Name</Label>
+              <Input
+                id="attorneyName"
+                value={data?.attorneyName}
+                onChange={(e) => onChange?.("attorneyName", e.target.value)}
+                placeholder="Enter attorney name"
+              />
+            </div>
+          )}
         </div>
       </Card>
     </div>
