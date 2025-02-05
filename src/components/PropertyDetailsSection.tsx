@@ -3,12 +3,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { PropertyDetailsData } from "@/types/transaction";
 
 interface PropertyDetailsSectionProps {
   role: string | null;
+  data?: PropertyDetailsData;
+  onChange?: (field: string, value: string) => void;
 }
 
-export function PropertyDetailsSection({ role }: PropertyDetailsSectionProps) {
+export function PropertyDetailsSection({ role, data, onChange }: PropertyDetailsSectionProps) {
   return (
     <div className="space-y-6">
       <div>
@@ -21,18 +24,34 @@ export function PropertyDetailsSection({ role }: PropertyDetailsSectionProps) {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="yearBuilt">Year Built</Label>
-              <Input id="yearBuilt" type="number" placeholder="Enter year built" />
+              <Input 
+                id="yearBuilt" 
+                type="number" 
+                placeholder="Enter year built"
+                value={data?.yearBuilt}
+                onChange={(e) => onChange?.("yearBuilt", e.target.value)}
+              />
             </div>
             
             <div className="space-y-2">
               <Label htmlFor="squareFootage">Square Footage</Label>
-              <Input id="squareFootage" type="number" placeholder="Enter square footage" />
+              <Input 
+                id="squareFootage" 
+                type="number" 
+                placeholder="Enter square footage"
+                value={data?.squareFootage}
+                onChange={(e) => onChange?.("squareFootage", e.target.value)}
+              />
             </div>
           </div>
 
           <div className="space-y-2">
             <Label>Property Type</Label>
-            <RadioGroup defaultValue="single-family">
+            <RadioGroup 
+              defaultValue="single-family"
+              value={data?.propertyType}
+              onValueChange={(value) => onChange?.("propertyType", value)}
+            >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="single-family" id="single-family" />
                 <Label htmlFor="single-family">Single Family</Label>
@@ -54,6 +73,8 @@ export function PropertyDetailsSection({ role }: PropertyDetailsSectionProps) {
               id="propertyDescription"
               placeholder="Enter property description"
               className="min-h-[100px]"
+              value={data?.description}
+              onChange={(e) => onChange?.("description", e.target.value)}
             />
           </div>
         </div>
