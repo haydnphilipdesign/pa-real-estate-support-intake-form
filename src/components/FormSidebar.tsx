@@ -1,4 +1,4 @@
-import { Home, User, DollarSign, FileText, Info, FileCheck, Building } from "lucide-react";
+import { Home, Building, User, DollarSign, FileText, Shield, Building2, FileSignature, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FormSidebarProps {
@@ -11,7 +11,12 @@ const steps = [
   { id: 2, title: "Property Info", icon: Building },
   { id: 3, title: "Client Info", icon: User },
   { id: 4, title: "Commission", icon: DollarSign },
-  { id: 5, title: "Documents", icon: FileText },
+  { id: 5, title: "Property Details", icon: Info },
+  { id: 6, title: "Warranty", icon: Shield },
+  { id: 7, title: "Title Company", icon: Building2 },
+  { id: 8, title: "Documents", icon: FileText },
+  { id: 9, title: "Additional Info", icon: Info },
+  { id: 10, title: "Sign & Submit", icon: FileSignature },
 ];
 
 export function FormSidebar({ currentStep, onStepClick }: FormSidebarProps) {

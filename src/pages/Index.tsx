@@ -6,9 +6,14 @@ import { PropertyInformation } from "@/components/PropertyInformation";
 import { ClientInformation } from "@/components/ClientInformation";
 import { CommissionSection } from "@/components/CommissionSection";
 import { DocumentsSection } from "@/components/DocumentsSection";
+import { PropertyDetailsSection } from "@/components/PropertyDetailsSection";
+import { WarrantySection } from "@/components/WarrantySection";
+import { TitleCompanySection } from "@/components/TitleCompanySection";
+import { AdditionalInfoSection } from "@/components/AdditionalInfoSection";
+import { SignatureSection } from "@/components/SignatureSection";
 import { useToast } from "@/hooks/use-toast";
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 10;
 
 export default function Index() {
   const { toast } = useToast();
@@ -164,7 +169,27 @@ export default function Index() {
           )}
 
           {currentStep === 5 && (
+            <PropertyDetailsSection role={selectedRole} />
+          )}
+
+          {currentStep === 6 && (
+            <WarrantySection role={selectedRole} />
+          )}
+
+          {currentStep === 7 && (
+            <TitleCompanySection role={selectedRole} />
+          )}
+
+          {currentStep === 8 && (
             <DocumentsSection role={selectedRole} />
+          )}
+
+          {currentStep === 9 && (
+            <AdditionalInfoSection role={selectedRole} />
+          )}
+
+          {currentStep === 10 && (
+            <SignatureSection role={selectedRole} />
           )}
         </div>
       </main>
