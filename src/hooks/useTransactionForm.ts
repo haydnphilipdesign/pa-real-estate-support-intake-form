@@ -48,6 +48,8 @@ export const useTransactionForm = () => {
     referralParty: "",
     brokerEin: "",
     referralFee: "",
+    brokerSplit: "",
+    isReferral: false
   });
 
   const [propertyDetails, setPropertyDetails] = useState<PropertyDetailsData>({
