@@ -5,14 +5,6 @@ export interface PropertyData {
   status: "vacant" | "occupied";
   isWinterized: boolean;
   updateMls: boolean;
-  resaleCertRequired?: boolean;
-  hoaName?: string;
-  coRequired?: boolean;
-  municipality?: string;
-  firstRightOfRefusal?: boolean;
-  firstRightName?: string;
-  attorneyRepresentation?: boolean;
-  attorneyName?: string;
 }
 
 export interface Client {
@@ -33,15 +25,18 @@ export interface CommissionData {
   buyerPaidCommission?: string;
   referralParty?: string;
   brokerEin?: string;
-  isReferral: boolean;
-  referralFee: string;
+  referralFee?: string;
 }
 
 export interface PropertyDetailsData {
-  yearBuilt: string;
-  squareFootage: string;
-  propertyType: "single-family" | "multi-family" | "condo";
-  description: string;
+  resaleCertRequired: boolean;
+  hoaName?: string;
+  coRequired: boolean;
+  municipality?: string;
+  firstRightOfRefusal: boolean;
+  firstRightName?: string;
+  attorneyRepresentation: boolean;
+  attorneyName?: string;
 }
 
 export interface WarrantyData {
@@ -53,10 +48,6 @@ export interface WarrantyData {
 
 export interface TitleCompanyData {
   companyName: string;
-  escrowOfficer: string;
-  escrowNumber: string;
-  phone: string;
-  email: string;
   coordinatorFeePaidBy: "client" | "agent";
 }
 

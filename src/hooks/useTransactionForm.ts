@@ -9,7 +9,8 @@ import {
   WarrantyData,
   TitleCompanyData,
   AdditionalInfoData,
-  SignatureData
+  SignatureData,
+  TransactionFormData
 } from "@/types/transaction";
 
 export const useTransactionForm = () => {
@@ -33,63 +34,74 @@ export const useTransactionForm = () => {
       email: "",
       phone: "",
       address: "",
-      maritalStatus: "",
+      maritalStatus: "single",
       type: "buyer",
     },
   ]);
 
   const [commissionData, setCommissionData] = useState<CommissionData>({
+    commissionBase: "salePrice",
     totalCommission: "",
-    brokerSplit: "",
-    isReferral: false,
+    listingAgentCommission: "",
+    buyersAgentCommission: "",
+    buyerPaidCommission: "",
+    referralParty: "",
+    brokerEin: "",
     referralFee: "",
   });
 
   const [propertyDetails, setPropertyDetails] = useState<PropertyDetailsData>({
-    yearBuilt: "",
-    squareFootage: "",
-    propertyType: "single-family",
-    description: "",
+    resaleCertRequired: false,
+    hoaName: "",
+    coRequired: false,
+    municipality: "",
+    firstRightOfRefusal: false,
+    firstRightName: "",
+    attorneyRepresentation: false,
+    attorneyName: "",
   });
 
   const [warrantyData, setWarrantyData] = useState<WarrantyData>({
     hasWarranty: false,
     provider: "",
-    term: "",
     cost: "",
+    paidBy: "seller",
   });
 
   const [titleData, setTitleData] = useState<TitleCompanyData>({
     companyName: "",
-    escrowOfficer: "",
-    escrowNumber: "",
-    phone: "",
-    email: "",
+    coordinatorFeePaidBy: "client",
   });
 
   const [additionalInfo, setAdditionalInfo] = useState<AdditionalInfoData>({
-    specialConditions: "",
+    specialInstructions: "",
+    urgentIssues: "",
     notes: "",
     requiresFollowUp: false,
   });
 
   const [signatureData, setSignatureData] = useState<SignatureData>({
+    agentName: "",
+    dateSubmitted: "",
+    signature: "",
     termsAccepted: false,
     infoConfirmed: false,
-    signature: "",
   });
 
   const handleStepClick = (step: number) => {
-    const errors = validateStep(currentStep, {
-      selectedRole,
+    const formData: TransactionFormData & { selectedRole: string } = {
+      selectedRole: selectedRole || "",
       propertyData,
       clients,
       commissionData,
       propertyDetails,
       warrantyData,
       titleData,
+      additionalInfo,
       signatureData,
-    });
+    };
+
+    const errors = validateStep(currentStep, formData);
 
     if (Object.keys(errors).length === 0 || step < currentStep) {
       setCurrentStep(step);
@@ -105,16 +117,19 @@ export const useTransactionForm = () => {
   };
 
   const handleNext = () => {
-    const errors = validateStep(currentStep, {
-      selectedRole,
+    const formData: TransactionFormData & { selectedRole: string } = {
+      selectedRole: selectedRole || "",
       propertyData,
       clients,
       commissionData,
       propertyDetails,
       warrantyData,
       titleData,
+      additionalInfo,
       signatureData,
-    });
+    };
+
+    const errors = validateStep(currentStep, formData);
 
     if (Object.keys(errors).length === 0) {
       setCurrentStep((prev) => Math.min(prev + 1, 10));
