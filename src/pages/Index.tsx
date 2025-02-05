@@ -15,6 +15,10 @@ import { useToast } from "@/hooks/use-toast";
 
 const TOTAL_STEPS = 10;
 
+interface ValidationErrors {
+  [key: string]: string[];
+}
+
 export default function Index() {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
@@ -38,67 +42,142 @@ export default function Index() {
       type: "buyer",
     },
   ]);
+  const [commissionData, setCommissionData] = useState({
+    totalCommission: "",
+    brokerSplit: "",
+    isReferral: false,
+    referralFee: "",
+  });
+  const [propertyDetails, setPropertyDetails] = useState({
+    yearBuilt: "",
+    squareFootage: "",
+    propertyType: "single-family",
+    description: "",
+  });
+  const [warrantyData, setWarrantyData] = useState({
+    hasWarranty: false,
+    provider: "",
+    term: "",
+    cost: "",
+  });
+  const [titleData, setTitleData] = useState({
+    companyName: "",
+    escrowOfficer: "",
+    escrowNumber: "",
+    phone: "",
+    email: "",
+  });
+  const [additionalInfo, setAdditionalInfo] = useState({
+    specialConditions: "",
+    notes: "",
+    requiresFollowUp: false,
+  });
+  const [signatureData, setSignatureData] = useState({
+    termsAccepted: false,
+    infoConfirmed: false,
+    signature: "",
+  });
+
+  const validateStep = (step: number): ValidationErrors => {
+    const errors: ValidationErrors = {};
+
+    switch (step) {
+      case 1:
+        if (!selectedRole) {
+          errors.role = ["Please select a role to continue"];
+        }
+        break;
+
+      case 2:
+        if (!propertyData.mlsNumber) errors.mlsNumber = ["MLS number is required"];
+        if (!propertyData.address) errors.address = ["Property address is required"];
+        if (!propertyData.salePrice) errors.salePrice = ["Sale price is required"];
+        break;
+
+      case 3:
+        clients.forEach((client, index) => {
+          if (!client.name) errors[`client${index}Name`] = ["Client name is required"];
+          if (!client.email) errors[`client${index}Email`] = ["Client email is required"];
+          if (!client.phone) errors[`client${index}Phone`] = ["Client phone is required"];
+          if (!client.maritalStatus) errors[`client${index}MaritalStatus`] = ["Marital status is required"];
+        });
+        break;
+
+      case 4:
+        if (!commissionData.totalCommission) errors.totalCommission = ["Total commission is required"];
+        if (!commissionData.brokerSplit) errors.brokerSplit = ["Broker split is required"];
+        if (commissionData.isReferral && !commissionData.referralFee) {
+          errors.referralFee = ["Referral fee is required when referral is selected"];
+        }
+        break;
+
+      case 5:
+        if (!propertyDetails.yearBuilt) errors.yearBuilt = ["Year built is required"];
+        if (!propertyDetails.squareFootage) errors.squareFootage = ["Square footage is required"];
+        break;
+
+      case 6:
+        if (warrantyData.hasWarranty) {
+          if (!warrantyData.provider) errors.warrantyProvider = ["Warranty provider is required"];
+          if (!warrantyData.term) errors.warrantyTerm = ["Warranty term is required"];
+          if (!warrantyData.cost) errors.warrantyCost = ["Warranty cost is required"];
+        }
+        break;
+
+      case 7:
+        if (!titleData.companyName) errors.titleCompany = ["Title company name is required"];
+        if (!titleData.escrowOfficer) errors.escrowOfficer = ["Escrow officer is required"];
+        if (!titleData.escrowNumber) errors.escrowNumber = ["Escrow number is required"];
+        break;
+
+      case 10:
+        if (!signatureData.termsAccepted) {
+          errors.terms = ["You must accept the terms and conditions"];
+        }
+        if (!signatureData.infoConfirmed) {
+          errors.confirmation = ["You must confirm the information is accurate"];
+        }
+        if (!signatureData.signature) {
+          errors.signature = ["Signature is required"];
+        }
+        break;
+    }
+
+    return errors;
+  };
 
   const handleStepClick = (step: number) => {
-    if (step < currentStep || validateCurrentStep()) {
+    const errors = validateStep(currentStep);
+    if (Object.keys(errors).length === 0 || step < currentStep) {
       setCurrentStep(step);
+    } else {
+      Object.values(errors).flat().forEach((error) => {
+        toast({
+          title: "Validation Error",
+          description: error,
+          variant: "destructive",
+        });
+      });
     }
   };
 
   const handleNext = () => {
-    if (validateCurrentStep()) {
+    const errors = validateStep(currentStep);
+    if (Object.keys(errors).length === 0) {
       setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+    } else {
+      Object.values(errors).flat().forEach((error) => {
+        toast({
+          title: "Validation Error",
+          description: error,
+          variant: "destructive",
+        });
+      });
     }
   };
 
   const handlePrevious = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
-  };
-
-  const validateCurrentStep = () => {
-    switch (currentStep) {
-      case 1:
-        if (!selectedRole) {
-          toast({
-            title: "Please select a role",
-            description: "You must select a role to continue",
-            variant: "destructive",
-          });
-          return false;
-        }
-        return true;
-      case 2:
-        if (!propertyData.mlsNumber || !propertyData.address || !propertyData.salePrice) {
-          toast({
-            title: "Missing information",
-            description: "Please fill in all required property information",
-            variant: "destructive",
-          });
-          return false;
-        }
-        return true;
-      case 3:
-        const hasInvalidClient = clients.some(
-          (client) => !client.name || !client.email || !client.phone || !client.maritalStatus
-        );
-        if (hasInvalidClient) {
-          toast({
-            title: "Missing client information",
-            description: "Please fill in all required client information",
-            variant: "destructive",
-          });
-          return false;
-        }
-        return true;
-      case 4:
-        // Commission validation will be added later
-        return true;
-      case 5:
-        // Documents validation will be added later
-        return true;
-      default:
-        return true;
-    }
   };
 
   const handlePropertyChange = (field: string, value: string | boolean) => {
@@ -165,19 +244,35 @@ export default function Index() {
           )}
 
           {currentStep === 4 && (
-            <CommissionSection role={selectedRole} />
+            <CommissionSection 
+              role={selectedRole}
+              data={commissionData}
+              onChange={(field, value) => setCommissionData(prev => ({ ...prev, [field]: value }))}
+            />
           )}
 
           {currentStep === 5 && (
-            <PropertyDetailsSection role={selectedRole} />
+            <PropertyDetailsSection 
+              role={selectedRole}
+              data={propertyDetails}
+              onChange={(field, value) => setPropertyDetails(prev => ({ ...prev, [field]: value }))}
+            />
           )}
 
           {currentStep === 6 && (
-            <WarrantySection role={selectedRole} />
+            <WarrantySection 
+              role={selectedRole}
+              data={warrantyData}
+              onChange={(field, value) => setWarrantyData(prev => ({ ...prev, [field]: value }))}
+            />
           )}
 
           {currentStep === 7 && (
-            <TitleCompanySection role={selectedRole} />
+            <TitleCompanySection 
+              role={selectedRole}
+              data={titleData}
+              onChange={(field, value) => setTitleData(prev => ({ ...prev, [field]: value }))}
+            />
           )}
 
           {currentStep === 8 && (
@@ -185,11 +280,19 @@ export default function Index() {
           )}
 
           {currentStep === 9 && (
-            <AdditionalInfoSection role={selectedRole} />
+            <AdditionalInfoSection 
+              role={selectedRole}
+              data={additionalInfo}
+              onChange={(field, value) => setAdditionalInfo(prev => ({ ...prev, [field]: value }))}
+            />
           )}
 
           {currentStep === 10 && (
-            <SignatureSection role={selectedRole} />
+            <SignatureSection 
+              role={selectedRole}
+              data={signatureData}
+              onChange={(field, value) => setSignatureData(prev => ({ ...prev, [field]: value }))}
+            />
           )}
         </div>
       </main>

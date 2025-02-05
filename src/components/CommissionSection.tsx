@@ -3,13 +3,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
-interface CommissionSectionProps {
-  role: string | null;
+interface CommissionData {
+  totalCommission: string;
+  brokerSplit: string;
+  isReferral: boolean;
+  referralFee: string;
 }
 
-export function CommissionSection({ role }: CommissionSectionProps) {
-  const [isReferral, setIsReferral] = useState(false);
-  
+interface CommissionSectionProps {
+  role: string | null;
+  data: CommissionData;
+  onChange: (field: string, value: string | boolean) => void;
+}
+
+export function CommissionSection({ role, data, onChange }: CommissionSectionProps) {
   return (
     <div className="space-y-6">
       <div>
@@ -19,48 +26,57 @@ export function CommissionSection({ role }: CommissionSectionProps) {
 
       <div className="grid gap-4">
         <div className="space-y-2">
-          <Label htmlFor="totalCommission">Total Commission (%)</Label>
+          <Label htmlFor="totalCommission">Total Commission (%) <span className="text-red-500">*</span></Label>
           <Input
             id="totalCommission"
             type="number"
             step="0.01"
             min="0"
             max="100"
+            value={data.totalCommission}
+            onChange={(e) => onChange("totalCommission", e.target.value)}
             placeholder="Enter commission percentage"
+            required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="brokerSplit">Broker Split (%)</Label>
+          <Label htmlFor="brokerSplit">Broker Split (%) <span className="text-red-500">*</span></Label>
           <Input
             id="brokerSplit"
             type="number"
             step="0.01"
             min="0"
             max="100"
+            value={data.brokerSplit}
+            onChange={(e) => onChange("brokerSplit", e.target.value)}
             placeholder="Enter broker split percentage"
+            required
           />
         </div>
 
         <div className="flex items-center space-x-2">
           <Checkbox
             id="isReferral"
-            checked={isReferral}
-            onCheckedChange={(checked) => setIsReferral(checked as boolean)}
+            checked={data.isReferral}
+            onCheckedChange={(checked) => onChange("isReferral", checked as boolean)}
           />
           <Label htmlFor="isReferral">This is a referral</Label>
         </div>
 
-        {isReferral && (
+        {data.isReferral && (
           <div className="space-y-2">
-            <Label htmlFor="referralFee">Referral Fee (%)</Label>
+            <Label htmlFor="referralFee">Referral Fee (%) <span className="text-red-500">*</span></Label>
             <Input
               id="referralFee"
               type="number"
               step="0.01"
               min="0"
               max="100"
+              value={data.referralFee}
+              onChange={(e) => onChange("referralFee", e.target.value)}
               placeholder="Enter referral fee percentage"
+              required
             />
           </div>
         )}
