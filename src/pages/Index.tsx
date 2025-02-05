@@ -67,6 +67,32 @@ export default function Index() {
     );
   };
 
+  const handleFieldChange = (section: string, field: string, value: any) => {
+    switch (section) {
+      case "property":
+        setPropertyData(prev => ({ ...prev, [field]: value }));
+        break;
+      case "commission":
+        setCommissionData(prev => ({ ...prev, [field]: value }));
+        break;
+      case "propertyDetails":
+        setPropertyDetails(prev => ({ ...prev, [field]: value }));
+        break;
+      case "warranty":
+        setWarrantyData(prev => ({ ...prev, [field]: value }));
+        break;
+      case "title":
+        setTitleData(prev => ({ ...prev, [field]: value }));
+        break;
+      case "additionalInfo":
+        setAdditionalInfo(prev => ({ ...prev, [field]: value }));
+        break;
+      case "signature":
+        setSignatureData(prev => ({ ...prev, [field]: value }));
+        break;
+    }
+  };
+
   return (
     <div className="min-h-screen flex bg-gray-50">
       <FormSidebar currentStep={currentStep} onStepClick={handleStepClick} />
@@ -83,7 +109,7 @@ export default function Index() {
           {currentStep === 2 && (
             <PropertyInformation
               data={propertyData}
-              onChange={(field, value) => setPropertyData(prev => ({ ...prev, [field]: value }))}
+              onChange={(field, value) => handleFieldChange("property", field, value)}
               role={selectedRole}
             />
           )}
@@ -102,7 +128,7 @@ export default function Index() {
             <CommissionSection 
               role={selectedRole}
               data={commissionData}
-              onChange={(field, value) => setCommissionData(prev => ({ ...prev, [field]: value }))}
+              onChange={(field, value) => handleFieldChange("commission", field, value)}
             />
           )}
 
@@ -110,19 +136,23 @@ export default function Index() {
             <PropertyDetailsSection 
               role={selectedRole}
               data={propertyDetails}
-              onChange={(field, value) => setPropertyDetails(prev => ({ ...prev, [field]: value }))}
+              onChange={(field, value) => handleFieldChange("propertyDetails", field, value)}
             />
           )}
 
           {currentStep === 6 && (
             <WarrantySection 
               role={selectedRole}
+              data={warrantyData}
+              onChange={(field, value) => handleFieldChange("warranty", field, value)}
             />
           )}
 
           {currentStep === 7 && (
             <TitleCompanySection 
               role={selectedRole}
+              data={titleData}
+              onChange={(field, value) => handleFieldChange("title", field, value)}
             />
           )}
 
@@ -133,12 +163,16 @@ export default function Index() {
           {currentStep === 9 && (
             <AdditionalInfoSection 
               role={selectedRole}
+              data={additionalInfo}
+              onChange={(field, value) => handleFieldChange("additionalInfo", field, value)}
             />
           )}
 
           {currentStep === 10 && (
             <SignatureSection 
               role={selectedRole}
+              data={signatureData}
+              onChange={(field, value) => handleFieldChange("signature", field, value)}
             />
           )}
 

@@ -18,14 +18,16 @@ export interface Client {
 }
 
 export interface CommissionData {
-  commissionBase: "salePrice" | "other";
   totalCommission: string;
+  brokerSplit: string;
+  isReferral: boolean;
+  referralFee: string;
+  commissionBase?: "salePrice" | "other";
   listingAgentCommission?: string;
   buyersAgentCommission?: string;
   buyerPaidCommission?: string;
   referralParty?: string;
   brokerEin?: string;
-  referralFee?: string;
 }
 
 export interface PropertyDetailsData {
