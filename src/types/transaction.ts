@@ -57,3 +57,14 @@ export interface SignatureData {
   infoConfirmed: boolean;
   signature: string;
 }
+
+export interface TransactionFormData {
+  propertyData: PropertyData;
+  clients: Client[];
+  commissionData: CommissionData;
+  propertyDetails: PropertyDetailsData;
+  warrantyData: WarrantyData;
+  titleData: TitleCompanyData;
+  additionalInfo: AdditionalInfoData;
+  signatureData: SignatureData;
+}

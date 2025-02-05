@@ -108,6 +108,8 @@ export default function Index() {
           {currentStep === 5 && (
             <PropertyDetailsSection 
               role={selectedRole}
+              data={propertyDetails}
+              onChange={(field, value) => setPropertyDetails(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
