@@ -2,9 +2,17 @@ export interface PropertyData {
   mlsNumber: string;
   address: string;
   salePrice: string;
-  status: string;
+  status: "vacant" | "occupied";
   isWinterized: boolean;
   updateMls: boolean;
+  resaleCertRequired?: boolean;
+  hoaName?: string;
+  coRequired?: boolean;
+  municipality?: string;
+  firstRightOfRefusal?: boolean;
+  firstRightName?: string;
+  attorneyRepresentation?: boolean;
+  attorneyName?: string;
 }
 
 export interface Client {
@@ -13,13 +21,18 @@ export interface Client {
   email: string;
   phone: string;
   address: string;
-  maritalStatus: string;
-  type: string;
+  maritalStatus: "single" | "married" | "divorced" | "widowed";
+  type: "buyer" | "seller";
 }
 
 export interface CommissionData {
+  commissionBase: "salePrice" | "other";
   totalCommission: string;
-  brokerSplit: string;
+  listingAgentCommission?: string;
+  buyersAgentCommission?: string;
+  buyerPaidCommission?: string;
+  referralParty?: string;
+  brokerEin?: string;
   isReferral: boolean;
   referralFee: string;
 }
@@ -27,15 +40,15 @@ export interface CommissionData {
 export interface PropertyDetailsData {
   yearBuilt: string;
   squareFootage: string;
-  propertyType: string;
+  propertyType: "single-family" | "multi-family" | "condo";
   description: string;
 }
 
 export interface WarrantyData {
   hasWarranty: boolean;
   provider: string;
-  term: string;
   cost: string;
+  paidBy: "seller" | "buyer" | "agent";
 }
 
 export interface TitleCompanyData {
@@ -44,18 +57,22 @@ export interface TitleCompanyData {
   escrowNumber: string;
   phone: string;
   email: string;
+  coordinatorFeePaidBy: "client" | "agent";
 }
 
 export interface AdditionalInfoData {
-  specialConditions: string;
-  notes: string;
+  specialInstructions?: string;
+  urgentIssues?: string;
+  notes?: string;
   requiresFollowUp: boolean;
 }
 
 export interface SignatureData {
+  agentName: string;
+  dateSubmitted: string;
+  signature: string;
   termsAccepted: boolean;
   infoConfirmed: boolean;
-  signature: string;
 }
 
 export interface TransactionFormData {

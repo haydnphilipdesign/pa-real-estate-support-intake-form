@@ -1,5 +1,6 @@
 import { FormSidebar } from "@/components/FormSidebar";
 import { MobileNavigation } from "@/components/MobileNavigation";
+import { FormNavigation } from "@/components/FormNavigation";
 import { RoleSelection } from "@/components/RoleSelection";
 import { PropertyInformation } from "@/components/PropertyInformation";
 import { ClientInformation } from "@/components/ClientInformation";
@@ -47,7 +48,7 @@ export default function Index() {
         email: "",
         phone: "",
         address: "",
-        maritalStatus: "",
+        maritalStatus: "single",
         type: selectedRole === "listing-agent" ? "seller" : 
               selectedRole === "buyers-agent" ? "buyer" : "buyer",
       },
@@ -116,12 +117,16 @@ export default function Index() {
           {currentStep === 6 && (
             <WarrantySection 
               role={selectedRole}
+              data={warrantyData}
+              onChange={(field, value) => setWarrantyData(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
           {currentStep === 7 && (
             <TitleCompanySection 
               role={selectedRole}
+              data={titleData}
+              onChange={(field, value) => setTitleData(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
@@ -132,14 +137,26 @@ export default function Index() {
           {currentStep === 9 && (
             <AdditionalInfoSection 
               role={selectedRole}
+              data={additionalInfo}
+              onChange={(field, value) => setAdditionalInfo(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
           {currentStep === 10 && (
             <SignatureSection 
               role={selectedRole}
+              data={signatureData}
+              onChange={(field, value) => setSignatureData(prev => ({ ...prev, [field]: value }))}
             />
           )}
+
+          <FormNavigation
+            currentStep={currentStep}
+            totalSteps={10}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
+            className="mt-8"
+          />
         </div>
       </main>
 
