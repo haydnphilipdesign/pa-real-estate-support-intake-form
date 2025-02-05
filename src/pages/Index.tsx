@@ -1,14 +1,161 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { FormSidebar } from "@/components/FormSidebar";
+import { MobileNavigation } from "@/components/MobileNavigation";
+import { RoleSelection } from "@/components/RoleSelection";
+import { PropertyInformation } from "@/components/PropertyInformation";
+import { ClientInformation } from "@/components/ClientInformation";
+import { useToast } from "@/components/ui/use-toast";
 
-const Index = () => {
+const TOTAL_STEPS = 5;
+
+export default function Index() {
+  const { toast } = useToast();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const [propertyData, setPropertyData] = useState({
+    mlsNumber: "",
+    address: "",
+    salePrice: "",
+    status: "occupied",
+    isWinterized: false,
+    updateMls: false,
+  });
+  const [clients, setClients] = useState([
+    {
+      id: "1",
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+      maritalStatus: "",
+      type: "buyer",
+    },
+  ]);
+
+  const handleStepClick = (step: number) => {
+    if (step < currentStep || validateCurrentStep()) {
+      setCurrentStep(step);
+    }
+  };
+
+  const handleNext = () => {
+    if (validateCurrentStep()) {
+      setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+    }
+  };
+
+  const handlePrevious = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  const validateCurrentStep = () => {
+    switch (currentStep) {
+      case 1:
+        if (!selectedRole) {
+          toast({
+            title: "Please select a role",
+            description: "You must select a role to continue",
+            variant: "destructive",
+          });
+          return false;
+        }
+        return true;
+      case 2:
+        if (!propertyData.mlsNumber || !propertyData.address || !propertyData.salePrice) {
+          toast({
+            title: "Missing information",
+            description: "Please fill in all required property information",
+            variant: "destructive",
+          });
+          return false;
+        }
+        return true;
+      case 3:
+        const hasInvalidClient = clients.some(
+          (client) => !client.name || !client.email || !client.phone
+        );
+        if (hasInvalidClient) {
+          toast({
+            title: "Missing client information",
+            description: "Please fill in all required client information",
+            variant: "destructive",
+          });
+          return false;
+        }
+        return true;
+      default:
+        return true;
+    }
+  };
+
+  const handlePropertyChange = (field: string, value: string | boolean) => {
+    setPropertyData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleAddClient = () => {
+    setClients((prev) => [
+      ...prev,
+      {
+        id: String(prev.length + 1),
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        maritalStatus: "",
+        type: "buyer",
+      },
+    ]);
+  };
+
+  const handleRemoveClient = (id: string) => {
+    setClients((prev) => prev.filter((client) => client.id !== id));
+  };
+
+  const handleClientChange = (id: string, field: string, value: string) => {
+    setClients((prev) =>
+      prev.map((client) =>
+        client.id === id ? { ...client, [field]: value } : client
+      )
+    );
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen flex bg-gray-50">
+      <FormSidebar currentStep={currentStep} onStepClick={handleStepClick} />
+      
+      <main className="flex-1 pb-16 md:pb-0">
+        <div className="container max-w-4xl py-8">
+          {currentStep === 1 && (
+            <RoleSelection
+              selectedRole={selectedRole}
+              onRoleSelect={setSelectedRole}
+            />
+          )}
+          
+          {currentStep === 2 && (
+            <PropertyInformation
+              data={propertyData}
+              onChange={handlePropertyChange}
+            />
+          )}
+          
+          {currentStep === 3 && (
+            <ClientInformation
+              clients={clients}
+              onAddClient={handleAddClient}
+              onRemoveClient={handleRemoveClient}
+              onClientChange={handleClientChange}
+            />
+          )}
+        </div>
+      </main>
+
+      <MobileNavigation
+        currentStep={currentStep}
+        totalSteps={TOTAL_STEPS}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
     </div>
   );
-};
-
-export default Index;
+}
