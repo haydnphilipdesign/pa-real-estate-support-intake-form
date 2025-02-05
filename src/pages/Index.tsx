@@ -4,6 +4,8 @@ import { MobileNavigation } from "@/components/MobileNavigation";
 import { RoleSelection } from "@/components/RoleSelection";
 import { PropertyInformation } from "@/components/PropertyInformation";
 import { ClientInformation } from "@/components/ClientInformation";
+import { CommissionSection } from "@/components/CommissionSection";
+import { DocumentsSection } from "@/components/DocumentsSection";
 import { useToast } from "@/hooks/use-toast";
 
 const TOTAL_STEPS = 5;
@@ -83,6 +85,12 @@ export default function Index() {
           return false;
         }
         return true;
+      case 4:
+        // Commission validation will be added later
+        return true;
+      case 5:
+        // Documents validation will be added later
+        return true;
       default:
         return true;
     }
@@ -149,6 +157,14 @@ export default function Index() {
               onClientChange={handleClientChange}
               role={selectedRole}
             />
+          )}
+
+          {currentStep === 4 && (
+            <CommissionSection role={selectedRole} />
+          )}
+
+          {currentStep === 5 && (
+            <DocumentsSection role={selectedRole} />
           )}
         </div>
       </main>

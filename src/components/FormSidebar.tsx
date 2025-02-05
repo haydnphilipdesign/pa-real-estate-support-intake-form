@@ -1,4 +1,4 @@
-import { Home, User, DollarSign, FileText } from "lucide-react";
+import { Home, User, DollarSign, FileText, Info, FileCheck, Building } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FormSidebarProps {
@@ -8,7 +8,7 @@ interface FormSidebarProps {
 
 const steps = [
   { id: 1, title: "Role Selection", icon: Home },
-  { id: 2, title: "Property Info", icon: Home },
+  { id: 2, title: "Property Info", icon: Building },
   { id: 3, title: "Client Info", icon: User },
   { id: 4, title: "Commission", icon: DollarSign },
   { id: 5, title: "Documents", icon: FileText },
