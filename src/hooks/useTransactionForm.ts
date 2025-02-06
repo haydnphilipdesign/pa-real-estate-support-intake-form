@@ -50,7 +50,8 @@ export const useTransactionForm = () => {
     brokerEin: "",
     referralFee: "",
     brokerSplit: "",
-    isReferral: false
+    isReferral: false,
+    coordinatorFeePaidBy: "client"
   });
 
   const [propertyDetails, setPropertyDetails] = useState<PropertyDetailsData>({
@@ -73,7 +74,6 @@ export const useTransactionForm = () => {
 
   const [titleData, setTitleData] = useState<TitleCompanyData>({
     companyName: "",
-    coordinatorFeePaidBy: "client",
   });
 
   const [additionalInfo, setAdditionalInfo] = useState<AdditionalInfoData>({

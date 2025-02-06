@@ -21,14 +21,8 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
   const canUpdateMls = role === "listing-agent" || role === "dual-agent";
 
   const handleMlsNumberChange = (value: string) => {
-    // Remove any non-digit characters except 'PM-'
-    let cleaned = value.replace(/[^\d-P]/g, '');
-    
-    // Remove any existing 'PM-' prefix to avoid duplicates
-    cleaned = cleaned.replace(/^PM-/, '');
-    
-    // Remove all remaining non-digits
-    cleaned = cleaned.replace(/[^\d]/g, '');
+    // Remove any non-digit characters
+    let cleaned = value.replace(/[^\d]/g, '');
     
     // Limit to 6 digits
     cleaned = cleaned.slice(0, 6);
@@ -36,8 +30,7 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
     // Pad with leading zeros if needed
     cleaned = cleaned.padStart(6, '0');
     
-    // Add the PM- prefix
-    onChange("mlsNumber", `PM-${cleaned}`);
+    onChange("mlsNumber", cleaned);
   };
 
   return (
@@ -56,13 +49,13 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
               <Label htmlFor="mlsNumber">MLS Number <span className="text-red-500">*</span></Label>
               <Input
                 id="mlsNumber"
-                placeholder="Format: PM-123456"
+                placeholder="Enter 6 digits"
                 value={data.mlsNumber}
                 onChange={(e) => handleMlsNumberChange(e.target.value)}
                 required
               />
               <p className="text-xs text-muted-foreground">
-                Format example: PM-123456
+                Format example: 123456
               </p>
             </div>
             
