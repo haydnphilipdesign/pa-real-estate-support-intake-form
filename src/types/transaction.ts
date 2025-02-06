@@ -29,6 +29,7 @@ export interface CommissionData {
   brokerSplit: string;
   isReferral: boolean;
   sellersAssist: string;
+  coordinatorFeePaidBy: "client" | "agent";
 }
 
 export interface PropertyDetailsData {
@@ -51,7 +52,6 @@ export interface WarrantyData {
 
 export interface TitleCompanyData {
   companyName: string;
-  coordinatorFeePaidBy: "client" | "agent";
 }
 
 export interface AdditionalInfoData {

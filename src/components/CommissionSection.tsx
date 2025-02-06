@@ -1,9 +1,8 @@
 
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface CommissionData {
@@ -17,6 +16,7 @@ interface CommissionData {
   referralParty: string;
   brokerEin: string;
   referralFee: string;
+  coordinatorFeePaidBy: "client" | "agent";
 }
 
 interface CommissionSectionProps {
@@ -119,17 +119,17 @@ export function CommissionSection({ role, data, onChange }: CommissionSectionPro
 
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
-            <Checkbox
+            <Switch
               id="hasBuyerPaidCommission"
               checked={!!data.buyerPaidCommission}
               onCheckedChange={(checked) => onChange("buyerPaidCommission", checked ? "0" : "")}
             />
-            <Label htmlFor="hasBuyerPaidCommission">Buyer is paying additional commission</Label>
+            <Label htmlFor="hasBuyerPaidCommission">Buyer is contributing towards commission</Label>
           </div>
 
           {data.buyerPaidCommission !== "" && (
             <div className="space-y-2 pl-6">
-              <Label htmlFor="buyerPaidCommission">Buyer Paid Commission Amount <span className="text-red-500">*</span></Label>
+              <Label htmlFor="buyerPaidCommission">Buyer Contribution Amount <span className="text-red-500">*</span></Label>
               <Input
                 id="buyerPaidCommission"
                 type="number"
@@ -148,10 +148,10 @@ export function CommissionSection({ role, data, onChange }: CommissionSectionPro
 
         <div className="space-y-4 pt-2">
           <div className="flex items-center space-x-2">
-            <Checkbox
+            <Switch
               id="isReferral"
               checked={data.isReferral}
-              onCheckedChange={(checked) => onChange("isReferral", checked as boolean)}
+              onCheckedChange={(checked) => onChange("isReferral", checked)}
             />
             <Label htmlFor="isReferral">This is a referral</Label>
           </div>
@@ -198,6 +198,25 @@ export function CommissionSection({ role, data, onChange }: CommissionSectionPro
               </div>
             </div>
           )}
+        </div>
+
+        <Separator className="my-4" />
+
+        <div className="space-y-2">
+          <Label>Transaction Coordinator Fee Paid By <span className="text-red-500">*</span></Label>
+          <RadioGroup
+            value={data.coordinatorFeePaidBy}
+            onValueChange={(value) => onChange("coordinatorFeePaidBy", value)}
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="client" id="coordinatorFeeClient" />
+              <Label htmlFor="coordinatorFeeClient">Client</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="agent" id="coordinatorFeeAgent" />
+              <Label htmlFor="coordinatorFeeAgent">Agent</Label>
+            </div>
+          </RadioGroup>
         </div>
       </div>
     </div>
