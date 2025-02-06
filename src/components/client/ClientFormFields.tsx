@@ -21,6 +21,8 @@ interface ClientFormFieldsProps {
 }
 
 export function ClientFormFields({ client, onClientChange, role }: ClientFormFieldsProps) {
+  console.log("Rendering ClientFormFields with client:", client);
+
   const getAvailableTypes = () => {
     switch (role) {
       case "listing-agent":
@@ -37,6 +39,11 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
     }
   };
 
+  const handleInputChange = (field: string, value: string) => {
+    console.log(`Updating ${field} to:`, value);
+    onClientChange(client.id, field, value);
+  };
+
   return (
     <div className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
@@ -44,10 +51,11 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <Label htmlFor={`name-${client.id}`}>Full Name <span className="text-red-500">*</span></Label>
           <Input
             id={`name-${client.id}`}
-            value={client.name || ""}
-            onChange={(e) => onClientChange(client.id, "name", e.target.value)}
+            value={client?.name ?? ""}
+            onChange={(e) => handleInputChange("name", e.target.value)}
             placeholder="Enter full name"
             required
+            className="transition-all duration-200 focus:ring-2 focus:ring-brand-gold/50"
           />
         </div>
 
@@ -56,10 +64,11 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <Input
             id={`email-${client.id}`}
             type="email"
-            value={client.email || ""}
-            onChange={(e) => onClientChange(client.id, "email", e.target.value)}
+            value={client?.email ?? ""}
+            onChange={(e) => handleInputChange("email", e.target.value)}
             placeholder="Enter email address"
             required
+            className="transition-all duration-200 focus:ring-2 focus:ring-brand-gold/50"
           />
         </div>
       </div>
@@ -69,10 +78,11 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <Label htmlFor={`phone-${client.id}`}>Phone <span className="text-red-500">*</span></Label>
           <Input
             id={`phone-${client.id}`}
-            value={client.phone || ""}
-            onChange={(e) => onClientChange(client.id, "phone", e.target.value)}
+            value={client?.phone ?? ""}
+            onChange={(e) => handleInputChange("phone", e.target.value)}
             placeholder="Enter phone number"
             required
+            className="transition-all duration-200 focus:ring-2 focus:ring-brand-gold/50"
           />
         </div>
 
@@ -80,10 +90,11 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <Label htmlFor={`address-${client.id}`}>Address <span className="text-red-500">*</span></Label>
           <Input
             id={`address-${client.id}`}
-            value={client.address || ""}
-            onChange={(e) => onClientChange(client.id, "address", e.target.value)}
+            value={client?.address ?? ""}
+            onChange={(e) => handleInputChange("address", e.target.value)}
             placeholder="Enter address"
             required
+            className="transition-all duration-200 focus:ring-2 focus:ring-brand-gold/50"
           />
         </div>
       </div>
@@ -92,10 +103,10 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
         <div className="space-y-2">
           <Label>Marital Status <span className="text-red-500">*</span></Label>
           <Select
-            value={client.maritalStatus || "single"}
-            onValueChange={(value) => onClientChange(client.id, "maritalStatus", value)}
+            value={client?.maritalStatus ?? "single"}
+            onValueChange={(value) => handleInputChange("maritalStatus", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-brand-gold/50">
               <SelectValue placeholder="Select marital status" />
             </SelectTrigger>
             <SelectContent>
@@ -110,14 +121,23 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
         <div className="space-y-2">
           <Label>Client Type <span className="text-red-500">*</span></Label>
           <RadioGroup
-            value={client.type || "buyer"}
-            onValueChange={(value) => onClientChange(client.id, "type", value)}
+            value={client?.type ?? "buyer"}
+            onValueChange={(value) => handleInputChange("type", value)}
             className="flex space-x-4"
           >
             {getAvailableTypes().map((type) => (
               <div key={type.value} className="flex items-center space-x-2">
-                <RadioGroupItem value={type.value} id={`${type.value}-${client.id}`} />
-                <Label htmlFor={`${type.value}-${client.id}`}>{type.label}</Label>
+                <RadioGroupItem 
+                  value={type.value} 
+                  id={`${type.value}-${client.id}`}
+                  className="transition-all duration-200 focus:ring-2 focus:ring-brand-gold/50"
+                />
+                <Label 
+                  htmlFor={`${type.value}-${client.id}`}
+                  className="cursor-pointer"
+                >
+                  {type.label}
+                </Label>
               </div>
             ))}
           </RadioGroup>
