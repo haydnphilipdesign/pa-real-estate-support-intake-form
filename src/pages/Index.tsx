@@ -72,11 +72,20 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
+    <div className="min-h-screen flex bg-brand-gold/10">
       <FormSidebar currentStep={currentStep} onStepClick={handleStepClick} />
       
       <main className="flex-1 pb-16 md:pb-0">
         <div className="container max-w-4xl py-8">
+          <div className="mb-8 text-center">
+            <img 
+              src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
+              alt="PA Real Estate Support Services LLC"
+              className="h-16 mx-auto mb-6"
+            />
+            <div className="h-px bg-brand-navy/10 max-w-md mx-auto" />
+          </div>
+
           {currentStep === 1 && (
             <RoleSelection
               selectedRole={selectedRole}

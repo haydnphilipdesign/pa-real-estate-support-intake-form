@@ -22,6 +22,13 @@ export default {
         inter: ["Inter", "sans-serif"],
       },
       colors: {
+        // Brand colors
+        brand: {
+          navy: "#222222",
+          gold: "#FDE1D3",
+          red: "#ea384c",
+        },
+        // Original theme colors
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
