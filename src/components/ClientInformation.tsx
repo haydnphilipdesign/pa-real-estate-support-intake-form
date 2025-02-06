@@ -30,7 +30,7 @@ export function ClientInformation({
 }: ClientInformationProps) {
   return (
     <div className="space-y-6">
-      <div className="space-y-2 animate-fade-in">
+      <div className="space-y-2">
         <h2 className="text-2xl font-semibold tracking-tight text-brand-navy">
           Client Information
         </h2>
@@ -43,11 +43,9 @@ export function ClientInformation({
         {clients.map((client, index) => (
           <div
             key={client.id}
-            className="transform transition-all duration-500 hover:-translate-y-1"
+            className="transition-all duration-300 hover:-translate-y-1"
             style={{
               animationDelay: `${index * 150}ms`,
-              opacity: 0,
-              animation: `fade-in 0.5s ease-out ${index * 0.15}s forwards`,
             }}
           >
             <ClientCard
@@ -63,14 +61,11 @@ export function ClientInformation({
         <Button
           type="button"
           variant="outline"
-          className="w-full bg-white hover:bg-brand-gold/10 transition-all duration-300 group relative overflow-hidden"
+          className="w-full bg-white hover:bg-brand-gold/10 transition-colors duration-200 group"
           onClick={onAddClient}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <span className="relative flex items-center justify-center">
-            <Plus className="mr-2 h-4 w-4 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-90" />
-            Add Another Client
-          </span>
+          <Plus className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:scale-125" />
+          Add Another Client
         </Button>
       </div>
     </div>
