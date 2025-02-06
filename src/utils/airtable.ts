@@ -1,7 +1,22 @@
 import Airtable from 'airtable';
 
+interface AirtableCredentials {
+  apiKey: string;
+  baseId: string;
+}
+
+let airtableCredentials: AirtableCredentials | null = null;
+
+export const setAirtableCredentials = (credentials: AirtableCredentials) => {
+  airtableCredentials = credentials;
+};
+
 export const submitToAirtable = async (formData: any) => {
-  const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID);
+  if (!airtableCredentials) {
+    throw new Error('Airtable credentials not set');
+  }
+
+  const base = new Airtable({ apiKey: airtableCredentials.apiKey }).base(airtableCredentials.baseId);
 
   try {
     const record = await base('Transactions').create([

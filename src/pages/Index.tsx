@@ -11,12 +11,15 @@ import { WarrantySection } from "@/components/WarrantySection";
 import { TitleCompanySection } from "@/components/TitleCompanySection";
 import { AdditionalInfoSection } from "@/components/AdditionalInfoSection";
 import { SignatureSection } from "@/components/SignatureSection";
+import { AirtableCredentialsForm } from "@/components/AirtableCredentialsForm";
 import { useTransactionForm } from "@/hooks/useTransactionForm";
-import { submitToAirtable } from "@/utils/airtable";
-import { useToast } from "@/components/ui/use-toast";
+import { submitToAirtable, setAirtableCredentials } from "@/utils/airtable";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 export default function Index() {
   const { toast } = useToast();
+  const [hasCredentials, setHasCredentials] = useState(false);
   const {
     currentStep,
     selectedRole,
@@ -42,61 +45,21 @@ export default function Index() {
     handlePrevious,
   } = useTransactionForm();
 
-  const handleAddClient = () => {
-    setClients((prev) => [
-      ...prev,
-      {
-        id: String(prev.length + 1),
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        maritalStatus: "single",
-        type: selectedRole === "listing-agent" ? "seller" : 
-              selectedRole === "buyers-agent" ? "buyer" : "buyer",
-      },
-    ]);
-  };
-
-  const handleRemoveClient = (id: string) => {
-    setClients((prev) => prev.filter((client) => client.id !== id));
-  };
-
-  const handleClientChange = (id: string, field: string, value: string) => {
-    setClients((prev) =>
-      prev.map((client) =>
-        client.id === id ? { ...client, [field]: value } : client
-      )
-    );
-  };
-
-  const handleFieldChange = (section: string, field: string, value: any) => {
-    switch (section) {
-      case "property":
-        setPropertyData(prev => ({ ...prev, [field]: value }));
-        break;
-      case "commission":
-        setCommissionData(prev => ({ ...prev, [field]: value }));
-        break;
-      case "propertyDetails":
-        setPropertyDetails(prev => ({ ...prev, [field]: value }));
-        break;
-      case "warranty":
-        setWarrantyData(prev => ({ ...prev, [field]: value }));
-        break;
-      case "title":
-        setTitleData(prev => ({ ...prev, [field]: value }));
-        break;
-      case "additionalInfo":
-        setAdditionalInfo(prev => ({ ...prev, [field]: value }));
-        break;
-      case "signature":
-        setSignatureData(prev => ({ ...prev, [field]: value }));
-        break;
-    }
+  const handleCredentialsSubmit = (credentials: { apiKey: string; baseId: string }) => {
+    setAirtableCredentials(credentials);
+    setHasCredentials(true);
   };
 
   const handleSubmit = async () => {
+    if (!hasCredentials) {
+      toast({
+        title: "Error",
+        description: "Please set your Airtable credentials first",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const formData = {
         selectedRole,
@@ -125,6 +88,17 @@ export default function Index() {
     }
   };
 
+  if (!hasCredentials) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <div className="w-full max-w-md">
+          <h1 className="text-2xl font-semibold mb-6 text-center">Set Airtable Credentials</h1>
+          <AirtableCredentialsForm onCredentialsSubmit={handleCredentialsSubmit} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex bg-gray-50">
       <FormSidebar currentStep={currentStep} onStepClick={handleStepClick} />
@@ -141,7 +115,7 @@ export default function Index() {
           {currentStep === 2 && (
             <PropertyInformation
               data={propertyData}
-              onChange={(field, value) => handleFieldChange("property", field, value)}
+              onChange={(field, value) => setPropertyData(prev => ({ ...prev, [field]: value }))}
               role={selectedRole}
             />
           )}
@@ -149,9 +123,25 @@ export default function Index() {
           {currentStep === 3 && (
             <ClientInformation
               clients={clients}
-              onAddClient={handleAddClient}
-              onRemoveClient={handleRemoveClient}
-              onClientChange={handleClientChange}
+              onAddClient={() => setClients((prev) => [
+                ...prev,
+                {
+                  id: String(prev.length + 1),
+                  name: "",
+                  email: "",
+                  phone: "",
+                  address: "",
+                  maritalStatus: "single",
+                  type: selectedRole === "listing-agent" ? "seller" : 
+                        selectedRole === "buyers-agent" ? "buyer" : "buyer",
+                },
+              ])}
+              onRemoveClient={(id) => setClients((prev) => prev.filter((client) => client.id !== id))}
+              onClientChange={(id, field, value) => setClients((prev) =>
+                prev.map((client) =>
+                  client.id === id ? { ...client, [field]: value } : client
+                )
+              )}
               role={selectedRole}
             />
           )}
@@ -160,7 +150,7 @@ export default function Index() {
             <CommissionSection 
               role={selectedRole}
               data={commissionData}
-              onChange={(field, value) => handleFieldChange("commission", field, value)}
+              onChange={(field, value) => setCommissionData(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
@@ -168,7 +158,7 @@ export default function Index() {
             <PropertyDetailsSection 
               role={selectedRole}
               data={propertyDetails}
-              onChange={(field, value) => handleFieldChange("propertyDetails", field, value)}
+              onChange={(field, value) => setPropertyDetails(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
@@ -176,7 +166,7 @@ export default function Index() {
             <WarrantySection 
               role={selectedRole}
               data={warrantyData}
-              onChange={(field, value) => handleFieldChange("warranty", field, value)}
+              onChange={(field, value) => setWarrantyData(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
@@ -184,7 +174,7 @@ export default function Index() {
             <TitleCompanySection 
               role={selectedRole}
               data={titleData}
-              onChange={(field, value) => handleFieldChange("title", field, value)}
+              onChange={(field, value) => setTitleData(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
@@ -196,7 +186,7 @@ export default function Index() {
             <AdditionalInfoSection 
               role={selectedRole}
               data={additionalInfo}
-              onChange={(field, value) => handleFieldChange("additionalInfo", field, value)}
+              onChange={(field, value) => setAdditionalInfo(prev => ({ ...prev, [field]: value }))}
             />
           )}
 
@@ -204,7 +194,7 @@ export default function Index() {
             <SignatureSection 
               role={selectedRole}
               data={signatureData}
-              onChange={(field, value) => handleFieldChange("signature", field, value)}
+              onChange={(field, value) => setSignatureData(prev => ({ ...prev, [field]: value }))}
               onSubmit={handleSubmit}
             />
           )}
