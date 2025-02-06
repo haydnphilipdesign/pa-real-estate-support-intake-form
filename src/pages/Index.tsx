@@ -11,15 +11,12 @@ import { WarrantySection } from "@/components/WarrantySection";
 import { TitleCompanySection } from "@/components/TitleCompanySection";
 import { AdditionalInfoSection } from "@/components/AdditionalInfoSection";
 import { SignatureSection } from "@/components/SignatureSection";
-import { AirtableCredentialsForm } from "@/components/AirtableCredentialsForm";
 import { useTransactionForm } from "@/hooks/useTransactionForm";
-import { submitToAirtable, setAirtableCredentials } from "@/utils/airtable";
+import { submitToAirtable } from "@/utils/airtable";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
 
 export default function Index() {
   const { toast } = useToast();
-  const [hasCredentials, setHasCredentials] = useState(false);
   const {
     currentStep,
     selectedRole,
@@ -45,21 +42,7 @@ export default function Index() {
     handlePrevious,
   } = useTransactionForm();
 
-  const handleCredentialsSubmit = (credentials: { apiKey: string; baseId: string }) => {
-    setAirtableCredentials(credentials);
-    setHasCredentials(true);
-  };
-
   const handleSubmit = async () => {
-    if (!hasCredentials) {
-      toast({
-        title: "Error",
-        description: "Please set your Airtable credentials first",
-        variant: "destructive",
-      });
-      return;
-    }
-
     try {
       const formData = {
         selectedRole,
@@ -87,17 +70,6 @@ export default function Index() {
       });
     }
   };
-
-  if (!hasCredentials) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-        <div className="w-full max-w-md">
-          <h1 className="text-2xl font-semibold mb-6 text-center">Set Airtable Credentials</h1>
-          <AirtableCredentialsForm onCredentialsSubmit={handleCredentialsSubmit} />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex bg-gray-50">
