@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -20,6 +21,23 @@ interface PropertyInformationProps {
 export function PropertyInformation({ data, onChange, role }: PropertyInformationProps) {
   const canUpdateMls = role === "listing-agent" || role === "dual-agent";
 
+  const handleMlsNumberChange = (value: string) => {
+    // Remove any non-digit characters except 'PM-'
+    let cleaned = value.replace(/[^\d-P]/g, '');
+    
+    // Ensure only one 'PM-' prefix
+    cleaned = cleaned.replace(/PM-+/g, 'PM-');
+    
+    // Limit the number part to 6 digits
+    const parts = cleaned.split('PM-');
+    if (parts[1] && parts[1].length > 6) {
+      parts[1] = parts[1].slice(0, 6);
+      cleaned = parts.join('PM-');
+    }
+    
+    onChange("mlsNumber", cleaned);
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -36,11 +54,15 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
               <Label htmlFor="mlsNumber">MLS Number <span className="text-red-500">*</span></Label>
               <Input
                 id="mlsNumber"
-                placeholder="Enter MLS number"
+                placeholder="Format: PM-123456"
                 value={data.mlsNumber}
-                onChange={(e) => onChange("mlsNumber", e.target.value)}
+                onChange={(e) => handleMlsNumberChange(e.target.value)}
                 required
+                pattern="^PM-\d{6}$"
               />
+              <p className="text-xs text-muted-foreground">
+                Format example: PM-123456
+              </p>
             </div>
             
             <div className="space-y-2">

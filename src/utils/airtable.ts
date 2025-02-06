@@ -6,13 +6,32 @@ const AIRTABLE_BASE_ID = 'appfzBPCBvZeW9QTl';
 
 const base = new Airtable({ apiKey: AIRTABLE_API_KEY }).base(AIRTABLE_BASE_ID);
 
+function formatMlsNumber(mlsNumber: string): string {
+  // Remove any whitespace
+  let cleaned = mlsNumber.trim();
+  
+  // If it doesn't start with 'PM-', add it
+  if (!cleaned.startsWith('PM-')) {
+    cleaned = `PM-${cleaned}`;
+  }
+  
+  // Ensure the number part is 6 digits with leading zeros
+  const numberPart = cleaned.replace('PM-', '');
+  const paddedNumber = numberPart.padStart(6, '0');
+  
+  return `PM-${paddedNumber}`;
+}
+
 export const submitToAirtable = async (formData: any) => {
   try {
+    // Format the MLS number before creating records
+    const formattedMlsNumber = formatMlsNumber(formData.propertyData.mlsNumber);
+    
     // Handle multiple clients by creating an array of records
     const clientRecords = formData.clients.map((client: any, index: number) => ({
       fields: {
         // Property Information
-        'MLS Number': formData.propertyData.mlsNumber,
+        'MLS Number': formattedMlsNumber,
         'Address': formData.propertyData.address,
         'Sale Price': formData.propertyData.salePrice,
         'Status': formData.propertyData.status,
