@@ -1,3 +1,4 @@
+
 import Airtable from 'airtable';
 
 const AIRTABLE_API_KEY = 'patTmLTvKhZ0hs6ZB.3644ac279f9828df981ce7921b05d5c996f5f2e82d9c51daee4604a06c4f9e2d';
@@ -7,48 +8,56 @@ const base = new Airtable({ apiKey: AIRTABLE_API_KEY }).base(AIRTABLE_BASE_ID);
 
 export const submitToAirtable = async (formData: any) => {
   try {
-    const record = await base('Transactions').create([
-      {
-        fields: {
-          // Property Information
-          'MLS Number': formData.propertyData.mlsNumber,
-          'Address': formData.propertyData.address,
-          'Sale Price': formData.propertyData.salePrice,
-          'Status': formData.propertyData.status,
-          'Is Winterized': formData.propertyData.isWinterized,
-          'Update MLS': formData.propertyData.updateMls,
+    // Handle multiple clients by creating an array of records
+    const clientRecords = formData.clients.map((client: any, index: number) => ({
+      fields: {
+        // Property Information
+        'MLS Number': formData.propertyData.mlsNumber,
+        'Address': formData.propertyData.address,
+        'Sale Price': formData.propertyData.salePrice,
+        'Status': formData.propertyData.status,
+        'Is Winterized': formData.propertyData.isWinterized,
+        'Update MLS': formData.propertyData.updateMls,
 
-          // Client Information (first client)
-          'Client Name': formData.clients[0]?.name,
-          'Client Email': formData.clients[0]?.email,
-          'Client Phone': formData.clients[0]?.phone,
-          'Client Address': formData.clients[0]?.address,
-          'Client Type': formData.clients[0]?.type,
-          'Marital Status': formData.clients[0]?.maritalStatus,
+        // Commission Information
+        'Commission Base': formData.commissionData.commissionBase,
+        'Sellers Assist': formData.commissionData.sellersAssist,
+        'Total Commission': formData.commissionData.totalCommission,
+        'Listing Agent Commission': formData.commissionData.listingAgentCommission,
+        'Buyers Agent Commission': formData.commissionData.buyersAgentCommission,
+        'Buyer Paid Commission': formData.commissionData.buyerPaidCommission,
+        'Is Referral': formData.commissionData.isReferral,
+        'Referral Party': formData.commissionData.referralParty,
+        'Broker EIN': formData.commissionData.brokerEin,
+        'Referral Fee': formData.commissionData.referralFee,
 
-          // Commission Information
-          'Total Commission': formData.commissionData.totalCommission,
-          'Broker Split': formData.commissionData.brokerSplit,
-          'Is Referral': formData.commissionData.isReferral,
-          'Referral Fee': formData.commissionData.referralFee,
+        // Client Information (indexed for multiple clients)
+        'Client Name': client.name,
+        'Client Email': client.email,
+        'Client Phone': client.phone,
+        'Client Address': client.address,
+        'Client Type': client.type,
+        'Marital Status': client.maritalStatus,
+        'Client Index': index + 1,
 
-          // Additional Information
-          'Special Instructions': formData.additionalInfo.specialInstructions,
-          'Urgent Issues': formData.additionalInfo.urgentIssues,
-          'Notes': formData.additionalInfo.notes,
-          'Requires Follow Up': formData.additionalInfo.requiresFollowUp,
+        // Additional Information
+        'Special Instructions': formData.additionalInfo.specialInstructions,
+        'Urgent Issues': formData.additionalInfo.urgentIssues,
+        'Notes': formData.additionalInfo.notes,
+        'Requires Follow Up': formData.additionalInfo.requiresFollowUp,
 
-          // Signature Information
-          'Agent Name': formData.signatureData.agentName,
-          'Date Submitted': formData.signatureData.dateSubmitted,
-          'Terms Accepted': formData.signatureData.termsAccepted,
-          'Info Confirmed': formData.signatureData.infoConfirmed,
-          'Signature': formData.signatureData.signature,
-        }
+        // Signature Information
+        'Agent Name': formData.signatureData.agentName,
+        'Date Submitted': formData.signatureData.dateSubmitted,
+        'Terms Accepted': formData.signatureData.termsAccepted,
+        'Info Confirmed': formData.signatureData.infoConfirmed,
+        'Signature': formData.signatureData.signature,
       }
-    ]);
+    }));
 
-    return record;
+    // Create records for each client
+    const records = await base('Transactions').create(clientRecords);
+    return records;
   } catch (error) {
     console.error('Error submitting to Airtable:', error);
     throw error;

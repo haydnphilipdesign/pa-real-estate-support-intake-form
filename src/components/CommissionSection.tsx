@@ -4,11 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface CommissionData {
+  commissionBase: "salePrice" | "other";
   totalCommission: string;
   listingAgentCommission: string;
   buyersAgentCommission: string;
+  buyerPaidCommission: string;
+  sellersAssist: string;
   isReferral: boolean;
   referralParty: string;
   brokerEin: string;
@@ -30,6 +34,40 @@ export function CommissionSection({ role, data, onChange }: CommissionSectionPro
       </div>
 
       <div className="grid gap-4">
+        <div className="space-y-2">
+          <Label>Commission Base <span className="text-red-500">*</span></Label>
+          <RadioGroup
+            value={data.commissionBase}
+            onValueChange={(value) => onChange("commissionBase", value)}
+            className="flex flex-col space-y-1"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="salePrice" id="salePrice" />
+              <Label htmlFor="salePrice">Sales Price</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="other" id="netPrice" />
+              <Label htmlFor="netPrice">Net Price (after Seller's Assist)</Label>
+            </div>
+          </RadioGroup>
+        </div>
+
+        {data.commissionBase === "other" && (
+          <div className="space-y-2 pl-6">
+            <Label htmlFor="sellersAssist">Seller's Assist Amount ($) <span className="text-red-500">*</span></Label>
+            <Input
+              id="sellersAssist"
+              type="number"
+              min="0"
+              step="0.01"
+              value={data.sellersAssist}
+              onChange={(e) => onChange("sellersAssist", e.target.value)}
+              placeholder="Enter seller's assist amount"
+              required
+            />
+          </div>
+        )}
+
         {role === "listing-agent" && (
           <div className="space-y-2">
             <Label htmlFor="totalCommission">Total Commission (%) <span className="text-red-500">*</span></Label>
@@ -77,6 +115,33 @@ export function CommissionSection({ role, data, onChange }: CommissionSectionPro
             placeholder="Enter buyer's agent commission percentage"
             required
           />
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="hasBuyerPaidCommission"
+              checked={!!data.buyerPaidCommission}
+              onCheckedChange={(checked) => onChange("buyerPaidCommission", checked ? "0" : "")}
+            />
+            <Label htmlFor="hasBuyerPaidCommission">Buyer is paying additional commission</Label>
+          </div>
+
+          {data.buyerPaidCommission !== "" && (
+            <div className="space-y-2 pl-6">
+              <Label htmlFor="buyerPaidCommission">Buyer Paid Commission Amount <span className="text-red-500">*</span></Label>
+              <Input
+                id="buyerPaidCommission"
+                type="number"
+                step="0.01"
+                min="0"
+                value={data.buyerPaidCommission}
+                onChange={(e) => onChange("buyerPaidCommission", e.target.value)}
+                placeholder="Enter amount ($ or %)"
+                required
+              />
+            </div>
+          )}
         </div>
 
         <Separator className="my-4" />

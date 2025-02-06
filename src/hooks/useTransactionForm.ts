@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { validateStep } from "@/utils/validation";
@@ -45,6 +46,7 @@ export const useTransactionForm = () => {
     listingAgentCommission: "",
     buyersAgentCommission: "",
     buyerPaidCommission: "",
+    sellersAssist: "",
     referralParty: "",
     brokerEin: "",
     referralFee: "",

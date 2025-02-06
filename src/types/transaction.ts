@@ -28,6 +28,7 @@ export interface CommissionData {
   referralFee: string;
   brokerSplit: string;
   isReferral: boolean;
+  sellersAssist: string;
 }
 
 export interface PropertyDetailsData {
