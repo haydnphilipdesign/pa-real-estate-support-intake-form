@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -32,7 +33,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           { value: "seller", label: "Seller" },
         ];
       default:
-        return [];
+        return [{ value: "buyer", label: "Buyer" }]; // Default to buyer if no role selected
     }
   };
 
@@ -45,6 +46,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
             id={`name-${client.id}`}
             value={client.name}
             onChange={(e) => onClientChange(client.id, "name", e.target.value)}
+            placeholder="Enter full name"
             required
           />
         </div>
@@ -56,6 +58,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
             type="email"
             value={client.email}
             onChange={(e) => onClientChange(client.id, "email", e.target.value)}
+            placeholder="Enter email address"
             required
           />
         </div>
@@ -68,6 +71,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
             id={`phone-${client.id}`}
             value={client.phone}
             onChange={(e) => onClientChange(client.id, "phone", e.target.value)}
+            placeholder="Enter phone number"
             required
           />
         </div>
@@ -78,6 +82,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
             id={`address-${client.id}`}
             value={client.address}
             onChange={(e) => onClientChange(client.id, "address", e.target.value)}
+            placeholder="Enter address"
             required
           />
         </div>
@@ -107,15 +112,14 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <RadioGroup
             value={client.type}
             onValueChange={(value) => onClientChange(client.id, "type", value)}
+            className="flex space-x-4"
           >
-            <div className="flex space-x-4">
-              {getAvailableTypes().map((type) => (
-                <div key={type.value} className="flex items-center space-x-2">
-                  <RadioGroupItem value={type.value} id={`${type.value}-${client.id}`} />
-                  <Label htmlFor={`${type.value}-${client.id}`}>{type.label}</Label>
-                </div>
-              ))}
-            </div>
+            {getAvailableTypes().map((type) => (
+              <div key={type.value} className="flex items-center space-x-2">
+                <RadioGroupItem value={type.value} id={`${type.value}-${client.id}`} />
+                <Label htmlFor={`${type.value}-${client.id}`}>{type.label}</Label>
+              </div>
+            ))}
           </RadioGroup>
         </div>
       </div>

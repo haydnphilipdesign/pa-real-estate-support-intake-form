@@ -28,6 +28,8 @@ export function ClientInformation({
   onClientChange,
   role,
 }: ClientInformationProps) {
+  console.log("Clients:", clients); // Debug log to check clients array
+  
   return (
     <div className="space-y-6">
       <div className="space-y-2 animate-fade-in">
@@ -40,7 +42,7 @@ export function ClientInformation({
       </div>
 
       <div className="space-y-4 transition-all duration-300">
-        {clients.map((client, index) => (
+        {Array.isArray(clients) && clients.map((client, index) => (
           <div
             key={client.id}
             className="transform transition-all duration-500 hover:-translate-y-1"
