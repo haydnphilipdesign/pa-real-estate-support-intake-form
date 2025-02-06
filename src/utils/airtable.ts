@@ -7,19 +7,20 @@ const AIRTABLE_BASE_ID = 'appfzBPCBvZeW9QTl';
 const base = new Airtable({ apiKey: AIRTABLE_API_KEY }).base(AIRTABLE_BASE_ID);
 
 function formatMlsNumber(mlsNumber: string): string {
-  // Remove any whitespace
-  let cleaned = mlsNumber.trim();
+  // Remove any non-digit characters except 'PM-'
+  let cleaned = mlsNumber.replace(/[^\d-P]/g, '');
   
-  // If it doesn't start with 'PM-', add it
-  if (!cleaned.startsWith('PM-')) {
-    cleaned = `PM-${cleaned}`;
-  }
+  // Remove any existing 'PM-' prefix to avoid duplicates
+  cleaned = cleaned.replace(/^PM-/, '');
   
-  // Ensure the number part is 6 digits with leading zeros
-  const numberPart = cleaned.replace('PM-', '');
-  const paddedNumber = numberPart.padStart(6, '0');
+  // Remove all remaining non-digits
+  cleaned = cleaned.replace(/[^\d]/g, '');
   
-  return `PM-${paddedNumber}`;
+  // Pad to 6 digits if needed
+  cleaned = cleaned.padStart(6, '0');
+  
+  // Add the PM- prefix
+  return `PM-${cleaned}`;
 }
 
 export const submitToAirtable = async (formData: any) => {
