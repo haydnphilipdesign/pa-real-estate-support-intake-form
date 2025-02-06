@@ -33,7 +33,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           { value: "seller", label: "Seller" },
         ];
       default:
-        return [{ value: "buyer", label: "Buyer" }]; // Default to buyer if no role selected
+        return [{ value: "buyer", label: "Buyer" }];
     }
   };
 
@@ -44,7 +44,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <Label htmlFor={`name-${client.id}`}>Full Name <span className="text-red-500">*</span></Label>
           <Input
             id={`name-${client.id}`}
-            value={client.name}
+            value={client.name || ""}
             onChange={(e) => onClientChange(client.id, "name", e.target.value)}
             placeholder="Enter full name"
             required
@@ -56,7 +56,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <Input
             id={`email-${client.id}`}
             type="email"
-            value={client.email}
+            value={client.email || ""}
             onChange={(e) => onClientChange(client.id, "email", e.target.value)}
             placeholder="Enter email address"
             required
@@ -69,7 +69,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <Label htmlFor={`phone-${client.id}`}>Phone <span className="text-red-500">*</span></Label>
           <Input
             id={`phone-${client.id}`}
-            value={client.phone}
+            value={client.phone || ""}
             onChange={(e) => onClientChange(client.id, "phone", e.target.value)}
             placeholder="Enter phone number"
             required
@@ -80,7 +80,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
           <Label htmlFor={`address-${client.id}`}>Address <span className="text-red-500">*</span></Label>
           <Input
             id={`address-${client.id}`}
-            value={client.address}
+            value={client.address || ""}
             onChange={(e) => onClientChange(client.id, "address", e.target.value)}
             placeholder="Enter address"
             required
@@ -92,7 +92,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
         <div className="space-y-2">
           <Label>Marital Status <span className="text-red-500">*</span></Label>
           <Select
-            value={client.maritalStatus}
+            value={client.maritalStatus || "single"}
             onValueChange={(value) => onClientChange(client.id, "maritalStatus", value)}
           >
             <SelectTrigger>
@@ -110,7 +110,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
         <div className="space-y-2">
           <Label>Client Type <span className="text-red-500">*</span></Label>
           <RadioGroup
-            value={client.type}
+            value={client.type || "buyer"}
             onValueChange={(value) => onClientChange(client.id, "type", value)}
             className="flex space-x-4"
           >
