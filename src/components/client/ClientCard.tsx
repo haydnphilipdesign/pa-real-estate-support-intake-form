@@ -29,20 +29,17 @@ export function ClientCard({
   role,
   showRemoveButton,
 }: ClientCardProps) {
-  console.log("Rendering ClientCard for client:", client); // Debug log
-
   return (
-    <Card className="group p-6 transition-all duration-300 hover:shadow-lg relative overflow-hidden bg-white">
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <Card className="group p-6 transition-all duration-300 hover:shadow-lg animate-fade-in relative overflow-hidden bg-white">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
       
       <div className="relative z-10">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-brand-navy">
+          <h3 className="text-lg font-semibold text-brand-navy group-hover:text-brand-navy/80 transition-colors duration-300">
             Client Details
           </h3>
           {showRemoveButton && (
             <Button
-              type="button"
               variant="ghost"
               size="icon"
               onClick={() => onRemoveClient(client.id)}
@@ -52,12 +49,14 @@ export function ClientCard({
             </Button>
           )}
         </div>
-
-        <ClientFormFields
-          client={client}
-          onClientChange={onClientChange}
-          role={role}
-        />
+        
+        <div className="relative transition-all duration-300 group-hover:translate-y-0">
+          <ClientFormFields
+            client={client}
+            onClientChange={onClientChange}
+            role={role}
+          />
+        </div>
       </div>
     </Card>
   );

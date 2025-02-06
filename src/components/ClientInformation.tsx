@@ -28,11 +28,9 @@ export function ClientInformation({
   onClientChange,
   role,
 }: ClientInformationProps) {
-  console.log("ClientInformation rendering with clients:", clients);
-
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
+      <div className="space-y-2 animate-fade-in">
         <h2 className="text-2xl font-semibold tracking-tight text-brand-navy">
           Client Information
         </h2>
@@ -41,32 +39,26 @@ export function ClientInformation({
         </p>
       </div>
 
-      <div className="space-y-4">
-        {clients && clients.length > 0 ? (
-          clients.map((client, index) => (
-            <div
-              key={client.id}
-              className="transform transition-all duration-500 hover:-translate-y-1"
-              style={{
-                animationDelay: `${index * 150}ms`,
-                opacity: 0,
-                animation: `fade-in 0.5s ease-out ${index * 0.15}s forwards`,
-              }}
-            >
-              <ClientCard
-                client={client}
-                onRemoveClient={onRemoveClient}
-                onClientChange={onClientChange}
-                role={role}
-                showRemoveButton={clients.length > 1}
-              />
-            </div>
-          ))
-        ) : (
-          <div className="text-center text-muted-foreground py-8">
-            No clients added yet. Click the button below to add a client.
+      <div className="space-y-4 transition-all duration-300">
+        {clients.map((client, index) => (
+          <div
+            key={client.id}
+            className="transform transition-all duration-500 hover:-translate-y-1"
+            style={{
+              animationDelay: `${index * 150}ms`,
+              opacity: 0,
+              animation: `fade-in 0.5s ease-out ${index * 0.15}s forwards`,
+            }}
+          >
+            <ClientCard
+              client={client}
+              onRemoveClient={onRemoveClient}
+              onClientChange={onClientChange}
+              role={role}
+              showRemoveButton={clients.length > 1}
+            />
           </div>
-        )}
+        ))}
 
         <Button
           type="button"
