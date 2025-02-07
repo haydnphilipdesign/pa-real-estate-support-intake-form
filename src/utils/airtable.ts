@@ -16,7 +16,8 @@ function formatMlsNumber(mlsNumber: string): string {
   // Pad with leading zeros if needed
   cleaned = cleaned.padStart(6, '0');
   
-  return cleaned;
+  // Always add PM- prefix for Airtable submission
+  return `PM-${cleaned}`;
 }
 
 export const submitToAirtable = async (formData: any) => {

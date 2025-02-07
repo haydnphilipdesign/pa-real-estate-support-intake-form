@@ -1,3 +1,4 @@
+
 export interface PropertyData {
   mlsNumber: string;
   address: string;
