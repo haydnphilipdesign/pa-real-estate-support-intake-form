@@ -23,7 +23,7 @@ export function FormNavigation({
         variant="outline"
         onClick={onPrevious}
         disabled={currentStep === 1}
-        className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-brand-navy border-white/20 px-5 py-6 h-11 transition-all shadow-sm backdrop-blur-sm"
+        className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border-white/10 px-5 py-6 h-11 transition-all shadow-sm backdrop-blur-sm"
       >
         <ChevronLeft className="w-4 h-4" />
         Previous

@@ -1,3 +1,4 @@
+
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { FormNavigation } from "@/components/FormNavigation";
 import { RoleSelection } from "@/components/RoleSelection";
@@ -75,17 +76,17 @@ export default function Index() {
   return (
     <div className="min-h-screen p-4 sm:p-6 md:p-8 lg:p-10 flex items-center justify-center">
       <motion.div 
-        initial={{ opacity: 0, y: 10, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-5xl backdrop-blur-2xl bg-white/25 rounded-2xl border border-white/30 shadow-lg overflow-hidden"
+        className="w-full max-w-4xl backdrop-blur-xl bg-white/10 rounded-xl border border-white/20 shadow-xl overflow-hidden"
       >
-        <div className="py-8 px-4 sm:px-6 md:px-8">
-          <div className="flex justify-center mb-6">
+        <div className="py-4 px-4 sm:px-6">
+          <div className="flex justify-center mb-3">
             <img 
               src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
               alt="PA Real Estate Support Services LLC"
-              className="h-14 md:h-16"
+              className="h-12 md:h-14"
             />
           </div>
 
@@ -95,7 +96,7 @@ export default function Index() {
             onStepClick={handleStepClick}
           />
 
-          <div className="p-6 md:p-8">
+          <div className="p-4 md:p-6">
             {currentStep === 1 && (
               <RoleSelection
                 selectedRole={selectedRole}
@@ -195,7 +196,7 @@ export default function Index() {
               totalSteps={10}
               onNext={handleNext}
               onPrevious={handlePrevious}
-              className="mt-10"
+              className="mt-8"
             />
           </div>
         </div>

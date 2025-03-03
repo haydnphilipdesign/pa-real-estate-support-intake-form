@@ -25,9 +25,9 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <div className="w-full space-y-4 px-6 pt-6 pb-4">
+    <div className="w-full space-y-4 px-2 pt-4 pb-2">
       <div className="flex justify-between items-center mb-2">
-        <button className="bg-brand-gold hover:bg-brand-gold2 text-brand-navy py-2.5 px-5 rounded-lg text-sm flex items-center gap-2 font-medium transition-colors duration-200 shadow-sm">
+        <button className="bg-white/10 hover:bg-white/15 text-white py-2 px-4 rounded-md text-sm flex items-center gap-2 font-medium transition-colors duration-200 shadow-sm backdrop-blur-sm">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
             <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
@@ -49,17 +49,17 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
               className={cn(
                 "flex flex-col items-center min-w-[70px] md:min-w-0 transition-colors whitespace-nowrap",
                 "px-3 py-1.5 rounded-lg",
-                isActive && "bg-white/20 backdrop-blur-sm",
-                isActive && "text-brand-gold",
-                isCompleted && "text-brand-gold/80",
-                !isActive && !isCompleted && "text-brand-navy"
+                isActive && "bg-white/10 backdrop-blur-sm",
+                isActive && "text-white",
+                isCompleted && "text-white/80",
+                !isActive && !isCompleted && "text-white/60"
               )}
             >
               <div className={cn(
-                "flex items-center justify-center w-8 h-8 rounded-full text-sm mb-1.5 transition-all",
-                isActive && "bg-brand-gold text-brand-navy shadow-glow",
-                isCompleted && "bg-brand-gold/30 text-brand-navy",
-                !isActive && !isCompleted && "bg-white/30 text-brand-navy"
+                "flex items-center justify-center w-7 h-7 rounded-full text-sm mb-1.5 transition-all",
+                isActive && "bg-white/20 text-white shadow-sm",
+                isCompleted && "bg-white/15 text-white",
+                !isActive && !isCompleted && "bg-white/10 text-white/70"
               )}>
                 {step.id}
               </div>
@@ -69,9 +69,9 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
         })}
       </div>
       
-      <div className="h-1.5 rounded-full overflow-hidden bg-white/15">
+      <div className="h-1 rounded-full overflow-hidden bg-white/10">
         <motion.div 
-          className="h-full bg-brand-gold"
+          className="h-full bg-white/40"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.3, ease: "easeOut" }}
