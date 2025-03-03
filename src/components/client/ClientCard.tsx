@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Trash2 } from "lucide-react";
+import { Trash2, User } from "lucide-react";
 import { ClientFormFields } from "./ClientFormFields";
 
 interface Client {
@@ -30,15 +30,18 @@ export function ClientCard({
   showRemoveButton,
 }: ClientCardProps) {
   return (
-    <Card className="p-6 backdrop-blur-sm bg-white/10 border border-white/20 shadow-md rounded-xl animate-fade-in hover:shadow-lg transition-all duration-300 group">
+    <Card className="p-6 backdrop-blur-lg bg-white/80 border-white/30 text-slate-800 shadow-md rounded-xl animate-fade-in hover:shadow-lg transition-all duration-300 group">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-semibold text-white">Client Details</h3>
+        <div className="flex items-center gap-2">
+          <User className="h-5 w-5 text-slate-700" />
+          <h3 className="text-xl font-medium text-slate-800">Client Details</h3>
+        </div>
         {showRemoveButton && (
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onRemoveClient(client.id)}
-            className="hover:bg-brand-red/10 hover:text-brand-red text-white/80 transition-colors duration-200"
+            className="hover:bg-red-100 hover:text-red-500 text-slate-500 transition-colors duration-200"
           >
             <Trash2 className="h-5 w-5" />
           </Button>

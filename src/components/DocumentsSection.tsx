@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Card } from "@/components/ui/card";
 import { ListChecks } from "lucide-react";
 
 // Document categories with their respective documents
@@ -102,71 +103,69 @@ interface DocumentsSectionProps {
 }
 
 export function DocumentsSection({ role }: DocumentsSectionProps) {
-  const [checkedDocuments, setCheckedDocuments] = useState<Set<string>>(new Set());
+  const [documentsConfirmed, setDocumentsConfirmed] = useState(false);
   const roleDocuments = getRoleDocuments(role);
 
-  const handleDocumentCheck = (document: string, checked: boolean) => {
-    setCheckedDocuments(prev => {
-      const newSet = new Set(prev);
-      if (checked) {
-        newSet.add(document);
-      } else {
-        newSet.delete(document);
-      }
-      return newSet;
-    });
-  };
+  // Group documents by category
+  const documentsByCategory: Record<string, string[]> = {};
+  Object.entries(DOCUMENT_CATEGORIES).forEach(([category, docs]) => {
+    const categoryDocs = docs.filter(doc => roleDocuments.includes(doc));
+    if (categoryDocs.length > 0) {
+      documentsByCategory[category] = categoryDocs;
+    }
+  });
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-2">
-        <ListChecks className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold">Required Documents</h2>
-      </div>
-      
-      <p className="text-muted-foreground">
-        Please confirm that you have uploaded the following documents to your transaction management system:
-      </p>
-
-      <div className="space-y-6">
-        {Object.entries(DOCUMENT_CATEGORIES).map(([category, documents]) => {
-          const categoryDocuments = documents.filter(doc => roleDocuments.includes(doc));
-          
-          if (categoryDocuments.length === 0) return null;
-
-          return (
-            <div key={category} className="space-y-4">
-              <h3 className="font-medium text-lg text-primary">{category}</h3>
-              <div className="space-y-3">
-                {categoryDocuments.map((document) => (
-                  <div key={document} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={document}
-                      checked={checkedDocuments.has(document)}
-                      onCheckedChange={(checked) => 
-                        handleDocumentCheck(document, checked as boolean)
-                      }
-                    />
-                    <label
-                      htmlFor={document}
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                      {document}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="mt-4 p-4 bg-muted rounded-lg">
-        <p className="text-sm text-muted-foreground">
-          Note: All documents must be uploaded to your transaction management system (Dotloop/DocuSign) 
-          before marking them as complete here.
+      <div className="space-y-2">
+        <h2 className="text-2xl font-semibold text-white">Required Documents</h2>
+        <p className="text-white/70">
+          Please review the list of required documents for your transaction
         </p>
       </div>
+      
+      <Card className="p-6 backdrop-blur-lg bg-white/80 border-white/30 text-slate-800">
+        <div className="space-y-6">
+          <div className="flex items-start gap-2">
+            <ListChecks className="h-6 w-6 text-slate-700 mt-1" />
+            <div>
+              <h3 className="text-xl font-medium text-slate-800">Document Checklist</h3>
+              <p className="text-slate-600 text-sm">
+                The following documents are required for your transaction
+              </p>
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            {Object.entries(documentsByCategory).map(([category, documents]) => (
+              <div key={category} className="space-y-2">
+                <h4 className="font-medium text-slate-800">{category}</h4>
+                <ul className="space-y-1 pl-5 list-disc text-slate-700 text-sm">
+                  {documents.map((document) => (
+                    <li key={document}>{document}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-6 pt-4 border-t border-slate-200">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="documentsConfirmed"
+                checked={documentsConfirmed}
+                onCheckedChange={(checked) => setDocumentsConfirmed(checked as boolean)}
+              />
+              <label
+                htmlFor="documentsConfirmed"
+                className="text-sm font-medium text-slate-800 leading-none"
+              >
+                I have reviewed the required documents and will upload all required documents to either DocuSign or Dotloop.
+              </label>
+            </div>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }

@@ -41,18 +41,19 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
     <div className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor={`name-${client.id}`} className="text-white">Full Name <span className="text-red-500">*</span></Label>
+          <Label htmlFor={`name-${client.id}`} className="text-slate-800">Full Name <span className="text-red-500">*</span></Label>
           <Input
             id={`name-${client.id}`}
             value={client.name}
             onChange={(e) => onClientChange(client.id, "name", e.target.value)}
             required
             placeholder="Enter full name"
+            className="bg-white/80 border-slate-300 text-slate-800 placeholder:text-slate-400"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor={`email-${client.id}`} className="text-white">Email <span className="text-red-500">*</span></Label>
+          <Label htmlFor={`email-${client.id}`} className="text-slate-800">Email <span className="text-red-500">*</span></Label>
           <Input
             id={`email-${client.id}`}
             type="email"
@@ -60,42 +61,45 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
             onChange={(e) => onClientChange(client.id, "email", e.target.value)}
             required
             placeholder="Enter email address"
+            className="bg-white/80 border-slate-300 text-slate-800 placeholder:text-slate-400"
           />
         </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor={`phone-${client.id}`} className="text-white">Phone <span className="text-red-500">*</span></Label>
+          <Label htmlFor={`phone-${client.id}`} className="text-slate-800">Phone <span className="text-red-500">*</span></Label>
           <Input
             id={`phone-${client.id}`}
             value={client.phone}
             onChange={(e) => onClientChange(client.id, "phone", e.target.value)}
             required
             placeholder="Enter phone number"
+            className="bg-white/80 border-slate-300 text-slate-800 placeholder:text-slate-400"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor={`address-${client.id}`} className="text-white">Address <span className="text-red-500">*</span></Label>
+          <Label htmlFor={`address-${client.id}`} className="text-slate-800">Address <span className="text-red-500">*</span></Label>
           <Input
             id={`address-${client.id}`}
             value={client.address}
             onChange={(e) => onClientChange(client.id, "address", e.target.value)}
             required
             placeholder="Enter address"
+            className="bg-white/80 border-slate-300 text-slate-800 placeholder:text-slate-400"
           />
         </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <Label className="text-white">Marital Status <span className="text-red-500">*</span></Label>
+          <Label className="text-slate-800">Marital Status <span className="text-red-500">*</span></Label>
           <Select
             value={client.maritalStatus}
             onValueChange={(value) => onClientChange(client.id, "maritalStatus", value)}
           >
-            <SelectTrigger className="bg-white/80 border-white/20 text-slate-800">
+            <SelectTrigger className="bg-white/80 border-slate-300 text-slate-800">
               <SelectValue placeholder="Select marital status" />
             </SelectTrigger>
             <SelectContent>
@@ -108,7 +112,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
         </div>
 
         <div className="space-y-2">
-          <Label className="text-white">Client Type <span className="text-red-500">*</span></Label>
+          <Label className="text-slate-800">Client Type <span className="text-red-500">*</span></Label>
           <RadioGroup
             value={client.type}
             onValueChange={(value) => onClientChange(client.id, "type", value)}
@@ -116,8 +120,8 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
             <div className="flex space-x-4">
               {getAvailableTypes().map((type) => (
                 <div key={type.value} className="flex items-center space-x-2">
-                  <RadioGroupItem value={type.value} id={`${type.value}-${client.id}`} className="text-white border-white" />
-                  <Label htmlFor={`${type.value}-${client.id}`} className="text-white">{type.label}</Label>
+                  <RadioGroupItem value={type.value} id={`${type.value}-${client.id}`} className="border-slate-400" />
+                  <Label htmlFor={`${type.value}-${client.id}`} className="text-slate-800">{type.label}</Label>
                 </div>
               ))}
             </div>

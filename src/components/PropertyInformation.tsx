@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { Building } from "lucide-react";
 
 interface PropertyInformationProps {
   data: {
@@ -40,31 +41,37 @@ export function PropertyInformation({
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h2 className="text-2xl font-semibold tracking-tight text-white">Property Information</h2>
+        <h2 className="text-2xl font-semibold text-white">Property Information</h2>
         <p className="text-white/70">
           Enter the details about the property
         </p>
       </div>
 
-      <Card className="p-6 backdrop-blur-lg bg-transparent border-white/30">
+      <Card className="p-6 backdrop-blur-lg bg-white/80 border-white/30 text-slate-800">
         <div className="space-y-6">
+          <div className="flex items-start gap-2 mb-2">
+            <Building className="h-5 w-5 text-slate-700 mt-1" />
+            <h3 className="text-xl font-medium text-slate-800">Property Details</h3>
+          </div>
+          
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="mlsNumber" className="text-white">MLS Number <span className="text-red-500">*</span></Label>
+              <Label htmlFor="mlsNumber" className="text-slate-800">MLS Number <span className="text-red-500">*</span></Label>
               <Input 
                 id="mlsNumber" 
                 placeholder="Enter 6 digits" 
                 value={data.mlsNumber} 
                 onChange={e => handleMlsNumberChange(e.target.value)} 
                 required 
+                className="bg-white/80 border-slate-300 text-slate-800 placeholder:text-slate-400"
               />
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-slate-500">
                 Format example: 123456
               </p>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="salePrice" className="text-white">Sale Price <span className="text-red-500">*</span></Label>
+              <Label htmlFor="salePrice" className="text-slate-800">Sale Price <span className="text-red-500">*</span></Label>
               <Input 
                 id="salePrice" 
                 placeholder="Enter sale price" 
@@ -72,31 +79,33 @@ export function PropertyInformation({
                 onChange={e => onChange("salePrice", e.target.value)} 
                 type="number" 
                 required 
+                className="bg-white/80 border-slate-300 text-slate-800 placeholder:text-slate-400"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="address" className="text-white">Property Address <span className="text-red-500">*</span></Label>
+            <Label htmlFor="address" className="text-slate-800">Property Address <span className="text-red-500">*</span></Label>
             <Input 
               id="address" 
               placeholder="Enter full property address" 
               value={data.address} 
               onChange={e => onChange("address", e.target.value)} 
-              required 
+              required
+              className="bg-white/80 border-slate-300 text-slate-800 placeholder:text-slate-400" 
             />
           </div>
 
           <div className="space-y-2">
-            <Label className="text-white">Property Status <span className="text-red-500">*</span></Label>
+            <Label className="text-slate-800">Property Status <span className="text-red-500">*</span></Label>
             <RadioGroup value={data.status} onValueChange={value => onChange("status", value)} className="flex space-x-6">
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="vacant" id="vacant" />
-                <Label htmlFor="vacant" className="text-white">Vacant</Label>
+                <RadioGroupItem value="vacant" id="vacant" className="border-slate-400" />
+                <Label htmlFor="vacant" className="text-slate-800">Vacant</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="occupied" id="occupied" />
-                <Label htmlFor="occupied" className="text-white">Occupied</Label>
+                <RadioGroupItem value="occupied" id="occupied" className="border-slate-400" />
+                <Label htmlFor="occupied" className="text-slate-800">Occupied</Label>
               </div>
             </RadioGroup>
           </div>
@@ -108,7 +117,7 @@ export function PropertyInformation({
                 checked={data.isWinterized} 
                 onCheckedChange={checked => onChange("isWinterized", checked)} 
               />
-              <Label htmlFor="winterized" className="text-white">Property is winterized</Label>
+              <Label htmlFor="winterized" className="text-slate-800">Property is winterized</Label>
             </div>
           )}
 
@@ -119,7 +128,7 @@ export function PropertyInformation({
                 checked={data.updateMls} 
                 onCheckedChange={checked => onChange("updateMls", checked)} 
               />
-              <Label htmlFor="updateMls" className="text-white">Update MLS status</Label>
+              <Label htmlFor="updateMls" className="text-slate-800">Update MLS status</Label>
             </div>
           )}
         </div>

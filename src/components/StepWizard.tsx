@@ -1,6 +1,5 @@
 
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface StepWizardProps {
   currentStep: number;
@@ -10,63 +9,92 @@ interface StepWizardProps {
 
 const steps = [
   { id: 1, title: "Role Selection" },
-  { id: 2, title: "Client Information" },
-  { id: 3, title: "Property Info" },
+  { id: 2, title: "Property Information" },
+  { id: 3, title: "Client Information" },
   { id: 4, title: "Commission" },
-  { id: 5, title: "Property Details" },
+  { id: 5, title: "Property & Title" },
   { id: 6, title: "Warranty" },
-  { id: 7, title: "Title Company" },
-  { id: 8, title: "Documents" },
-  { id: 9, title: "Additional Info" },
-  { id: 10, title: "Signature" },
+  { id: 7, title: "Documents" },
+  { id: 8, title: "Additional Info" },
+  { id: 9, title: "Signature" },
 ];
 
 export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardProps) {
+  // Calculate visible steps (previous, current, and next steps)
+  const getVisibleSteps = () => {
+    // Always show current step and neighbors
+    const visibleSteps = steps.filter(step => {
+      return Math.abs(step.id - currentStep) <= 1 || step.id === 1 || step.id === steps.length;
+    });
+    
+    // Sort by ID to ensure correct order
+    return visibleSteps.sort((a, b) => a.id - b.id);
+  };
+
+  const visibleSteps = getVisibleSteps();
   const progress = (currentStep / totalSteps) * 100;
 
   return (
     <div className="w-full space-y-4 px-2 pt-4 pb-2">      
-      <div className="flex overflow-x-auto pb-2 hide-scrollbar justify-center gap-6">
-        {steps.map((step) => {
+      <div className="flex overflow-x-auto pb-2 hide-scrollbar justify-center">
+        {visibleSteps.map((step, index) => {
           const isActive = currentStep === step.id;
           const isCompleted = currentStep > step.id;
+          const isFirst = index === 0;
+          const isLast = index === visibleSteps.length - 1;
+          
+          // Add ellipsis indicators for gaps
+          const showLeftEllipsis = !isFirst && visibleSteps[index - 1]?.id !== step.id - 1;
+          const showRightEllipsis = !isLast && visibleSteps[index + 1]?.id !== step.id + 1;
           
           return (
-            <button
-              key={step.id}
-              onClick={() => onStepClick(step.id)}
-              className={cn(
-                "flex flex-col items-center min-w-0 transition-colors whitespace-nowrap px-2 py-1 rounded-lg",
-                isActive && "text-white",
-                isCompleted && "text-white/80",
-                !isActive && !isCompleted && "text-white/60"
+            <>
+              {showLeftEllipsis && (
+                <div className="flex items-center px-2">
+                  <span className="text-white/50">•••</span>
+                </div>
               )}
-            >
-              <div className={cn(
-                "flex items-center justify-center w-7 h-7 rounded-full text-sm mb-1 transition-all",
-                isActive ? "border-b-2 border-white text-white" : "",
-                isCompleted && "text-white/80",
-                !isActive && !isCompleted && "text-white/70"
-              )}>
-                {step.id}
-              </div>
-              <span className={cn(
-                "text-xs font-medium",
-                isActive && "border-b border-white pb-1"
-              )}>
-                {step.title}
-              </span>
-            </button>
+              
+              <button
+                key={step.id}
+                onClick={() => onStepClick(step.id)}
+                className={cn(
+                  "flex flex-col items-center min-w-0 transition-colors whitespace-nowrap px-4 py-1 rounded-lg",
+                  isActive && "text-white",
+                  isCompleted && "text-white/80",
+                  !isActive && !isCompleted && "text-white/60"
+                )}
+              >
+                <div className={cn(
+                  "flex items-center justify-center w-7 h-7 rounded-full text-sm mb-1 transition-all",
+                  isActive ? "text-white" : "",
+                  isCompleted && "text-white/80",
+                  !isActive && !isCompleted && "text-white/70"
+                )}>
+                  {step.id}
+                </div>
+                <span className={cn(
+                  "text-xs font-medium",
+                  isActive && "border-b border-white pb-1"
+                )}>
+                  {step.title}
+                </span>
+              </button>
+              
+              {showRightEllipsis && (
+                <div className="flex items-center px-2">
+                  <span className="text-white/50">•••</span>
+                </div>
+              )}
+            </>
           );
         })}
       </div>
       
       <div className="h-1 rounded-full overflow-hidden bg-white/10">
-        <motion.div 
-          className="h-full border-b-2 border-white"
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+        <div 
+          className="h-full border-b-2 border-white transition-all duration-300 ease-out"
+          style={{ width: `${progress}%` }}
         />
       </div>
     </div>
