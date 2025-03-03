@@ -15,7 +15,7 @@ export function TitleCompanySection({ role, data, onChange }: TitleCompanySectio
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-white">Title Company Information</h2>
-        <p className="text-white/70 mb-6">Enter title company details</p>
+        <p className="text-white/80 mb-6">Enter title company details</p>
       </div>
 
       <div className="space-y-4">

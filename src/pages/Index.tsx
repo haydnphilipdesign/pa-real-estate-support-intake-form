@@ -1,4 +1,3 @@
-
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { FormNavigation } from "@/components/FormNavigation";
 import { RoleSelection } from "@/components/RoleSelection";
@@ -16,8 +15,6 @@ import { submitToAirtable } from "@/utils/airtable";
 import { useToast } from "@/hooks/use-toast";
 import { StepWizard } from "@/components/StepWizard";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { FileText } from "lucide-react";
 
 export default function Index() {
   const { toast } = useToast();
@@ -81,7 +78,7 @@ export default function Index() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-5xl backdrop-blur-md bg-[#0a3666]/30 rounded-xl border border-white/20 shadow-xl overflow-hidden"
+        className="w-full max-w-5xl backdrop-blur-md bg-white/20 rounded-xl border border-white/30 shadow-xl overflow-hidden"
       >
         <div className="py-4 px-8">
           <div className="flex justify-center mb-6">
@@ -90,13 +87,6 @@ export default function Index() {
               alt="PA Real Estate Support Services LLC"
               className="h-12"
             />
-          </div>
-
-          <div className="mb-6 flex justify-between items-center">
-            <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
-              <FileText className="mr-2 h-4 w-4" />
-              Fill with Test Data
-            </Button>
           </div>
 
           <StepWizard
