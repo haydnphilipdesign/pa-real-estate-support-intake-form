@@ -7,7 +7,6 @@ import { ListChecks } from "lucide-react";
 const DOCUMENT_CATEGORIES = {
   "Core Transaction Documents": [
     "Agreement of Sale",
-    "Attorney Review Clause (if applicable)",
     "Deposit Money Notice",
     "Cooperating Broker's Compensation",
     "KW Wire Fraud Notice",
@@ -20,18 +19,19 @@ const DOCUMENT_CATEGORIES = {
     "KW Affiliate Services Disclosure",
     "KW Affiliate Services Addendum",
     "Seller's Property Disclosure",
-    "Lead Based Paint Disclosure (if applicable)",
   ],
   "Financial Documents": [
     "Buyer's Estimated Costs",
     "Seller's Estimated Costs",
-    "KPSS ABA (if using Keystone Premier Settlement)",
-    "For Your Protection Notice (if applicable)",
   ],
   "Warranty Documents": [
     "KW Home Warranty Waiver",
   ],
-  "Additional Documents": [
+  "Documents for Specific Situations": [
+    "Attorney Review Clause (if applicable)",
+    "Lead Based Paint Disclosure (if applicable)",
+    "KPSS ABA (if using Keystone Premier Settlement)",
+    "For Your Protection Notice (if applicable)",
     "Referral Agreement & W-9 (if applicable)",
   ],
 } as const;
