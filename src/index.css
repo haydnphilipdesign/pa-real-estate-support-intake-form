@@ -56,8 +56,8 @@
   }
 
   body {
-    @apply bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 text-foreground font-manrope min-h-screen;
-    background-image: url('/lovable-uploads/a56c4a4f-3734-470d-aa93-29fc1b0d3c13.png');
+    @apply bg-[#0a2649] text-foreground font-manrope min-h-screen;
+    background-image: url('/lovable-uploads/61cb76ae-4460-4687-b6d2-0c15fea8cc1b.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -74,10 +74,9 @@
   }
 
   .step-pending {
-    @apply text-gray-400 border-gray-300;
+    @apply text-gray-300 border-gray-300;
   }
   
-  /* Enhanced glass effect classes */
   .glass-card {
     @apply backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg transition-all;
   }
@@ -90,18 +89,15 @@
     @apply backdrop-blur-lg bg-white/10 border-b border-white/20;
   }
   
-  /* Hide scrollbar for Chrome, Safari and Opera */
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
   
-  /* Hide scrollbar for IE, Edge and Firefox */
   .hide-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  /* Animation utilities */
   .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
   }

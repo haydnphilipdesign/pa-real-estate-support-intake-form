@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -36,17 +37,17 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h2 className="text-2xl font-semibold tracking-tight">Property Information</h2>
-        <p className="text-muted-foreground">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">Property Information</h2>
+        <p className="text-white/70">
           Enter the details about the property
         </p>
       </div>
 
-      <Card className="p-6">
+      <div className="space-y-6">
         <div className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="mlsNumber">MLS Number <span className="text-red-500">*</span></Label>
+              <Label htmlFor="mlsNumber" className="text-white">MLS Number <span className="text-red-500">*</span></Label>
               <Input
                 id="mlsNumber"
                 placeholder="Enter 6 digits"
@@ -54,13 +55,13 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
                 onChange={(e) => handleMlsNumberChange(e.target.value)}
                 required
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/60">
                 Format example: 123456
               </p>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="salePrice">Sale Price <span className="text-red-500">*</span></Label>
+              <Label htmlFor="salePrice" className="text-white">Sale Price <span className="text-red-500">*</span></Label>
               <Input
                 id="salePrice"
                 placeholder="Enter sale price"
@@ -73,7 +74,7 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="address">Property Address <span className="text-red-500">*</span></Label>
+            <Label htmlFor="address" className="text-white">Property Address <span className="text-red-500">*</span></Label>
             <Input
               id="address"
               placeholder="Enter full property address"
@@ -84,19 +85,19 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
           </div>
 
           <div className="space-y-2">
-            <Label>Property Status <span className="text-red-500">*</span></Label>
+            <Label className="text-white">Property Status <span className="text-red-500">*</span></Label>
             <RadioGroup
               value={data.status}
               onValueChange={(value) => onChange("status", value)}
-              className="flex flex-col space-y-1"
+              className="flex space-x-6"
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="vacant" id="vacant" />
-                <Label htmlFor="vacant">Vacant</Label>
+                <RadioGroupItem value="vacant" id="vacant" className="border-white text-white" />
+                <Label htmlFor="vacant" className="text-white">Vacant</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="occupied" id="occupied" />
-                <Label htmlFor="occupied">Occupied</Label>
+                <RadioGroupItem value="occupied" id="occupied" className="border-white text-white" />
+                <Label htmlFor="occupied" className="text-white">Occupied</Label>
               </div>
             </RadioGroup>
           </div>
@@ -108,7 +109,7 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
                 checked={data.isWinterized}
                 onCheckedChange={(checked) => onChange("isWinterized", checked)}
               />
-              <Label htmlFor="winterized">Property is winterized</Label>
+              <Label htmlFor="winterized" className="text-white">Property is winterized</Label>
             </div>
           )}
 
@@ -119,11 +120,11 @@ export function PropertyInformation({ data, onChange, role }: PropertyInformatio
                 checked={data.updateMls}
                 onCheckedChange={(checked) => onChange("updateMls", checked)}
               />
-              <Label htmlFor="updateMls">Update MLS status</Label>
+              <Label htmlFor="updateMls" className="text-white">Update MLS status</Label>
             </div>
           )}
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

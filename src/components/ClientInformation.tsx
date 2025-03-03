@@ -31,10 +31,10 @@ export function ClientInformation({
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h2 className="text-2xl font-semibold tracking-tight text-brand-navy">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">
           Client Information
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white/70">
           Enter the details for all clients involved in this transaction
         </p>
       </div>
@@ -61,7 +61,7 @@ export function ClientInformation({
         <Button
           type="button"
           variant="outline"
-          className="w-full bg-white hover:bg-brand-gold/10 transition-colors duration-200 group"
+          className="w-full bg-white/10 text-white hover:bg-white/20 transition-colors duration-200 border-white/20 group"
           onClick={onAddClient}
         >
           <Plus className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:scale-125" />

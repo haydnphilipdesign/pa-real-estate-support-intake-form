@@ -16,6 +16,8 @@ import { submitToAirtable } from "@/utils/airtable";
 import { useToast } from "@/hooks/use-toast";
 import { StepWizard } from "@/components/StepWizard";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { FileText } from "lucide-react";
 
 export default function Index() {
   const { toast } = useToast();
@@ -74,20 +76,27 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen p-4 sm:p-6 md:p-8 lg:p-10 flex items-center justify-center">
+    <div className="min-h-screen p-4 flex items-center justify-center">
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-4xl backdrop-blur-xl bg-white/10 rounded-xl border border-white/20 shadow-xl overflow-hidden"
+        className="w-full max-w-5xl backdrop-blur-md bg-[#0a3666]/30 rounded-xl border border-white/20 shadow-xl overflow-hidden"
       >
-        <div className="py-4 px-4 sm:px-6">
-          <div className="flex justify-center mb-3">
+        <div className="py-4 px-8">
+          <div className="flex justify-center mb-6">
             <img 
               src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
               alt="PA Real Estate Support Services LLC"
-              className="h-12 md:h-14"
+              className="h-12"
             />
+          </div>
+
+          <div className="mb-6 flex justify-between items-center">
+            <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <FileText className="mr-2 h-4 w-4" />
+              Fill with Test Data
+            </Button>
           </div>
 
           <StepWizard

@@ -14,24 +14,22 @@ export function TitleCompanySection({ role, data, onChange }: TitleCompanySectio
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Title Company Information</h2>
-        <p className="text-gray-500 mb-6">Enter title company details</p>
+        <h2 className="text-2xl font-semibold mb-4 text-white">Title Company Information</h2>
+        <p className="text-white/70 mb-6">Enter title company details</p>
       </div>
 
-      <Card className="p-6">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="companyName">Title Company Name <span className="text-red-500">*</span></Label>
-            <Input
-              id="companyName"
-              value={data.companyName}
-              onChange={(e) => onChange("companyName", e.target.value)}
-              placeholder="Enter title company name"
-              required
-            />
-          </div>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="companyName" className="text-white">Title Company Name <span className="text-red-500">*</span></Label>
+          <Input
+            id="companyName"
+            value={data.companyName}
+            onChange={(e) => onChange("companyName", e.target.value)}
+            placeholder="Enter title company name"
+            required
+          />
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

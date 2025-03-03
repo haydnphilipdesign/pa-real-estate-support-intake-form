@@ -30,7 +30,7 @@ export function ClientCard({
   showRemoveButton,
 }: ClientCardProps) {
   return (
-    <Card className="p-6 backdrop-blur-lg bg-white/10 border border-white/20 shadow-md rounded-xl animate-fade-in hover:shadow-lg transition-all duration-300 group">
+    <Card className="p-6 backdrop-blur-sm bg-white/10 border border-white/20 shadow-md rounded-xl animate-fade-in hover:shadow-lg transition-all duration-300 group">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-semibold text-white">Client Details</h3>
         {showRemoveButton && (
@@ -45,7 +45,6 @@ export function ClientCard({
         )}
       </div>
       <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         <ClientFormFields
           client={client}
           onClientChange={onClientChange}
