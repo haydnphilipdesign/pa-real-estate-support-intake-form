@@ -95,7 +95,7 @@ export function ClientFormFields({ client, onClientChange, role }: ClientFormFie
             value={client.maritalStatus}
             onValueChange={(value) => onClientChange(client.id, "maritalStatus", value)}
           >
-            <SelectTrigger className="bg-white/10 border-white/20 text-white">
+            <SelectTrigger className="bg-white/80 border-white/20 text-slate-800">
               <SelectValue placeholder="Select marital status" />
             </SelectTrigger>
             <SelectContent>

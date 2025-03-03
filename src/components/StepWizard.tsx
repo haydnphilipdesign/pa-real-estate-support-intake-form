@@ -26,7 +26,7 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
 
   return (
     <div className="w-full space-y-4 px-2 pt-4 pb-2">      
-      <div className="flex overflow-x-auto pb-2 hide-scrollbar justify-center gap-4">
+      <div className="flex overflow-x-auto pb-2 hide-scrollbar justify-center gap-6">
         {steps.map((step) => {
           const isActive = currentStep === step.id;
           const isCompleted = currentStep > step.id;
@@ -36,9 +36,7 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
               key={step.id}
               onClick={() => onStepClick(step.id)}
               className={cn(
-                "flex flex-col items-center min-w-0 transition-colors whitespace-nowrap",
-                "px-2 py-1 rounded-lg",
-                isActive && "bg-white/20 backdrop-blur-sm",
+                "flex flex-col items-center min-w-0 transition-colors whitespace-nowrap px-2 py-1 rounded-lg",
                 isActive && "text-white",
                 isCompleted && "text-white/80",
                 !isActive && !isCompleted && "text-white/60"
@@ -46,13 +44,18 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
             >
               <div className={cn(
                 "flex items-center justify-center w-7 h-7 rounded-full text-sm mb-1 transition-all",
-                isActive && "bg-white/30 text-white shadow-sm",
-                isCompleted && "bg-white/25 text-white",
-                !isActive && !isCompleted && "bg-white/15 text-white/70"
+                isActive ? "border-b-2 border-white text-white" : "",
+                isCompleted && "text-white/80",
+                !isActive && !isCompleted && "text-white/70"
               )}>
                 {step.id}
               </div>
-              <span className="text-xs font-medium">{step.title}</span>
+              <span className={cn(
+                "text-xs font-medium",
+                isActive && "border-b border-white pb-1"
+              )}>
+                {step.title}
+              </span>
             </button>
           );
         })}
@@ -60,7 +63,7 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
       
       <div className="h-1 rounded-full overflow-hidden bg-white/10">
         <motion.div 
-          className="h-full bg-white/50"
+          className="h-full border-b-2 border-white"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.3, ease: "easeOut" }}

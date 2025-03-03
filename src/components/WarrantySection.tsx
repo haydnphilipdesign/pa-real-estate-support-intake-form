@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -15,14 +16,14 @@ export function WarrantySection({ role, data, onChange }: WarrantySectionProps) 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Warranty Information</h2>
-        <p className="text-gray-500 mb-6">Enter warranty details for the property</p>
+        <h2 className="text-2xl font-semibold mb-4 text-white">Warranty Information</h2>
+        <p className="text-white/80 mb-6">Enter warranty details for the property</p>
       </div>
 
-      <Card className="p-6">
+      <Card className="p-6 backdrop-blur-lg bg-white/20 border-white/30">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <Label htmlFor="hasWarranty">Home Warranty Purchased</Label>
+            <Label htmlFor="hasWarranty" className="text-white">Home Warranty Purchased</Label>
             <Switch
               id="hasWarranty"
               checked={data.hasWarranty}
@@ -33,7 +34,7 @@ export function WarrantySection({ role, data, onChange }: WarrantySectionProps) 
           {data.hasWarranty && (
             <>
               <div className="space-y-2">
-                <Label htmlFor="provider">Warranty Provider <span className="text-red-500">*</span></Label>
+                <Label htmlFor="provider" className="text-white">Warranty Provider <span className="text-red-500">*</span></Label>
                 <Input
                   id="provider"
                   value={data.provider}
@@ -44,7 +45,7 @@ export function WarrantySection({ role, data, onChange }: WarrantySectionProps) 
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cost">Warranty Cost <span className="text-red-500">*</span></Label>
+                <Label htmlFor="cost" className="text-white">Warranty Cost <span className="text-red-500">*</span></Label>
                 <Input
                   id="cost"
                   type="number"
@@ -56,22 +57,22 @@ export function WarrantySection({ role, data, onChange }: WarrantySectionProps) 
               </div>
 
               <div className="space-y-2">
-                <Label>Warranty Paid By <span className="text-red-500">*</span></Label>
+                <Label className="text-white">Warranty Paid By <span className="text-red-500">*</span></Label>
                 <RadioGroup
                   value={data.paidBy}
                   onValueChange={(value) => onChange("paidBy", value)}
                 >
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="seller" id="seller" />
-                    <Label htmlFor="seller">Seller</Label>
+                    <RadioGroupItem value="seller" id="seller" className="border-white" />
+                    <Label htmlFor="seller" className="text-white">Seller</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="buyer" id="buyer" />
-                    <Label htmlFor="buyer">Buyer</Label>
+                    <RadioGroupItem value="buyer" id="buyer" className="border-white" />
+                    <Label htmlFor="buyer" className="text-white">Buyer</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="agent" id="agent" />
-                    <Label htmlFor="agent">Agent</Label>
+                    <RadioGroupItem value="agent" id="agent" className="border-white" />
+                    <Label htmlFor="agent" className="text-white">Agent</Label>
                   </div>
                 </RadioGroup>
               </div>

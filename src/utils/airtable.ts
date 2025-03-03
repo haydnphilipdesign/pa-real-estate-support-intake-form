@@ -1,5 +1,6 @@
 
 import Airtable from 'airtable';
+import { TABLES, TRANSACTION_FIELDS, CLIENT_FIELDS } from '@/config/airtable';
 
 const AIRTABLE_API_KEY = 'patTmLTvKhZ0hs6ZB.3644ac279f9828df981ce7921b05d5c996f5f2e82d9c51daee4604a06c4f9e2d';
 const AIRTABLE_BASE_ID = 'appfzBPCBvZeW9QTl';
@@ -28,55 +29,53 @@ export const submitToAirtable = async (formData: any) => {
     const clientRecords = formData.clients.map((client: any, index: number) => ({
       fields: {
         // Property Information
-        'MLS Number': formattedMlsNumber,
-        'Address': formData.propertyData.address,
-        'Sale Price': formData.propertyData.salePrice,
-        'Status': formData.propertyData.status,
-        'Is Winterized': formData.propertyData.isWinterized,
-        'Update MLS': formData.propertyData.updateMls,
+        [TRANSACTION_FIELDS.MLS_NUMBER]: formattedMlsNumber,
+        [TRANSACTION_FIELDS.ADDRESS]: formData.propertyData.address,
+        [TRANSACTION_FIELDS.SALE_PRICE]: formData.propertyData.salePrice,
+        [TRANSACTION_FIELDS.PROPERTY_STATUS]: formData.propertyData.status,
+        [TRANSACTION_FIELDS.WINTERIZED]: formData.propertyData.isWinterized,
+        [TRANSACTION_FIELDS.UPDATE_MLS]: formData.propertyData.updateMls,
 
         // Commission Information
-        'Commission Base': formData.commissionData.commissionBase,
-        'Sellers Assist': formData.commissionData.sellersAssist,
-        'Total Commission': formData.commissionData.totalCommission,
-        'Listing Agent Commission': formData.commissionData.listingAgentCommission,
-        'Buyers Agent Commission': formData.commissionData.buyersAgentCommission,
-        'Buyer Paid Commission': formData.commissionData.buyerPaidCommission,
-        'Is Referral': formData.commissionData.isReferral,
-        'Referral Party': formData.commissionData.referralParty,
-        'Broker EIN': formData.commissionData.brokerEin,
-        'Referral Fee': formData.commissionData.referralFee,
+        [TRANSACTION_FIELDS.COMMISSION_BASE]: formData.commissionData.commissionBase,
+        [TRANSACTION_FIELDS.SELLERS_ASSIST]: formData.commissionData.sellersAssist,
+        [TRANSACTION_FIELDS.TOTAL_COMMISSION_PERCENTAGE]: formData.commissionData.totalCommission,
+        [TRANSACTION_FIELDS.LISTING_AGENT_PERCENTAGE]: formData.commissionData.listingAgentCommission,
+        [TRANSACTION_FIELDS.BUYERS_AGENT_PERCENTAGE]: formData.commissionData.buyersAgentCommission,
+        [TRANSACTION_FIELDS.BUYER_PAID_PERCENTAGE]: formData.commissionData.buyerPaidCommission,
+        [TRANSACTION_FIELDS.REFERRAL]: formData.commissionData.isReferral,
+        [TRANSACTION_FIELDS.REFERRAL_PARTY]: formData.commissionData.referralParty,
+        [TRANSACTION_FIELDS.BROKER_EIN]: formData.commissionData.brokerEin,
+        [TRANSACTION_FIELDS.REFERRAL_FEE]: formData.commissionData.referralFee,
 
         // Client Information (indexed for multiple clients)
-        'Client Name': client.name,
-        'Client Email': client.email,
-        'Client Phone': client.phone,
-        'Client Address': client.address,
-        'Client Type': client.type,
-        'Marital Status': client.maritalStatus,
-        'Client Index': index + 1,
+        [CLIENT_FIELDS.CLIENT_NAME]: client.name,
+        [CLIENT_FIELDS.CLIENT_EMAIL]: client.email,
+        [CLIENT_FIELDS.CLIENT_PHONE]: client.phone,
+        [CLIENT_FIELDS.CLIENT_ADDRESS]: client.address,
+        [CLIENT_FIELDS.CLIENT_TYPE]: client.type,
+        [CLIENT_FIELDS.MARITAL_STATUS]: client.maritalStatus,
+        [CLIENT_FIELDS.CLIENT_INDEX]: index + 1,
 
         // Additional Information
-        'Special Instructions': formData.additionalInfo.specialInstructions,
-        'Urgent Issues': formData.additionalInfo.urgentIssues,
-        'Notes': formData.additionalInfo.notes,
-        'Requires Follow Up': formData.additionalInfo.requiresFollowUp,
+        [TRANSACTION_FIELDS.SPECIAL_INSTRUCTIONS]: formData.additionalInfo.specialInstructions,
+        [TRANSACTION_FIELDS.URGENT_ISSUES]: formData.additionalInfo.urgentIssues,
+        [TRANSACTION_FIELDS.ADDITIONAL_INFORMATION]: formData.additionalInfo.notes,
+        [TRANSACTION_FIELDS.REQUIRES_FOLLOW_UP]: formData.additionalInfo.requiresFollowUp,
 
         // Signature Information
-        'Agent Name': formData.signatureData.agentName,
-        'Date Submitted': formData.signatureData.dateSubmitted,
-        'Terms Accepted': formData.signatureData.termsAccepted,
-        'Info Confirmed': formData.signatureData.infoConfirmed,
-        'Signature': formData.signatureData.signature,
+        [TRANSACTION_FIELDS.AGENT_NAME]: formData.signatureData.agentName,
+        [TRANSACTION_FIELDS.DATE_SUBMITTED]: formData.signatureData.dateSubmitted,
+        [TRANSACTION_FIELDS.TERMS_ACCEPTED]: formData.signatureData.termsAccepted,
+        [TRANSACTION_FIELDS.INFO_CONFIRMED]: formData.signatureData.infoConfirmed,
       }
     }));
 
     // Create records for each client
-    const records = await base('Transactions').create(clientRecords);
+    const records = await base(TABLES.TRANSACTIONS).create(clientRecords);
     return records;
   } catch (error) {
     console.error('Error submitting to Airtable:', error);
     throw error;
   }
 };
-

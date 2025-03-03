@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
@@ -16,16 +17,16 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Property Details</h2>
-        <p className="text-gray-500 mb-6">Enter additional property information</p>
+        <h2 className="text-2xl font-semibold mb-4 text-white">Property Details</h2>
+        <p className="text-white/80 mb-6">Enter additional property information</p>
       </div>
 
-      <Card className="p-6">
+      <Card className="p-6 backdrop-blur-lg bg-white/20 border-white/30">
         <div className="space-y-4">
           {isListingOrDualAgent && (
             <>
               <div className="flex items-center justify-between">
-                <Label htmlFor="resaleCertRequired">Resale Certificate Required</Label>
+                <Label htmlFor="resaleCertRequired" className="text-white">Resale Certificate Required</Label>
                 <Switch
                   id="resaleCertRequired"
                   checked={data?.resaleCertRequired}
@@ -35,7 +36,7 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
 
               {data?.resaleCertRequired && (
                 <div className="space-y-2">
-                  <Label htmlFor="hoaName">HOA Name</Label>
+                  <Label htmlFor="hoaName" className="text-white">HOA Name</Label>
                   <Input
                     id="hoaName"
                     value={data?.hoaName}
@@ -48,7 +49,7 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
           )}
 
           <div className="flex items-center justify-between">
-            <Label htmlFor="coRequired">CO Required</Label>
+            <Label htmlFor="coRequired" className="text-white">CO Required</Label>
             <Switch
               id="coRequired"
               checked={data?.coRequired}
@@ -58,7 +59,7 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
 
           {data?.coRequired && (
             <div className="space-y-2">
-              <Label htmlFor="municipality">Municipality/Township</Label>
+              <Label htmlFor="municipality" className="text-white">Municipality/Township</Label>
               <Input
                 id="municipality"
                 value={data?.municipality}
@@ -71,7 +72,7 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
           {isListingOrDualAgent && (
             <>
               <div className="flex items-center justify-between">
-                <Label htmlFor="firstRightOfRefusal">First Right of Refusal</Label>
+                <Label htmlFor="firstRightOfRefusal" className="text-white">First Right of Refusal</Label>
                 <Switch
                   id="firstRightOfRefusal"
                   checked={data?.firstRightOfRefusal}
@@ -81,7 +82,7 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
 
               {data?.firstRightOfRefusal && (
                 <div className="space-y-2">
-                  <Label htmlFor="firstRightName">First Right of Refusal Name</Label>
+                  <Label htmlFor="firstRightName" className="text-white">First Right of Refusal Name</Label>
                   <Input
                     id="firstRightName"
                     value={data?.firstRightName}
@@ -94,7 +95,7 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
           )}
 
           <div className="flex items-center justify-between">
-            <Label htmlFor="attorneyRepresentation">Attorney Representation</Label>
+            <Label htmlFor="attorneyRepresentation" className="text-white">Attorney Representation</Label>
             <Switch
               id="attorneyRepresentation"
               checked={data?.attorneyRepresentation}
@@ -104,7 +105,7 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
 
           {data?.attorneyRepresentation && (
             <div className="space-y-2">
-              <Label htmlFor="attorneyName">Attorney Name</Label>
+              <Label htmlFor="attorneyName" className="text-white">Attorney Name</Label>
               <Input
                 id="attorneyName"
                 value={data?.attorneyName}

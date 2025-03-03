@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -45,7 +46,7 @@ export function PropertyInformation({
           <div className="grid gap-6 md:grid-cols-2 bg-inherit">
             <div className="space-y-2 bg-transparent rounded-none">
               <Label htmlFor="mlsNumber" className="text-white">MLS Number <span className="text-red-500">*</span></Label>
-              <Input id="mlsNumber" placeholder="Enter 6 digits" value={data.mlsNumber} onChange={e => handleMlsNumberChange(e.target.value)} required className="bg-slate-800" />
+              <Input id="mlsNumber" placeholder="Enter 6 digits" value={data.mlsNumber} onChange={e => handleMlsNumberChange(e.target.value)} required />
               <p className="text-xs text-white/60">
                 Format example: 123456
               </p>
@@ -53,13 +54,13 @@ export function PropertyInformation({
             
             <div className="space-y-2">
               <Label htmlFor="salePrice" className="text-white">Sale Price <span className="text-red-500">*</span></Label>
-              <Input id="salePrice" placeholder="Enter sale price" value={data.salePrice} onChange={e => onChange("salePrice", e.target.value)} type="number" required className="bg-slate-800" />
+              <Input id="salePrice" placeholder="Enter sale price" value={data.salePrice} onChange={e => onChange("salePrice", e.target.value)} type="number" required />
             </div>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="address" className="text-white">Property Address <span className="text-red-500">*</span></Label>
-            <Input id="address" placeholder="Enter full property address" value={data.address} onChange={e => onChange("address", e.target.value)} required className="bg-slate-800" />
+            <Input id="address" placeholder="Enter full property address" value={data.address} onChange={e => onChange("address", e.target.value)} required />
           </div>
 
           <div className="space-y-2">
