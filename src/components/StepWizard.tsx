@@ -25,23 +25,19 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <div className="w-full space-y-6 px-8 pt-8 pb-4 glass-nav rounded-t-2xl shadow-md">
-      <div className="flex flex-col space-y-4">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-brand-navy">Transaction Form</h1>
-          <button className="bg-brand-gold hover:bg-brand-gold2 text-brand-navy py-2.5 px-5 rounded-lg text-sm flex items-center gap-2 font-medium transition-colors duration-200 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-              <path d="M9 14l2 2 4-4"></path>
-            </svg>
-            Fill with Test Data
-          </button>
-        </div>
-        <p className="text-base text-brand-navy/80">Please fill out all required fields to complete your transaction.</p>
+    <div className="w-full space-y-4 px-6 pt-6 pb-4">
+      <div className="flex justify-between items-center mb-2">
+        <button className="bg-brand-gold hover:bg-brand-gold2 text-brand-navy py-2.5 px-5 rounded-lg text-sm flex items-center gap-2 font-medium transition-colors duration-200 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            <path d="M9 14l2 2 4-4"></path>
+          </svg>
+          Fill with Test Data
+        </button>
       </div>
       
-      <div className="flex overflow-x-auto pb-2 hide-scrollbar gap-2">
+      <div className="flex overflow-x-auto pb-2 hide-scrollbar gap-3">
         {steps.map((step) => {
           const isActive = currentStep === step.id;
           const isCompleted = currentStep > step.id;
@@ -52,17 +48,18 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
               onClick={() => onStepClick(step.id)}
               className={cn(
                 "flex flex-col items-center min-w-[70px] md:min-w-0 transition-colors whitespace-nowrap",
-                "px-3 py-2 rounded-xl",
+                "px-3 py-1.5 rounded-lg",
+                isActive && "bg-white/20 backdrop-blur-sm",
                 isActive && "text-brand-gold",
                 isCompleted && "text-brand-gold/80",
                 !isActive && !isCompleted && "text-brand-navy"
               )}
             >
               <div className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full text-sm mb-2 transition-all",
+                "flex items-center justify-center w-8 h-8 rounded-full text-sm mb-1.5 transition-all",
                 isActive && "bg-brand-gold text-brand-navy shadow-glow",
                 isCompleted && "bg-brand-gold/30 text-brand-navy",
-                !isActive && !isCompleted && "bg-white/40 text-brand-navy"
+                !isActive && !isCompleted && "bg-white/30 text-brand-navy"
               )}>
                 {step.id}
               </div>
@@ -72,7 +69,7 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
         })}
       </div>
       
-      <div className="h-2.5 rounded-full overflow-hidden bg-white/20">
+      <div className="h-1.5 rounded-full overflow-hidden bg-white/15">
         <motion.div 
           className="h-full bg-brand-gold"
           initial={{ width: 0 }}

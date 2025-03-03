@@ -30,7 +30,7 @@ export function ClientCard({
   showRemoveButton,
 }: ClientCardProps) {
   return (
-    <Card className="p-6 glass-card rounded-xl animate-fade-in hover:shadow-card transition-all duration-300 group">
+    <Card className="p-6 glass-effect rounded-xl animate-fade-in hover:shadow-card transition-all duration-300 group">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-semibold text-brand-navy">Client Details</h3>
         {showRemoveButton && (

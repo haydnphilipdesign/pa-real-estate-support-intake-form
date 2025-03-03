@@ -1,4 +1,3 @@
-import { FormSidebar } from "@/components/FormSidebar";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { FormNavigation } from "@/components/FormNavigation";
 import { RoleSelection } from "@/components/RoleSelection";
@@ -74,28 +73,22 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-brand-navy to-brand-navy2 text-brand-navy p-4 sm:p-6 md:p-10">
-      <main className="container max-w-6xl py-4 md:py-8">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 text-center"
-        >
-          <img 
-            src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
-            alt="PA Real Estate Support Services LLC"
-            className="h-14 md:h-16 mx-auto mb-4"
-          />
-          <div className="h-px bg-brand-gold/40 max-w-md mx-auto" />
-        </motion.div>
+    <div className="min-h-screen p-4 sm:p-6 md:p-8 lg:p-10 flex items-center justify-center">
+      <motion.div 
+        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-5xl backdrop-blur-2xl bg-white/25 rounded-2xl border border-white/30 shadow-lg overflow-hidden"
+      >
+        <div className="py-8 px-4 sm:px-6 md:px-8">
+          <div className="flex justify-center mb-6">
+            <img 
+              src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
+              alt="PA Real Estate Support Services LLC"
+              className="h-14 md:h-16"
+            />
+          </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="rounded-2xl shadow-xl overflow-hidden bg-white/5 backdrop-blur-lg border border-white/20"
-        >
           <StepWizard
             currentStep={currentStep}
             totalSteps={10}
@@ -205,8 +198,8 @@ export default function Index() {
               className="mt-10"
             />
           </div>
-        </motion.div>
-      </main>
+        </div>
+      </motion.div>
     </div>
   );
 }
