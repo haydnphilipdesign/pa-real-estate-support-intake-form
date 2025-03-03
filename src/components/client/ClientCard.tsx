@@ -32,13 +32,13 @@ export function ClientCard({
   return (
     <Card className="p-6 glass-card rounded-xl animate-fade-in hover:shadow-card transition-all duration-300 group">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-semibold text-white">Client Details</h3>
+        <h3 className="text-xl font-semibold text-brand-navy">Client Details</h3>
         {showRemoveButton && (
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onRemoveClient(client.id)}
-            className="hover:bg-brand-red/10 hover:text-brand-red text-white/80 transition-colors duration-200"
+            className="hover:bg-brand-red/10 hover:text-brand-red text-brand-navy/80 transition-colors duration-200"
           >
             <Trash2 className="h-5 w-5" />
           </Button>

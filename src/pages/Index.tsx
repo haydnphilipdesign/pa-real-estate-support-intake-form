@@ -74,18 +74,18 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-brand-navy to-brand-navy2 text-white">
-      <main className="container max-w-6xl py-10 px-4 md:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-brand-navy to-brand-navy2 text-brand-navy p-4 sm:p-6 md:p-10">
+      <main className="container max-w-6xl py-4 md:py-8">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-10 text-center"
+          className="mb-8 text-center"
         >
           <img 
             src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
             alt="PA Real Estate Support Services LLC"
-            className="h-16 mx-auto mb-6"
+            className="h-14 md:h-16 mx-auto mb-4"
           />
           <div className="h-px bg-brand-gold/40 max-w-md mx-auto" />
         </motion.div>
@@ -94,7 +94,7 @@ export default function Index() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="glass-card rounded-2xl shadow-2xl overflow-hidden"
+          className="rounded-2xl shadow-xl overflow-hidden bg-white/5 backdrop-blur-lg border border-white/20"
         >
           <StepWizard
             currentStep={currentStep}
@@ -102,7 +102,7 @@ export default function Index() {
             onStepClick={handleStepClick}
           />
 
-          <div className="p-8">
+          <div className="p-6 md:p-8">
             {currentStep === 1 && (
               <RoleSelection
                 selectedRole={selectedRole}

@@ -33,8 +33,8 @@ export function RoleSelection({ selectedRole, onRoleSelect }: RoleSelectionProps
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="space-y-3">
-        <h2 className="text-3xl font-semibold tracking-tight text-white">Select Your Role</h2>
-        <p className="text-white/70 text-lg max-w-2xl">
+        <h2 className="text-3xl font-semibold tracking-tight text-brand-navy">Select Your Role</h2>
+        <p className="text-brand-navy/70 text-lg max-w-2xl">
           Choose your role in this real estate transaction to continue with the appropriate workflow
         </p>
       </div>
@@ -49,7 +49,7 @@ export function RoleSelection({ selectedRole, onRoleSelect }: RoleSelectionProps
               key={role.id}
               className={cn(
                 "glass-card relative cursor-pointer transition-all hover:shadow-glow animate-scale overflow-hidden group",
-                isSelected ? "ring-2 ring-brand-gold bg-white/20" : "bg-white/10 hover:bg-white/15",
+                isSelected ? "ring-2 ring-brand-gold bg-white/40" : "bg-white/20 hover:bg-white/30",
               )}
               onClick={() => onRoleSelect(role.id)}
             >
@@ -57,12 +57,12 @@ export function RoleSelection({ selectedRole, onRoleSelect }: RoleSelectionProps
               <div className="p-8 relative z-10">
                 <div className={cn(
                   "w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors",
-                  isSelected ? "bg-brand-gold text-brand-navy" : "bg-white/10 text-white group-hover:bg-white/15"
+                  isSelected ? "bg-brand-gold text-brand-navy" : "bg-white/30 text-brand-navy group-hover:bg-white/40"
                 )}>
                   <Icon className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-white">{role.title}</h3>
-                <p className="text-white/70 leading-relaxed">
+                <h3 className="text-xl font-semibold mb-3 text-brand-navy">{role.title}</h3>
+                <p className="text-brand-navy/80 leading-relaxed">
                   {role.description}
                 </p>
               </div>

@@ -75,11 +75,11 @@
   
   /* Enhanced glass effect classes */
   .glass-card {
-    @apply backdrop-blur-2xl bg-white/10 border border-white/20 shadow-lg transition-all;
+    @apply backdrop-blur-xl bg-white/30 border border-white/40 shadow-lg transition-all;
   }
   
   .glass-nav {
-    @apply backdrop-blur-xl bg-white/10 border-b border-white/20;
+    @apply backdrop-blur-xl bg-white/20 border-b border-white/30;
   }
   
   /* Hide scrollbar for Chrome, Safari and Opera */
