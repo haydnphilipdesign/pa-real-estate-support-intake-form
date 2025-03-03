@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ListChecks } from "lucide-react";
@@ -5,11 +6,11 @@ import { ListChecks } from "lucide-react";
 // Document categories with their respective documents
 const DOCUMENT_CATEGORIES = {
   "Core Transaction Documents": [
-    "Agreement of Sale & Addenda",
-    "Attorney Review Clause",
+    "Agreement of Sale",
+    "Attorney Review Clause (if applicable)",
     "Deposit Money Notice",
-    "Commission Agreement",
-    "Wire Fraud Advisory",
+    "Cooperating Broker's Compensation",
+    "KW Wire Fraud Notice",
   ],
   "Agency & Disclosure Documents": [
     "Buyer's Agency Contract",
@@ -17,19 +18,21 @@ const DOCUMENT_CATEGORIES = {
     "Dual Agency Disclosure",
     "Consumer Notice",
     "KW Affiliate Services Disclosure",
+    "KW Affiliate Services Addendum",
+    "Seller's Property Disclosure",
+    "Lead Based Paint Disclosure (if applicable)",
   ],
   "Financial Documents": [
-    "Estimated Closing Costs",
-    "Estimated Seller Proceeds",
-    "Prequalification Letter",
-    "Proof of Funds",
+    "Buyer's Estimated Costs",
+    "Seller's Estimated Costs",
+    "KPSS ABA (if using Keystone Premier Settlement)",
+    "For Your Protection Notice (if applicable)",
   ],
-  "Property Documents": [
-    "Seller's Property Disclosure",
-    "Title Documents",
+  "Warranty Documents": [
+    "KW Home Warranty Waiver",
   ],
   "Additional Documents": [
-    "KW Home Warranty Waiver",
+    "Referral Agreement & W-9 (if applicable)",
   ],
 } as const;
 
@@ -38,50 +41,56 @@ const getRoleDocuments = (role: string | null): string[] => {
   switch (role) {
     case "buyers-agent":
       return [
-        "Agreement of Sale & Addenda",
-        "Attorney Review Clause",
-        "Deposit Money Notice",
-        "Buyer's Agency Contract",
-        "Estimated Closing Costs",
+        "Agreement of Sale",
+        "Attorney Review Clause (if applicable)",
         "KW Affiliate Services Disclosure",
+        "KW Affiliate Services Addendum",
+        "KW Wire Fraud Notice",
+        "KW Home Warranty Waiver",
         "Consumer Notice",
+        "Buyer's Agency Contract",
         "Seller's Property Disclosure",
-        "Prequalification Letter",
-        "Proof of Funds",
-        "Commission Agreement",
-        "Wire Fraud Advisory",
-        "KW Home Warranty Waiver"
+        "Lead Based Paint Disclosure (if applicable)",
+        "Deposit Money Notice",
+        "Buyer's Estimated Costs",
+        "Cooperating Broker's Compensation",
+        "KPSS ABA (if using Keystone Premier Settlement)",
+        "For Your Protection Notice (if applicable)",
+        "Referral Agreement & W-9 (if applicable)",
       ];
     case "listing-agent":
       return [
-        "Listing Agreement",
+        "Agreement of Sale",
+        "Attorney Review Clause (if applicable)",
+        "KW Affiliate Services Addendum",
         "Seller's Property Disclosure",
-        "Agreement of Sale & Addenda",
-        "Estimated Seller Proceeds",
-        "Title Documents",
-        "KW Affiliate Services Disclosure",
-        "Wire Fraud Advisory",
-        "Commission Agreement"
+        "Lead Based Paint Disclosure (if applicable)",
+        "Seller's Estimated Costs",
+        "KW Wire Fraud Notice",
+        "Referral Agreement & W-9 (if applicable)",
+        "KW Home Warranty Waiver",
+        "Cooperating Broker's Compensation",
       ];
     case "dual-agent":
       return [
-        "Agreement of Sale & Addenda",
-        "Dual Agency Disclosure",
-        "Deposit Money Notice",
-        "Attorney Review Clause",
-        "Buyer's Agency Contract",
-        "Estimated Closing Costs",
-        "Prequalification Letter",
-        "Proof of Funds",
-        "Listing Agreement",
-        "Seller's Property Disclosure",
-        "Estimated Seller Proceeds",
-        "Title Documents",
+        "Agreement of Sale",
+        "Attorney Review Clause (if applicable)",
         "KW Affiliate Services Disclosure",
+        "KW Affiliate Services Addendum",
         "Consumer Notice",
-        "Wire Fraud Advisory",
-        "Commission Agreement",
-        "KW Home Warranty Waiver"
+        "Buyer's Agency Contract",
+        "Seller's Property Disclosure",
+        "Lead Based Paint Disclosure (if applicable)",
+        "Deposit Money Notice",
+        "Buyer's Estimated Costs",
+        "Seller's Estimated Costs",
+        "KPSS ABA (if using Keystone Premier Settlement)",
+        "For Your Protection Notice (if applicable)",
+        "Referral Agreement & W-9 (if applicable)",
+        "KW Wire Fraud Notice",
+        "KW Home Warranty Waiver",
+        "Cooperating Broker's Compensation",
+        "Dual Agency Disclosure",
       ];
     default:
       return [];
