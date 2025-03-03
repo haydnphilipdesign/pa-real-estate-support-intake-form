@@ -1,3 +1,4 @@
+
 import { FormSidebar } from "@/components/FormSidebar";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { FormNavigation } from "@/components/FormNavigation";
@@ -73,7 +74,7 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-gold/30 to-brand-navy/10">
+    <div className="min-h-screen bg-brand-navy text-white">
       <main className="container max-w-6xl py-8">
         <div className="mb-8 text-center">
           <img 
@@ -81,10 +82,10 @@ export default function Index() {
             alt="PA Real Estate Support Services LLC"
             className="h-16 mx-auto mb-6"
           />
-          <div className="h-px bg-brand-navy/10 max-w-md mx-auto" />
+          <div className="h-px bg-brand-gold/40 max-w-md mx-auto" />
         </div>
 
-        <div className="backdrop-blur-xl bg-white/30 rounded-2xl border border-white/20 shadow-lg">
+        <div className="glass-card rounded-2xl shadow-2xl">
           <StepWizard
             currentStep={currentStep}
             totalSteps={10}

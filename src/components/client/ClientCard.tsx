@@ -30,15 +30,15 @@ export function ClientCard({
   showRemoveButton,
 }: ClientCardProps) {
   return (
-    <Card className="p-6 transition-all duration-300 hover:shadow-lg animate-fade-in">
+    <Card className="p-6 backdrop-blur-xl bg-white/20 border border-white/30 shadow-lg transition-all duration-300 hover:shadow-xl animate-fade-in">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-brand-navy">Client Details</h3>
+        <h3 className="text-lg font-semibold text-white">Client Details</h3>
         {showRemoveButton && (
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onRemoveClient(client.id)}
-            className="hover:bg-red-100 hover:text-red-600 transition-colors duration-200"
+            className="hover:bg-brand-red/10 hover:text-brand-red text-white/80 transition-colors duration-200"
           >
             <Trash2 className="h-4 w-4" />
           </Button>

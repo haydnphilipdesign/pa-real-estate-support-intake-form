@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -22,11 +23,11 @@ export default {
         inter: ["Inter", "sans-serif"],
       },
       colors: {
-        // Brand colors
+        // Brand colors - updated to match logo
         brand: {
-          navy: "#222222",
-          gold: "#FDE1D3",
-          red: "#ea384c",
+          navy: "#1A2A42", // Deeper navy blue from logo
+          gold: "#E6C87E", // Rich gold from logo
+          red: "#DC3545",  // Red for checkmarks
         },
         // Original theme colors
         border: "hsl(var(--border))",

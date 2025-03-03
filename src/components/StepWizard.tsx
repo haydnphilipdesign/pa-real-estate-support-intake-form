@@ -25,11 +25,11 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <div className="w-full space-y-4 px-6 pt-6 pb-0">
+    <div className="w-full space-y-4 px-6 pt-6 pb-0 glass-nav rounded-t-2xl">
       <div className="flex flex-col space-y-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold">Transaction Form</h1>
-          <button className="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-md text-sm flex items-center gap-2">
+          <h1 className="text-xl font-bold text-white">Transaction Form</h1>
+          <button className="bg-brand-gold hover:bg-brand-gold/80 text-brand-navy py-2 px-4 rounded-md text-sm flex items-center gap-2 font-medium transition-colors duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
               <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
@@ -38,7 +38,7 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
             Fill with Test Data
           </button>
         </div>
-        <p className="text-sm text-gray-500">Please fill out all required fields.</p>
+        <p className="text-sm text-white/70">Please fill out all required fields.</p>
       </div>
       
       <div className="flex overflow-x-auto pb-1 hide-scrollbar gap-1">
@@ -53,16 +53,16 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
               className={cn(
                 "flex flex-col items-center min-w-[60px] md:min-w-0 transition-colors whitespace-nowrap",
                 "px-3 py-1 rounded-full",
-                isActive && "text-amber-700",
-                isCompleted && "text-amber-600",
-                !isActive && !isCompleted && "text-gray-400"
+                isActive && "text-brand-gold",
+                isCompleted && "text-brand-gold/80",
+                !isActive && !isCompleted && "text-white/60"
               )}
             >
               <div className={cn(
                 "flex items-center justify-center w-8 h-8 rounded-full text-sm mb-1",
-                isActive && "bg-amber-500 text-white",
-                isCompleted && "bg-amber-200 text-amber-800",
-                !isActive && !isCompleted && "bg-gray-200 text-gray-500"
+                isActive && "bg-brand-gold text-brand-navy",
+                isCompleted && "bg-brand-gold/30 text-white",
+                !isActive && !isCompleted && "bg-white/10 text-white/60"
               )}>
                 {step.id}
               </div>
@@ -72,9 +72,9 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
         })}
       </div>
       
-      <div className="h-2 rounded-full overflow-hidden bg-gray-200">
+      <div className="h-2 rounded-full overflow-hidden bg-white/10">
         <div 
-          className="h-full bg-amber-500 transition-all duration-300 ease-in-out"
+          className="h-full bg-brand-gold transition-all duration-300 ease-in-out"
           style={{ width: `${progress}%` }}
         ></div>
       </div>
