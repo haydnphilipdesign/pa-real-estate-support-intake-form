@@ -93,7 +93,7 @@ export const useTransactionForm = () => {
   });
 
   const handleStepClick = (step: number) => {
-    const formData: TransactionFormData & { selectedRole: string } = {
+    const formData: TransactionFormData = {
       selectedRole: selectedRole || "",
       propertyData,
       clients,
@@ -128,7 +128,7 @@ export const useTransactionForm = () => {
   };
 
   const handleNext = () => {
-    const formData: TransactionFormData & { selectedRole: string } = {
+    const formData: TransactionFormData = {
       selectedRole: selectedRole || "",
       propertyData,
       clients,

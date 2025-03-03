@@ -51,7 +51,7 @@ const clientFieldMap = {
   transactions: 'fldYsIpMRHmvRjpUd',
 };
 
-export const submitToAirtable = async (data: TransactionFormData) => {
+export const submitToAirtable = async (data: TransactionFormData & { selectedRole: string }) => {
   try {
     // First, create client records
     const clientRecords = await Promise.all(

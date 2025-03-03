@@ -1,3 +1,4 @@
+
 export interface PropertyData {
   mlsNumber: string;
   address: string;
@@ -70,6 +71,7 @@ export interface SignatureData {
 }
 
 export interface TransactionFormData {
+  selectedRole: string;
   propertyData: PropertyData;
   clients: Client[];
   commissionData: CommissionData;
