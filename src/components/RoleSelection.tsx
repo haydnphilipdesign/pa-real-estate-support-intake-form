@@ -43,8 +43,8 @@ export function RoleSelection({
                 <div className={cn("w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors", isSelected ? "bg-brand-gold text-brand-navy" : "bg-white/30 text-brand-navy group-hover:bg-white/40")}>
                   <Icon className="w-7 h-7" />
                 </div>
-                <h3 className="mb-3 text-brand-navy text-2xl font-bold text-slate-200">{role.title}</h3>
-                <p className="text-brand-navy/80 leading-relaxed text-slate-300 text-lg font-medium">
+                <h3 className="mb-3 text-brand-navy text-2xl font-bold text-slate-950">{role.title}</h3>
+                <p className="text-brand-navy/80 leading-relaxed text-lg font-medium text-slate-950">
                   {role.description}
                 </p>
               </div>
