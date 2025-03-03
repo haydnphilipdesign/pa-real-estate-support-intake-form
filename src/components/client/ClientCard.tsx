@@ -30,9 +30,9 @@ export function ClientCard({
   showRemoveButton,
 }: ClientCardProps) {
   return (
-    <Card className="p-6 backdrop-blur-xl bg-white/20 border border-white/30 shadow-lg transition-all duration-300 hover:shadow-xl animate-fade-in">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-white">Client Details</h3>
+    <Card className="p-6 glass-card rounded-xl animate-fade-in hover:shadow-card transition-all duration-300 group">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-xl font-semibold text-white">Client Details</h3>
         {showRemoveButton && (
           <Button
             variant="ghost"
@@ -40,12 +40,12 @@ export function ClientCard({
             onClick={() => onRemoveClient(client.id)}
             className="hover:bg-brand-red/10 hover:text-brand-red text-white/80 transition-colors duration-200"
           >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-5 w-5" />
           </Button>
         )}
       </div>
       <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/5 to-transparent animate-pulse pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         <ClientFormFields
           client={client}
           onClientChange={onClientChange}

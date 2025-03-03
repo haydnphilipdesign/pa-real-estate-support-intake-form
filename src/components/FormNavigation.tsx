@@ -18,24 +18,24 @@ export function FormNavigation({
   className = "",
 }: FormNavigationProps) {
   return (
-    <div className={`flex items-center justify-between mt-6 ${className}`}>
+    <div className={`flex items-center justify-between mt-8 ${className}`}>
       <Button
         variant="outline"
         onClick={onPrevious}
         disabled={currentStep === 1}
-        className="flex items-center bg-white/50 hover:bg-white/60"
+        className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20 px-5 py-6 h-11 transition-all"
       >
-        <ChevronLeft className="w-4 h-4 mr-2" />
+        <ChevronLeft className="w-4 h-4" />
         Previous
       </Button>
       
       <Button
         onClick={onNext}
         disabled={currentStep === totalSteps}
-        className="flex items-center bg-amber-500 hover:bg-amber-600 text-white"
+        className="flex items-center gap-2 bg-brand-gold hover:bg-brand-gold2 text-brand-navy px-5 py-6 h-11 transition-all shadow-sm"
       >
         Next
-        <ChevronRight className="w-4 h-4 ml-2" />
+        <ChevronRight className="w-4 h-4" />
       </Button>
     </div>
   );

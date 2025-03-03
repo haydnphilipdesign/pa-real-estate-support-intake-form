@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Home, Users, UserCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -30,30 +31,38 @@ const roles = [
 
 export function RoleSelection({ selectedRole, onRoleSelect }: RoleSelectionProps) {
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-semibold tracking-tight">Select Your Role</h2>
-        <p className="text-muted-foreground">
-          Choose your role in this real estate transaction
+    <div className="space-y-8 animate-fade-in">
+      <div className="space-y-3">
+        <h2 className="text-3xl font-semibold tracking-tight text-white">Select Your Role</h2>
+        <p className="text-white/70 text-lg max-w-2xl">
+          Choose your role in this real estate transaction to continue with the appropriate workflow
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-3">
         {roles.map((role) => {
           const Icon = role.icon;
+          const isSelected = selectedRole === role.id;
+          
           return (
             <Card
               key={role.id}
               className={cn(
-                "relative cursor-pointer transition-all hover:shadow-md",
-                selectedRole === role.id && "ring-2 ring-primary",
+                "glass-card relative cursor-pointer transition-all hover:shadow-glow animate-scale overflow-hidden group",
+                isSelected ? "ring-2 ring-brand-gold bg-white/20" : "bg-white/10 hover:bg-white/15",
               )}
               onClick={() => onRoleSelect(role.id)}
             >
-              <div className="p-6">
-                <Icon className="w-8 h-8 mb-4 text-primary" />
-                <h3 className="font-semibold mb-2">{role.title}</h3>
-                <p className="text-sm text-muted-foreground">
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-brand-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="p-8 relative z-10">
+                <div className={cn(
+                  "w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors",
+                  isSelected ? "bg-brand-gold text-brand-navy" : "bg-white/10 text-white group-hover:bg-white/15"
+                )}>
+                  <Icon className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-white">{role.title}</h3>
+                <p className="text-white/70 leading-relaxed">
                   {role.description}
                 </p>
               </div>

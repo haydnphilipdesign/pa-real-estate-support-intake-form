@@ -1,4 +1,3 @@
-
 import { FormSidebar } from "@/components/FormSidebar";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { FormNavigation } from "@/components/FormNavigation";
@@ -16,6 +15,7 @@ import { useTransactionForm } from "@/hooks/useTransactionForm";
 import { submitToAirtable } from "@/utils/airtable";
 import { useToast } from "@/hooks/use-toast";
 import { StepWizard } from "@/components/StepWizard";
+import { motion } from "framer-motion";
 
 export default function Index() {
   const { toast } = useToast();
@@ -74,25 +74,35 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-navy text-white">
-      <main className="container max-w-6xl py-8">
-        <div className="mb-8 text-center">
+    <div className="min-h-screen bg-gradient-to-b from-brand-navy to-brand-navy2 text-white">
+      <main className="container max-w-6xl py-10 px-4 md:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-10 text-center"
+        >
           <img 
             src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
             alt="PA Real Estate Support Services LLC"
             className="h-16 mx-auto mb-6"
           />
           <div className="h-px bg-brand-gold/40 max-w-md mx-auto" />
-        </div>
+        </motion.div>
 
-        <div className="glass-card rounded-2xl shadow-2xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="glass-card rounded-2xl shadow-2xl overflow-hidden"
+        >
           <StepWizard
             currentStep={currentStep}
             totalSteps={10}
             onStepClick={handleStepClick}
           />
 
-          <div className="p-6">
+          <div className="p-8">
             {currentStep === 1 && (
               <RoleSelection
                 selectedRole={selectedRole}
@@ -192,10 +202,10 @@ export default function Index() {
               totalSteps={10}
               onNext={handleNext}
               onPrevious={handlePrevious}
-              className="mt-8"
+              className="mt-10"
             />
           </div>
-        </div>
+        </motion.div>
       </main>
     </div>
   );
