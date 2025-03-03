@@ -18,10 +18,10 @@ export function PropertyDetailsSection({ role, data, onChange }: PropertyDetails
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-white">Property Details</h2>
-        <p className="text-white/80 mb-6">Enter additional property information</p>
+        <p className="text-white/70 mb-6">Enter additional property information</p>
       </div>
 
-      <Card className="p-6 backdrop-blur-lg bg-white/20 border-white/30">
+      <Card className="p-6 backdrop-blur-lg bg-transparent border-white/30">
         <div className="space-y-4">
           {isListingOrDualAgent && (
             <>

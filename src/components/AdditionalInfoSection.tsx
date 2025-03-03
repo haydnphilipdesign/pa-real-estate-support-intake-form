@@ -1,3 +1,4 @@
+
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
@@ -14,14 +15,14 @@ export function AdditionalInfoSection({ role, data, onChange }: AdditionalInfoSe
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Additional Information</h2>
-        <p className="text-gray-500 mb-6">Add any additional notes or special conditions</p>
+        <h2 className="text-2xl font-semibold mb-4 text-white">Additional Information</h2>
+        <p className="text-white/70 mb-6">Add any additional notes or special conditions</p>
       </div>
 
-      <Card className="p-6">
+      <Card className="p-6 backdrop-blur-lg bg-transparent border-white/30">
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="specialInstructions">Special Instructions</Label>
+            <Label htmlFor="specialInstructions" className="text-white">Special Instructions</Label>
             <Textarea
               id="specialInstructions"
               value={data.specialInstructions}
@@ -32,7 +33,7 @@ export function AdditionalInfoSection({ role, data, onChange }: AdditionalInfoSe
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="urgentIssues">Urgent Issues</Label>
+            <Label htmlFor="urgentIssues" className="text-white">Urgent Issues</Label>
             <Textarea
               id="urgentIssues"
               value={data.urgentIssues}
@@ -43,7 +44,7 @@ export function AdditionalInfoSection({ role, data, onChange }: AdditionalInfoSe
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="notes">Additional Notes</Label>
+            <Label htmlFor="notes" className="text-white">Additional Notes</Label>
             <Textarea
               id="notes"
               value={data.notes}
@@ -54,7 +55,7 @@ export function AdditionalInfoSection({ role, data, onChange }: AdditionalInfoSe
           </div>
 
           <div className="flex items-center justify-between">
-            <Label htmlFor="requiresFollowUp">Requires Follow-up</Label>
+            <Label htmlFor="requiresFollowUp" className="text-white">Requires Follow-up</Label>
             <Switch
               id="requiresFollowUp"
               checked={data.requiresFollowUp}
