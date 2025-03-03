@@ -1,42 +1,33 @@
 
-import { useState } from "react";
-import { Toaster } from "./src/components/ui/toaster";
-import { TooltipProvider } from "./src/components/ui/tooltip";
-import { Toaster as Sonner } from "./src/components/ui/sonner";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
 import { motion } from "framer-motion";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Import form components
-import { FormNavigation } from "./src/components/FormNavigation";
-import { RoleSelection } from "./src/components/RoleSelection";
-import { PropertyInformation } from "./src/components/PropertyInformation";
-import { ClientInformation } from "./src/components/ClientInformation";
-import { CommissionSection } from "./src/components/CommissionSection";
-import { DocumentsSection } from "./src/components/DocumentsSection";
-import { PropertyDetailsSection } from "./src/components/PropertyDetailsSection";
-import { WarrantySection } from "./src/components/WarrantySection";
-import { AdditionalInfoSection } from "./src/components/AdditionalInfoSection";
-import { SignatureSection } from "./src/components/SignatureSection";
-import { StepWizard } from "./src/components/StepWizard";
+// Import components
+import { FormNavigation } from "@/components/FormNavigation";
+import { RoleSelection } from "@/components/RoleSelection";
+import { PropertyInformation } from "@/components/PropertyInformation";
+import { ClientInformation } from "@/components/ClientInformation";
+import { CommissionSection } from "@/components/CommissionSection";
+import { DocumentsSection } from "@/components/DocumentsSection";
+import { PropertyDetailsSection } from "@/components/PropertyDetailsSection";
+import { WarrantySection } from "@/components/WarrantySection";
+import { AdditionalInfoSection } from "@/components/AdditionalInfoSection";
+import { SignatureSection } from "@/components/SignatureSection";
+import { StepWizard } from "@/components/StepWizard";
 
-// Import the custom hook for form state management
-import { useTransactionForm } from "./src/hooks/useTransactionForm";
-import { submitToAirtable } from "./src/utils/airtable";
-import { useToast } from "./src/hooks/use-toast";
+// Import hooks and utils
+import { useTransactionForm } from "@/hooks/useTransactionForm";
+import { submitToAirtable } from "@/utils/airtable";
+import { useToast } from "@/hooks/use-toast";
 
-interface TransactionFormProps {
-  onComplete?: (data: any) => void;
-  logo?: string;
-  className?: string;
-}
-
+// Create a new QueryClient instance
 const queryClient = new QueryClient();
 
-export default function TransactionForm({ 
-  onComplete,
-  logo = "/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png",
-  className = ""
-}: TransactionFormProps) {
+export function TransactionForm() {
   const { toast } = useToast();
   const {
     currentStep,
@@ -83,12 +74,7 @@ export default function TransactionForm({
         title: "Success!",
         description: "Transaction has been submitted successfully.",
       });
-      
-      if (onComplete) {
-        onComplete(formData);
-      }
     } catch (error) {
-      console.error("Form submission error:", error);
       toast({
         title: "Error",
         description: "Failed to submit transaction. Please try again.",
@@ -103,7 +89,7 @@ export default function TransactionForm({
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className={`min-h-screen p-4 flex items-center justify-center ${className}`}>
+        <div className="min-h-screen p-4 flex items-center justify-center">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -113,7 +99,7 @@ export default function TransactionForm({
             <div className="py-4 px-8">
               <div className="flex justify-center mb-6">
                 <img 
-                  src={logo}
+                  src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
                   alt="PA Real Estate Support Services LLC"
                   className="h-12"
                 />
@@ -226,7 +212,7 @@ export default function TransactionForm({
           </motion.div>
         </div>
         <Toaster />
-        <Sonner />
+        <SonnerToaster />
       </TooltipProvider>
     </QueryClientProvider>
   );
