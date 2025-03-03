@@ -22,20 +22,16 @@ export function FormNavigation({
         variant="outline"
         onClick={onPrevious}
         disabled={currentStep === 1}
-        className="flex items-center"
+        className="flex items-center bg-white/50 hover:bg-white/60"
       >
         <ChevronLeft className="w-4 h-4 mr-2" />
         Previous
       </Button>
       
-      <span className="text-sm text-gray-500">
-        Step {currentStep} of {totalSteps}
-      </span>
-      
       <Button
         onClick={onNext}
         disabled={currentStep === totalSteps}
-        className="flex items-center"
+        className="flex items-center bg-brand-navy/80 hover:bg-brand-navy text-white"
       >
         Next
         <ChevronRight className="w-4 h-4 ml-2" />

@@ -14,6 +14,7 @@ import { SignatureSection } from "@/components/SignatureSection";
 import { useTransactionForm } from "@/hooks/useTransactionForm";
 import { submitToAirtable } from "@/utils/airtable";
 import { useToast } from "@/hooks/use-toast";
+import { StepWizard } from "@/components/StepWizard";
 
 export default function Index() {
   const { toast } = useToast();
@@ -72,130 +73,129 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen flex bg-brand-gold/10">
-      <FormSidebar currentStep={currentStep} onStepClick={handleStepClick} />
-      
-      <main className="flex-1 pb-16 md:pb-0">
-        <div className="container max-w-4xl py-8">
-          <div className="mb-8 text-center">
-            <img 
-              src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
-              alt="PA Real Estate Support Services LLC"
-              className="h-16 mx-auto mb-6"
-            />
-            <div className="h-px bg-brand-navy/10 max-w-md mx-auto" />
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-brand-gold/30 to-brand-navy/10">
+      <main className="container max-w-6xl py-8">
+        <div className="mb-8 text-center">
+          <img 
+            src="/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
+            alt="PA Real Estate Support Services LLC"
+            className="h-16 mx-auto mb-6"
+          />
+          <div className="h-px bg-brand-navy/10 max-w-md mx-auto" />
+        </div>
 
-          {currentStep === 1 && (
-            <RoleSelection
-              selectedRole={selectedRole}
-              onRoleSelect={setSelectedRole}
-            />
-          )}
-          
-          {currentStep === 2 && (
-            <PropertyInformation
-              data={propertyData}
-              onChange={(field, value) => setPropertyData(prev => ({ ...prev, [field]: value }))}
-              role={selectedRole}
-            />
-          )}
-          
-          {currentStep === 3 && (
-            <ClientInformation
-              clients={clients}
-              onAddClient={() => setClients((prev) => [
-                ...prev,
-                {
-                  id: String(prev.length + 1),
-                  name: "",
-                  email: "",
-                  phone: "",
-                  address: "",
-                  maritalStatus: "single",
-                  type: selectedRole === "listing-agent" ? "seller" : 
-                        selectedRole === "buyers-agent" ? "buyer" : "buyer",
-                },
-              ])}
-              onRemoveClient={(id) => setClients((prev) => prev.filter((client) => client.id !== id))}
-              onClientChange={(id, field, value) => setClients((prev) =>
-                prev.map((client) =>
-                  client.id === id ? { ...client, [field]: value } : client
-                )
-              )}
-              role={selectedRole}
-            />
-          )}
-
-          {currentStep === 4 && (
-            <CommissionSection 
-              role={selectedRole}
-              data={commissionData}
-              onChange={(field, value) => setCommissionData(prev => ({ ...prev, [field]: value }))}
-            />
-          )}
-
-          {currentStep === 5 && (
-            <PropertyDetailsSection 
-              role={selectedRole}
-              data={propertyDetails}
-              onChange={(field, value) => setPropertyDetails(prev => ({ ...prev, [field]: value }))}
-            />
-          )}
-
-          {currentStep === 6 && (
-            <WarrantySection 
-              role={selectedRole}
-              data={warrantyData}
-              onChange={(field, value) => setWarrantyData(prev => ({ ...prev, [field]: value }))}
-            />
-          )}
-
-          {currentStep === 7 && (
-            <TitleCompanySection 
-              role={selectedRole}
-              data={titleData}
-              onChange={(field, value) => setTitleData(prev => ({ ...prev, [field]: value }))}
-            />
-          )}
-
-          {currentStep === 8 && (
-            <DocumentsSection role={selectedRole} />
-          )}
-
-          {currentStep === 9 && (
-            <AdditionalInfoSection 
-              role={selectedRole}
-              data={additionalInfo}
-              onChange={(field, value) => setAdditionalInfo(prev => ({ ...prev, [field]: value }))}
-            />
-          )}
-
-          {currentStep === 10 && (
-            <SignatureSection 
-              role={selectedRole}
-              data={signatureData}
-              onChange={(field, value) => setSignatureData(prev => ({ ...prev, [field]: value }))}
-              onSubmit={handleSubmit}
-            />
-          )}
-
-          <FormNavigation
+        <div className="backdrop-blur-xl bg-white/30 rounded-2xl border border-white/20 shadow-lg">
+          <StepWizard
             currentStep={currentStep}
             totalSteps={10}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            className="mt-8"
+            onStepClick={handleStepClick}
           />
+
+          <div className="p-6">
+            {currentStep === 1 && (
+              <RoleSelection
+                selectedRole={selectedRole}
+                onRoleSelect={setSelectedRole}
+              />
+            )}
+            
+            {currentStep === 2 && (
+              <PropertyInformation
+                data={propertyData}
+                onChange={(field, value) => setPropertyData(prev => ({ ...prev, [field]: value }))}
+                role={selectedRole}
+              />
+            )}
+            
+            {currentStep === 3 && (
+              <ClientInformation
+                clients={clients}
+                onAddClient={() => setClients((prev) => [
+                  ...prev,
+                  {
+                    id: String(prev.length + 1),
+                    name: "",
+                    email: "",
+                    phone: "",
+                    address: "",
+                    maritalStatus: "single",
+                    type: selectedRole === "listing-agent" ? "seller" : 
+                          selectedRole === "buyers-agent" ? "buyer" : "buyer",
+                  },
+                ])}
+                onRemoveClient={(id) => setClients((prev) => prev.filter((client) => client.id !== id))}
+                onClientChange={(id, field, value) => setClients((prev) =>
+                  prev.map((client) =>
+                    client.id === id ? { ...client, [field]: value } : client
+                  )
+                )}
+                role={selectedRole}
+              />
+            )}
+
+            {currentStep === 4 && (
+              <CommissionSection 
+                role={selectedRole}
+                data={commissionData}
+                onChange={(field, value) => setCommissionData(prev => ({ ...prev, [field]: value }))}
+              />
+            )}
+
+            {currentStep === 5 && (
+              <PropertyDetailsSection 
+                role={selectedRole}
+                data={propertyDetails}
+                onChange={(field, value) => setPropertyDetails(prev => ({ ...prev, [field]: value }))}
+              />
+            )}
+
+            {currentStep === 6 && (
+              <WarrantySection 
+                role={selectedRole}
+                data={warrantyData}
+                onChange={(field, value) => setWarrantyData(prev => ({ ...prev, [field]: value }))}
+              />
+            )}
+
+            {currentStep === 7 && (
+              <TitleCompanySection 
+                role={selectedRole}
+                data={titleData}
+                onChange={(field, value) => setTitleData(prev => ({ ...prev, [field]: value }))}
+              />
+            )}
+
+            {currentStep === 8 && (
+              <DocumentsSection role={selectedRole} />
+            )}
+
+            {currentStep === 9 && (
+              <AdditionalInfoSection 
+                role={selectedRole}
+                data={additionalInfo}
+                onChange={(field, value) => setAdditionalInfo(prev => ({ ...prev, [field]: value }))}
+              />
+            )}
+
+            {currentStep === 10 && (
+              <SignatureSection 
+                role={selectedRole}
+                data={signatureData}
+                onChange={(field, value) => setSignatureData(prev => ({ ...prev, [field]: value }))}
+                onSubmit={handleSubmit}
+              />
+            )}
+
+            <FormNavigation
+              currentStep={currentStep}
+              totalSteps={10}
+              onNext={handleNext}
+              onPrevious={handlePrevious}
+              className="mt-8"
+            />
+          </div>
         </div>
       </main>
-
-      <MobileNavigation
-        currentStep={currentStep}
-        totalSteps={10}
-        onNext={handleNext}
-        onPrevious={handlePrevious}
-      />
     </div>
   );
 }
