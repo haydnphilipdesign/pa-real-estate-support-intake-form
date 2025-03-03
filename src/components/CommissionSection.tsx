@@ -26,6 +26,8 @@ interface CommissionSectionProps {
 }
 
 export function CommissionSection({ role, data, onChange }: CommissionSectionProps) {
+  const isListingOrDualAgent = role === "listing-agent" || role === "dual-agent";
+  
   return (
     <div className="space-y-6">
       <div>
@@ -68,7 +70,7 @@ export function CommissionSection({ role, data, onChange }: CommissionSectionPro
           </div>
         )}
 
-        {role === "listing-agent" && (
+        {isListingOrDualAgent && (
           <div className="space-y-2">
             <Label htmlFor="totalCommission">Total Commission (%) <span className="text-red-500">*</span></Label>
             <Input
@@ -85,7 +87,7 @@ export function CommissionSection({ role, data, onChange }: CommissionSectionPro
           </div>
         )}
 
-        {role === "listing-agent" && (
+        {isListingOrDualAgent && (
           <div className="space-y-2">
             <Label htmlFor="listingAgentCommission">Listing Agent Commission (%) <span className="text-red-500">*</span></Label>
             <Input

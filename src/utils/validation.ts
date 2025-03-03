@@ -1,3 +1,4 @@
+
 import { TransactionFormData } from "@/types/transaction";
 
 export const validateStep = (
@@ -114,9 +115,7 @@ export const validateStep = (
       if (!data.titleData.companyName) {
         errors.titleCompany = ["Title company name is required"];
       }
-      if (!data.titleData.coordinatorFeePaidBy) {
-        errors.coordinatorFeePaidBy = ["Must specify who pays coordinator fee"];
-      }
+      // Remove the coordinatorFeePaidBy validation from here as it belongs to commissionData
       break;
 
     case 10:

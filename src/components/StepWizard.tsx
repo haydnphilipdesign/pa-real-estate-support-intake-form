@@ -10,25 +10,38 @@ interface StepWizardProps {
 
 const steps = [
   { id: 1, title: "Role Selection" },
-  { id: 2, title: "Property Info" },
-  { id: 3, title: "Client Info" },
+  { id: 2, title: "Client Information" },
+  { id: 3, title: "Property Info" },
   { id: 4, title: "Commission" },
   { id: 5, title: "Property Details" },
   { id: 6, title: "Warranty" },
   { id: 7, title: "Title Company" },
   { id: 8, title: "Documents" },
   { id: 9, title: "Additional Info" },
-  { id: 10, title: "Sign & Submit" },
+  { id: 10, title: "Signature" },
 ];
 
 export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardProps) {
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <div className="w-full space-y-4 px-4 py-6">
-      <Progress value={progress} className="h-2" />
+    <div className="w-full space-y-4 px-6 pt-6 pb-0">
+      <div className="flex flex-col space-y-4">
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl font-bold">Transaction Form</h1>
+          <button className="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-md text-sm flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              <path d="M9 14l2 2 4-4"></path>
+            </svg>
+            Fill with Test Data
+          </button>
+        </div>
+        <p className="text-sm text-gray-500">Please fill out all required fields.</p>
+      </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-sm">
+      <div className="flex overflow-x-auto pb-1 hide-scrollbar gap-1">
         {steps.map((step) => {
           const isActive = currentStep === step.id;
           const isCompleted = currentStep > step.id;
@@ -38,27 +51,32 @@ export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardP
               key={step.id}
               onClick={() => onStepClick(step.id)}
               className={cn(
-                "px-3 py-2 rounded-lg transition-colors text-left",
-                "hover:bg-white/10",
-                isActive && "bg-white/20 text-primary font-medium",
-                isCompleted && "text-primary/80",
-                !isActive && !isCompleted && "text-muted-foreground"
+                "flex flex-col items-center min-w-[60px] md:min-w-0 transition-colors whitespace-nowrap",
+                "px-3 py-1 rounded-full",
+                isActive && "text-amber-700",
+                isCompleted && "text-amber-600",
+                !isActive && !isCompleted && "text-gray-400"
               )}
             >
-              <div className="flex items-center gap-2">
-                <span className={cn(
-                  "flex items-center justify-center w-6 h-6 rounded-full text-xs",
-                  isActive && "bg-primary text-primary-foreground",
-                  isCompleted && "bg-primary/20 text-primary",
-                  !isActive && !isCompleted && "bg-muted text-muted-foreground"
-                )}>
-                  {step.id}
-                </span>
-                <span className="truncate">{step.title}</span>
+              <div className={cn(
+                "flex items-center justify-center w-8 h-8 rounded-full text-sm mb-1",
+                isActive && "bg-amber-500 text-white",
+                isCompleted && "bg-amber-200 text-amber-800",
+                !isActive && !isCompleted && "bg-gray-200 text-gray-500"
+              )}>
+                {step.id}
               </div>
+              <span className="text-xs">{step.title}</span>
             </button>
           );
         })}
+      </div>
+      
+      <div className="h-2 rounded-full overflow-hidden bg-gray-200">
+        <div 
+          className="h-full bg-amber-500 transition-all duration-300 ease-in-out"
+          style={{ width: `${progress}%` }}
+        ></div>
       </div>
     </div>
   );

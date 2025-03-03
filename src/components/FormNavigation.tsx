@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -31,7 +32,7 @@ export function FormNavigation({
       <Button
         onClick={onNext}
         disabled={currentStep === totalSteps}
-        className="flex items-center bg-brand-navy/80 hover:bg-brand-navy text-white"
+        className="flex items-center bg-amber-500 hover:bg-amber-600 text-white"
       >
         Next
         <ChevronRight className="w-4 h-4 ml-2" />

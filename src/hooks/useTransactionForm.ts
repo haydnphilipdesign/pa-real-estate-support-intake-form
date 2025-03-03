@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { validateStep } from "@/utils/validation";
@@ -106,6 +107,13 @@ export const useTransactionForm = () => {
 
     const errors = validateStep(currentStep, formData);
 
+    // Special handling for step 4 (Commission) for buyer's agent
+    if (currentStep === 4 && selectedRole === "buyers-agent" && 
+        errors.totalCommission && errors.totalCommission.includes("Total commission is required")) {
+      // Remove the total commission error for buyer's agent
+      delete errors.totalCommission;
+    }
+
     if (Object.keys(errors).length === 0 || step < currentStep) {
       setCurrentStep(step);
     } else {
@@ -133,6 +141,13 @@ export const useTransactionForm = () => {
     };
 
     const errors = validateStep(currentStep, formData);
+
+    // Special handling for step 4 (Commission) for buyer's agent
+    if (currentStep === 4 && selectedRole === "buyers-agent" && 
+        errors.totalCommission && errors.totalCommission.includes("Total commission is required")) {
+      // Remove the total commission error for buyer's agent
+      delete errors.totalCommission;
+    }
 
     if (Object.keys(errors).length === 0) {
       setCurrentStep((prev) => Math.min(prev + 1, 10));
