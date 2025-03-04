@@ -1,5 +1,5 @@
 
-import PortalTransactionForm from './TransactionForm/PortalTransactionForm';
+import { PortalTransactionForm } from './TransactionForm/PortalTransactionForm';
 
 interface AgentPortalTransactionFormProps {
   agent: {
