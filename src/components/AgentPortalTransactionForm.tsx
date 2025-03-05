@@ -1,41 +1,31 @@
 
-import PortalTransactionForm from './TransactionForm/PortalTransactionForm';
+import { PortalTransactionForm } from './TransactionForm/PortalTransactionForm';
 
 interface AgentPortalTransactionFormProps {
   agent: {
     id: string;
-    name?: string;
+    name: string;
   };
-  onSubmissionComplete?: (data: any) => void;
+  onSubmit: (data: any) => void;
+  logo?: string;
 }
 
-const AgentPortalTransactionForm = ({ 
-  agent, 
-  onSubmissionComplete 
-}: AgentPortalTransactionFormProps) => {
-  
-  const handleFormSubmit = (data: any) => {
-    console.log(`Transaction submitted by ${agent.name || agent.id}:`, data);
-    
-    // You can add additional logic here like navigating to a different page
-    // or showing a success modal
-    
-    if (onSubmissionComplete) {
-      onSubmissionComplete(data);
-    }
-  };
-  
+/**
+ * AgentPortalTransactionForm is a wrapper around the PortalTransactionForm
+ * that provides agent-specific functionality
+ */
+export function AgentPortalTransactionForm({
+  agent,
+  onSubmit,
+  logo = "/lovable-uploads/9849cb8f-e9f4-4d2d-ac43-b638a6715172.png"
+}: AgentPortalTransactionFormProps) {
   return (
-    <div className="agent-portal-form-container">
-      <h2 className="text-2xl font-semibold mb-6">Submit New Transaction</h2>
-      
-      <PortalTransactionForm
-        onFormSubmit={handleFormSubmit}
-        agentId={agent.id}
-        logo="/optimized/logo.png" // Update with your actual logo path
+    <div className="agent-portal-transaction-form">
+      <PortalTransactionForm 
+        agentId={agent.id} 
+        onFormSubmit={onSubmit} 
+        logo={logo} 
       />
     </div>
   );
-};
-
-export default AgentPortalTransactionForm;
+}
