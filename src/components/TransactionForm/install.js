@@ -1,6 +1,4 @@
 
-#!/usr/bin/env node
-
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
@@ -10,176 +8,136 @@ const colors = {
   reset: '\x1b[0m',
   bright: '\x1b[1m',
   green: '\x1b[32m',
+  cyan: '\x1b[36m',
   yellow: '\x1b[33m',
-  red: '\x1b[31m',
-  cyan: '\x1b[36m'
+  red: '\x1b[31m'
 };
 
-// Configuration
-const sourceDir = path.join(__dirname);
-const targetDir = process.cwd();
+console.log(`${colors.bright}${colors.cyan}==== PA Real Estate Transaction Form Installation ====${colors.reset}\n`);
 
-console.log(`${colors.bright}${colors.cyan}PA Real Estate Transaction Form Installer${colors.reset}\n`);
-console.log(`Installing from: ${sourceDir}`);
-console.log(`Installing to: ${targetDir}\n`);
+// Define source and destination paths
+const CURRENT_DIR = __dirname;
+const PROJECT_ROOT = path.resolve(process.cwd());
 
-// Function to create directory if it doesn't exist
-function ensureDirectoryExists(dir) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-    console.log(`${colors.green}Created directory: ${dir}${colors.reset}`);
+// Function to ensure a directory exists
+function ensureDirectoryExists(dirPath) {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+    console.log(`${colors.green}Created directory: ${dirPath}${colors.reset}`);
   }
 }
 
-// Function to copy a file
-function copyFile(source, target) {
+// Function to copy file with directory creation
+function copyFile(src, dest) {
   try {
-    const content = fs.readFileSync(source, 'utf-8');
-    fs.writeFileSync(target, content, 'utf-8');
-    console.log(`${colors.green}Copied: ${path.relative(targetDir, target)}${colors.reset}`);
+    ensureDirectoryExists(path.dirname(dest));
+    fs.copyFileSync(src, dest);
+    console.log(`${colors.green}Copied: ${path.basename(src)} to ${dest}${colors.reset}`);
   } catch (error) {
-    console.error(`${colors.red}Error copying ${source} to ${target}: ${error.message}${colors.reset}`);
+    console.error(`${colors.red}Error copying ${src}: ${error.message}${colors.reset}`);
   }
 }
 
-// Function to copy a directory recursively
-function copyDirectory(source, target) {
-  ensureDirectoryExists(target);
+// Function to copy directory recursively
+function copyDirectoryRecursive(src, dest) {
+  ensureDirectoryExists(dest);
+  const entries = fs.readdirSync(src, { withFileTypes: true });
   
-  const files = fs.readdirSync(source);
-  
-  for (const file of files) {
-    const sourcePath = path.join(source, file);
-    const targetPath = path.join(target, file);
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
     
-    const stat = fs.statSync(sourcePath);
-    
-    if (stat.isDirectory()) {
-      copyDirectory(sourcePath, targetPath);
+    if (entry.isDirectory()) {
+      copyDirectoryRecursive(srcPath, destPath);
     } else {
-      copyFile(sourcePath, targetPath);
+      copyFile(srcPath, destPath);
     }
   }
 }
 
-// Create the necessary directories
-const componentsDir = path.join(targetDir, 'src', 'components');
-const hooksDir = path.join(targetDir, 'src', 'hooks');
-const utilsDir = path.join(targetDir, 'src', 'utils');
-const typesDir = path.join(targetDir, 'src', 'types');
+// Check for required dependencies
+console.log(`${colors.cyan}Checking for required dependencies...${colors.reset}`);
+const requiredDeps = ['@tanstack/react-query', 'airtable', 'framer-motion', 'lucide-react'];
+const packageJsonPath = path.join(PROJECT_ROOT, 'package.json');
 
-ensureDirectoryExists(componentsDir);
-ensureDirectoryExists(hooksDir);
-ensureDirectoryExists(utilsDir);
-ensureDirectoryExists(typesDir);
-
-// Copy the component files
-try {
-  // Copy TransactionForm components
-  copyDirectory(
-    path.join(sourceDir, 'src', 'components'),
-    path.join(componentsDir, 'TransactionForm')
-  );
-  
-  // Copy hooks
-  copyDirectory(
-    path.join(sourceDir, 'src', 'hooks'),
-    hooksDir
-  );
-  
-  // Copy utils
-  copyDirectory(
-    path.join(sourceDir, 'src', 'utils'),
-    utilsDir
-  );
-  
-  // Copy types
-  copyDirectory(
-    path.join(sourceDir, 'src', 'types'),
-    typesDir
-  );
-
-  // Copy .env.example
-  copyFile(
-    path.join(sourceDir, '.env.example'),
-    path.join(targetDir, '.env.example')
-  );
-  
-  // Copy main TransactionForm component
-  copyFile(
-    path.join(sourceDir, 'TransactionForm.tsx'),
-    path.join(componentsDir, 'TransactionForm.tsx')
-  );
-  
-  // Copy PortalTransactionForm component
-  copyFile(
-    path.join(sourceDir, 'PortalTransactionForm.tsx'),
-    path.join(componentsDir, 'PortalTransactionForm.tsx')
-  );
-  
-  console.log(`\n${colors.green}✓ Files copied successfully${colors.reset}\n`);
-} catch (error) {
-  console.error(`${colors.red}Error during file copy: ${error.message}${colors.reset}`);
+if (!fs.existsSync(packageJsonPath)) {
+  console.error(`${colors.red}Error: package.json not found. Are you running this from your project root?${colors.reset}`);
+  process.exit(1);
 }
 
-// Check if required dependencies are installed
-console.log(`${colors.cyan}Checking dependencies...${colors.reset}`);
+const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+const existingDeps = packageJson.dependencies || {};
+const missingDeps = requiredDeps.filter(dep => !existingDeps[dep]);
 
-// Function to check if a package is installed
-function isPackageInstalled(packageName) {
+if (missingDeps.length > 0) {
+  console.log(`${colors.yellow}Missing dependencies: ${missingDeps.join(', ')}${colors.reset}`);
+  
+  const installCmd = `npm install --save ${missingDeps.join(' ')}`;
+  console.log(`${colors.cyan}Installing missing dependencies: ${installCmd}${colors.reset}`);
+  
   try {
-    require.resolve(packageName, { paths: [targetDir] });
-    return true;
-  } catch (err) {
-    return false;
+    execSync(installCmd, { stdio: 'inherit' });
+    console.log(`${colors.green}Successfully installed dependencies${colors.reset}`);
+  } catch (error) {
+    console.error(`${colors.red}Failed to install dependencies. Please install them manually:${colors.reset}`);
+    console.log(`${installCmd}\n`);
+  }
+} else {
+  console.log(`${colors.green}All required dependencies are installed${colors.reset}`);
+}
+
+// Copy files
+console.log(`\n${colors.cyan}Copying files to your project...${colors.reset}`);
+
+// Main transaction form components
+copyFile(
+  path.join(CURRENT_DIR, 'TransactionForm.tsx'),
+  path.join(PROJECT_ROOT, 'src', 'components', 'TransactionForm', 'TransactionForm.tsx')
+);
+copyFile(
+  path.join(CURRENT_DIR, 'PortalTransactionForm.tsx'),
+  path.join(PROJECT_ROOT, 'src', 'components', 'TransactionForm', 'PortalTransactionForm.tsx')
+);
+copyFile(
+  path.join(CURRENT_DIR, 'AgentPortalTransactionForm.tsx'),
+  path.join(PROJECT_ROOT, 'src', 'components', 'AgentPortalTransactionForm.tsx')
+);
+
+// Source directories to copy
+const dirsToCopy = [
+  { src: path.join(CURRENT_DIR, 'src', 'components'), dest: path.join(PROJECT_ROOT, 'src', 'components', 'TransactionForm') },
+  { src: path.join(CURRENT_DIR, 'src', 'hooks'), dest: path.join(PROJECT_ROOT, 'src', 'hooks') },
+  { src: path.join(CURRENT_DIR, 'src', 'utils'), dest: path.join(PROJECT_ROOT, 'src', 'utils') },
+  { src: path.join(CURRENT_DIR, 'src', 'types'), dest: path.join(PROJECT_ROOT, 'src', 'types') }
+];
+
+for (const dir of dirsToCopy) {
+  if (fs.existsSync(dir.src)) {
+    copyDirectoryRecursive(dir.src, dir.dest);
+  } else {
+    console.warn(`${colors.yellow}Warning: Source directory not found: ${dir.src}${colors.reset}`);
   }
 }
 
-const requiredDependencies = [
-  '@tanstack/react-query',
-  'airtable',
-  'framer-motion',
-  'lucide-react',
-  'react',
-  'react-dom'
-];
+// Copy .env.example
+copyFile(
+  path.join(CURRENT_DIR, '.env.example'),
+  path.join(PROJECT_ROOT, '.env.example')
+);
 
-const missingDependencies = requiredDependencies.filter(dep => !isPackageInstalled(dep));
+// Copy README and integration guide
+copyFile(
+  path.join(CURRENT_DIR, 'README.md'),
+  path.join(PROJECT_ROOT, 'src', 'components', 'TransactionForm', 'README.md')
+);
+copyFile(
+  path.join(CURRENT_DIR, 'INTEGRATION.md'),
+  path.join(PROJECT_ROOT, 'src', 'components', 'TransactionForm', 'INTEGRATION.md')
+);
 
-if (missingDependencies.length > 0) {
-  console.log(`${colors.yellow}Missing dependencies: ${missingDependencies.join(', ')}${colors.reset}`);
-  console.log(`\nInstall them with: npm install ${missingDependencies.join(' ')}`);
-} else {
-  console.log(`${colors.green}✓ All required dependencies are installed${colors.reset}`);
-}
-
-// Print setup instructions
-console.log(`\n${colors.bright}${colors.cyan}Setup Instructions:${colors.reset}`);
-console.log(`
-1. ${colors.yellow}Set up environment variables:${colors.reset}
-   Copy the variables from .env.example to your project's .env file and fill in the values.
-
-2. ${colors.yellow}Import and use the form:${colors.reset}
-   a) As a standalone form:
-      import { TransactionForm } from './components/TransactionForm';
-      
-      function YourComponent() {
-        return <TransactionForm />;
-      }
-      
-   b) Within an agent portal:
-      import { PortalTransactionForm } from './components/PortalTransactionForm';
-      
-      function AgentPortalPage() {
-        return <PortalTransactionForm />;
-      }
-
-3. ${colors.yellow}Configure Airtable:${colors.reset}
-   Make sure your Airtable base has tables for:
-   - Transactions
-   - Clients
-   
-   Update the field mappings in src/utils/airtable.ts if your Airtable field IDs differ.
-
-${colors.green}Installation completed successfully!${colors.reset}
-`);
+console.log(`\n${colors.bright}${colors.green}✓ Installation completed successfully!${colors.reset}`);
+console.log(`\n${colors.cyan}Next steps:${colors.reset}`);
+console.log(`1. Set up your Airtable environment variables in .env`);
+console.log(`2. Import the components as shown in the integration guide:`);
+console.log(`   ${colors.bright}${PROJECT_ROOT}/src/components/TransactionForm/INTEGRATION.md${colors.reset}`);
+console.log(`\nThank you for using PA Real Estate Transaction Form!\n`);

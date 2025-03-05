@@ -6,12 +6,22 @@ interface PortalTransactionFormProps {
   agentId?: string;
   onFormSubmit?: (data: any) => void;
   logo?: string;
+  className?: string;
 }
 
-export function PortalTransactionForm({ agentId, onFormSubmit, logo }: PortalTransactionFormProps) {
+export function PortalTransactionForm({ 
+  agentId, 
+  onFormSubmit, 
+  logo,
+  className 
+}: PortalTransactionFormProps) {
   return (
     <div className="w-full h-full bg-gradient-to-b from-brand-navy to-brand-navy/90 text-white">
-      <TransactionForm />
+      <TransactionForm 
+        onComplete={onFormSubmit}
+        logo={logo}
+        className={className}
+      />
     </div>
   );
 }

@@ -58,41 +58,93 @@ VITE_AIRTABLE_CLIENTS_TABLE_ID=your_clients_table_id_here
 #### As a standalone form:
 
 ```jsx
-import { TransactionForm } from './components/TransactionForm';
+import { TransactionForm } from './components/TransactionForm/TransactionForm';
 
 function YourComponent() {
-  return <TransactionForm />;
+  return (
+    <TransactionForm 
+      onComplete={(data) => console.log('Form submitted:', data)}
+      logo="/path/to/your/logo.png"
+      className="custom-styles"
+    />
+  );
 }
 ```
 
 #### Within an agent portal:
 
 ```jsx
-import { PortalTransactionForm } from './components/PortalTransactionForm';
+import { PortalTransactionForm } from './components/TransactionForm/PortalTransactionForm';
 
 function AgentPortalPage() {
-  return <PortalTransactionForm />;
+  const handleSubmit = (formData) => {
+    // Handle the form submission in your application
+    console.log('Transaction submitted:', formData);
+  };
+
+  return (
+    <PortalTransactionForm 
+      onFormSubmit={handleSubmit}
+      logo="/path/to/your/logo.png"
+      className="custom-styles"
+    />
+  );
 }
 ```
 
 #### If you already have an AgentPortal component:
 
-Update your existing AgentPortal.tsx:
-
 ```jsx
-import { PortalTransactionForm } from './components/PortalTransactionForm';
+import { AgentPortalTransactionForm } from './components/AgentPortalTransactionForm';
 
 function AgentPortal() {
-  // ... your existing code
+  const agentId = "agent-123"; // Get from your authentication system
+  
+  const handleSubmit = (formData) => {
+    // Handle the form submission in your application
+    console.log('Transaction submitted:', formData);
+  };
 
   return (
-    <div>
+    <div className="agent-portal">
       {/* ... your existing UI */}
-      <PortalTransactionForm />
+      <AgentPortalTransactionForm 
+        onFormSubmit={handleSubmit}
+        agentId={agentId}
+        logo="/path/to/your/logo.png"
+        className="custom-styles"
+      />
     </div>
   );
 }
 ```
+
+## Props
+
+### TransactionForm
+
+- `onComplete`: Callback function that receives the form data after successful submission
+- `logo`: Path to your logo image (defaults to the PA Real Estate Support Services logo)
+- `className`: Additional CSS classes to apply to the form container
+
+### PortalTransactionForm & AgentPortalTransactionForm
+
+- `onFormSubmit`: Callback function that receives the enriched form data
+- `agentId`: ID of the current agent (for tracking submissions)
+- `logo`: Path to your logo image
+- `className`: Additional CSS classes to apply to the form container
+
+## CSS Integration
+
+The form relies on Tailwind CSS. If your project uses Tailwind, ensure your configuration includes the necessary classes. If not, you may need to include the prebuilt CSS file:
+
+```jsx
+import './components/TransactionForm/styles.css';
+```
+
+## Styling Customization
+
+To customize the form styling or behavior, you can modify the individual component files or override styles through the `className` prop.
 
 ## Airtable Configuration
 
@@ -101,13 +153,6 @@ Ensure your Airtable base has:
 - A table for Clients
 
 The field mappings in `src/utils/airtable.ts` may need to be updated if your Airtable field IDs differ from the default configuration.
-
-## Customization
-
-You can customize:
-- UI appearance by modifying the components in `src/components/TransactionForm/`
-- Form validation logic in `src/utils/validation.ts`
-- Data handling in `src/hooks/useTransactionForm.ts`
 
 ## Troubleshooting
 
