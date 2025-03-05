@@ -8,15 +8,15 @@ interface StepWizardProps {
 }
 
 const steps = [
-  { id: 1, title: "Role Selection" },
-  { id: 2, title: "Property Information" },
-  { id: 3, title: "Client Information" },
-  { id: 4, title: "Commission" },
-  { id: 5, title: "Property & Title" },
-  { id: 6, title: "Warranty" },
-  { id: 7, title: "Documents" },
-  { id: 8, title: "Additional Info" },
-  { id: 9, title: "Signature" },
+  { id: 1, title: "Role\nSelection" },
+  { id: 2, title: "Property\nInformation" },
+  { id: 3, title: "Client\nInformation" },
+  { id: 4, title: "Commission\nInformation" },
+  { id: 5, title: "Property & Title\nInformation" },
+  { id: 6, title: "Home Warranty\nInformation" },
+  { id: 7, title: "Required\nDocumentation" },
+  { id: 8, title: "Additional\nInformation" },
+  { id: 9, title: "Sign &\nSubmit" },
 ];
 
 export function StepWizard({ currentStep, totalSteps, onStepClick }: StepWizardProps) {
